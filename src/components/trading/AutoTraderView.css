@@ -1,0 +1,444 @@
+/* ===== Auto Trader View — Premium Dark Glassmorphism ===== */
+
+.at-view {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* ===== Hero ===== */
+.at-hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 64px 48px;
+    background: linear-gradient(to right, rgba(10, 10, 10, 1) 0%, rgba(10, 10, 10, 0.9) 30%, rgba(10, 10, 10, 0) 100%), url('/auto-trader-bg.png');
+    background-size: cover;
+    background-position: center;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+    min-height: 480px;
+}
+
+.at-hero-content {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+}
+
+.at-hero-badge {
+    font-size: 0.6rem;
+    font-weight: 900;
+    letter-spacing: 0.3em;
+    color: #2997ff;
+    padding: 6px 16px;
+    background: rgba(41, 151, 255, 0.1);
+    border: 1px solid rgba(41, 151, 255, 0.2);
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.at-hero-title {
+    font-size: 3rem;
+    font-weight: 900;
+    color: #fff;
+    margin: 0 0 16px;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+}
+
+.at-accent {
+    color: #2997ff;
+}
+
+.at-hero-desc {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0 0 32px;
+    line-height: 1.6;
+    max-width: 600px;
+    font-weight: 500;
+}
+
+/* Hero Yield Strip */
+.at-yield-strip {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.at-yield-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    backdrop-filter: blur(8px);
+}
+
+.at-yield-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.at-yield-value {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Interface Grid */
+.at-interface-grid {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 24px;
+}
+
+/* Glass Panels */
+.at-panel {
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    padding: 32px;
+    backdrop-filter: blur(12px);
+}
+
+.at-panel-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 32px;
+}
+
+.at-panel-header h3 {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #fff;
+    margin: 0;
+}
+
+.at-panel-header svg {
+    color: #2997ff;
+}
+
+/* Config Sections */
+.at-config-section {
+    margin-bottom: 40px;
+}
+
+.at-config-section:last-child {
+    margin-bottom: 0;
+}
+
+.at-section-label {
+    font-size: 0.65rem;
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 16px;
+    display: block;
+}
+
+/* Risk Dial Cards */
+.at-risk-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.at-risk-card {
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.at-risk-card:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.12);
+    transform: translateY(-2px);
+}
+
+.at-risk-card.active {
+    background: rgba(41, 151, 255, 0.08);
+    border-color: #2997ff;
+    box-shadow: 0 0 20px rgba(41, 151, 255, 0.15);
+}
+
+.at-risk-val {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 4px;
+}
+
+.at-risk-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 8px;
+}
+
+.at-risk-desc {
+    display: block;
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.3);
+    line-height: 1.4;
+}
+
+/* Credential Mesh */
+.at-credential-mesh {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.at-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.at-field label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.at-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    padding: 0 16px;
+    height: 48px;
+    transition: all 0.2s ease;
+}
+
+.at-input-wrapper:focus-within {
+    border-color: #2997ff;
+    background: rgba(41, 151, 255, 0.03);
+    box-shadow: 0 0 0 4px rgba(41, 151, 255, 0.05);
+}
+
+.at-input-wrapper svg {
+    color: rgba(255, 255, 255, 0.25);
+}
+
+.at-input-wrapper input {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 0.85rem;
+    width: 100%;
+    outline: none;
+    font-weight: 600;
+}
+
+.at-input-wrapper input::placeholder {
+    color: rgba(255, 255, 255, 0.15);
+}
+
+/* Deployment Button */
+.at-deploy-btn {
+    width: 100%;
+    height: 64px;
+    border-radius: 14px;
+    margin-top: 40px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    border: none;
+    background: #fff;
+    /* Static fallback */
+    padding: 0;
+    transition: all 0.3s ease;
+}
+
+.at-deploy-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #2997ff, #0071e3);
+    color: #fff;
+    font-weight: 800;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+}
+
+.at-deploy-btn.active .at-deploy-content {
+    background: linear-gradient(135deg, #ff3b30, #d70015);
+}
+
+.at-deploy-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(41, 151, 255, 0.3);
+}
+
+.at-deploy-btn.active:hover {
+    box-shadow: 0 12px 32px rgba(255, 59, 48, 0.3);
+}
+
+/* Intelligence Column */
+.at-intel-column {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.at-intel-card {
+    padding: 24px;
+}
+
+.at-intel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.at-intel-header h3 {
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: #fff;
+    margin: 0;
+}
+
+/* Protocol Checklist */
+.at-checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.at-check-item {
+    display: flex;
+    gap: 16px;
+}
+
+.at-item-icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: rgba(41, 151, 255, 0.1);
+    color: #2997ff;
+    flex-shrink: 0;
+}
+
+.at-item-text h4 {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: #fff;
+    margin: 0 0 4px;
+}
+
+.at-item-text p {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.4);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Visual Mesh Animation Placeholder */
+.at-visual-mesh {
+    position: absolute;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.15;
+    pointer-events: none;
+}
+
+/* Pulse Animation */
+.at-pulse {
+    width: 8px;
+    height: 8px;
+    background: #2997ff;
+    border-radius: 50%;
+    position: relative;
+}
+
+.at-pulse::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    border-radius: inherit;
+    animation: at-pulse 2s infinite;
+}
+
+@keyframes at-pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+    .at-interface-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .at-hero {
+        padding: 40px 24px;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .at-hero-desc {
+        margin: 0 auto 32px;
+    }
+
+    .at-yield-strip {
+        justify-content: center;
+    }
+
+    .at-credential-mesh {
+        grid-template-columns: 1fr;
+    }
+
+    .at-risk-grid {
+        grid-template-columns: 1fr;
+    }
+}

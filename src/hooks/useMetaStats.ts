@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { io, Socket } from 'socket.io-client';
+import io from 'socket.io-client';
+type Socket = any;
 
 interface MetaStats {
     balance: number;
