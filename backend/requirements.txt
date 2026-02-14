@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+python-dotenv
+python-socketio
+aiohttp
+websockets
+janus
+requests
+colorlog
+pydantic-settings

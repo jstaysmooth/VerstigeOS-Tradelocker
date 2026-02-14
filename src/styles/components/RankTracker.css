@@ -1,0 +1,202 @@
+/* RankTracker Component Styles - Ported from Sales.css */
+
+.rank-progression-v2 {
+    padding: var(--spacing-xl);
+    background: rgba(255, 255, 255, 0.01);
+    border-radius: var(--border-radius-xl);
+    border: 1px solid var(--glass-border);
+    margin-bottom: var(--spacing-2xl);
+    position: relative;
+    overflow: hidden;
+}
+
+.rank-progression-v2 .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.rank-progression-v2 h3 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    background: linear-gradient(to right, #fff, var(--secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.current-rank-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-2xl);
+    background: radial-gradient(circle at top left, rgba(41, 151, 255, 0.1), transparent 70%);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    margin-bottom: var(--spacing-xl);
+}
+
+.rank-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+    margin: 8px 0;
+    letter-spacing: -0.04em;
+}
+
+.qual-logic {
+    color: var(--secondary);
+    font-size: 1rem;
+    max-width: 400px;
+}
+
+.rank-progress-circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: conic-gradient(var(--accent) 100%, transparent 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 30px rgba(41, 151, 255, 0.2);
+}
+
+.circle-inner {
+    width: 84px;
+    height: 84px;
+    background: #0a0a0a;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #fff;
+}
+
+.next-rank-path {
+    background: rgba(255, 255, 255, 0.03);
+    padding: var(--spacing-xl);
+    border-radius: var(--border-radius-lg);
+    margin-bottom: var(--spacing-xl);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.progress-bar-v2 {
+    height: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--border-radius-full);
+    margin: 20px 0;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(to right, var(--accent), #00d2ff);
+    box-shadow: 0 0 15px var(--accent);
+}
+
+.rank-requirements {
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.rank-scroller {
+    display: flex;
+    gap: var(--spacing-lg);
+    overflow-x: auto;
+    padding: var(--spacing-md) 0;
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.rank-scroller::-webkit-scrollbar {
+    display: none;
+    /* Chrome/Safari */
+}
+
+.rank-card-v2 {
+    min-width: 260px;
+    padding: var(--spacing-xl);
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+    opacity: 0.6;
+}
+
+.rank-card-v2.active {
+    opacity: 1;
+    transform: scale(1.02);
+    border-color: var(--accent);
+    background: rgba(41, 151, 255, 0.08);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+.rank-card-v2.completed {
+    opacity: 1;
+    border-color: rgba(48, 209, 88, 0.3);
+}
+
+.rank-badge-v2 {
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 800;
+    margin-bottom: var(--spacing-md);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.rank-card-v2.active .rank-badge-v2 {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    box-shadow: 0 0 15px var(--accent);
+}
+
+.rank-card-v2.completed .rank-badge-v2 {
+    background: var(--fintech-green);
+    color: #fff;
+    border: none;
+}
+
+.rank-meta h4 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.commission {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.qual-desc {
+    font-size: 0.8rem;
+    color: var(--secondary);
+    line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+    .current-rank-card {
+        flex-direction: column;
+        text-align: center;
+        gap: var(--spacing-xl);
+    }
+
+    .rank-title {
+        font-size: 2.25rem;
+    }
+}

@@ -1,0 +1,211 @@
+/* [project]/src/styles/pages/AgencyModel.css [app-client] (css) */
+.agency-model-section {
+  padding: var(--spacing-3xl) var(--spacing-lg);
+  background: radial-gradient(circle, #10b9810d 0%, #0000 70%);
+  position: relative;
+  overflow: hidden;
+}
+
+.agency-header {
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto var(--spacing-3xl);
+}
+
+.agency-title {
+  margin-bottom: var(--spacing-md);
+  background: linear-gradient(135deg, #fff, #10b981);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.agency-subtitle {
+  color: #ffffffb3;
+  font-size: 1.125rem;
+  line-height: 1.6;
+}
+
+.agency-logic-grid {
+  gap: var(--spacing-2xl);
+  grid-template-columns: 1fr 1.2fr;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+}
+
+.model-card {
+  padding: var(--spacing-xl);
+  border-radius: var(--border-radius-xl);
+  background: #ffffff08;
+  border: 1px solid #ffffff14;
+  position: relative;
+  overflow: hidden;
+}
+
+.model-card:before {
+  content: "";
+  background: linear-gradient(90deg, #10b981, #059669);
+  width: 100%;
+  height: 4px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.cashflow-visual {
+  margin: var(--spacing-xl) 0;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  position: relative;
+}
+
+.flow-node {
+  z-index: 2;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  display: flex;
+}
+
+.node-icon {
+  color: #10b981;
+  background: #10b9811a;
+  border: 1px solid #10b9814d;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  width: 48px;
+  height: 48px;
+  display: flex;
+}
+
+.flow-line {
+  background: #ffffff1a;
+  flex: 1;
+  height: 2px;
+  margin: 0 16px;
+  position: relative;
+}
+
+.flow-particle {
+  background: #10b981;
+  border-radius: 50%;
+  width: 8px;
+  height: 8px;
+  animation: 2s linear infinite flowRight;
+  position: absolute;
+  top: -3px;
+  left: 0;
+  box-shadow: 0 0 10px #10b981;
+}
+
+@keyframes flowRight {
+  0% {
+    opacity: 0;
+    left: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    left: 100%;
+  }
+}
+
+.advance-badge {
+  color: #10b981;
+  background: #10b98133;
+  border-radius: 12px;
+  margin-top: 8px;
+  padding: 4px 12px;
+  font-size: .75rem;
+  font-weight: 700;
+}
+
+.distribution-visual {
+  gap: var(--spacing-lg);
+  flex-direction: column;
+  display: flex;
+}
+
+.dist-row {
+  align-items: center;
+  gap: var(--spacing-md);
+  opacity: .6;
+  transition: all .3s;
+  display: flex;
+}
+
+.dist-row.active {
+  opacity: 1;
+  transform: scale(1.02);
+}
+
+.dist-bar-container {
+  background: #ffffff1a;
+  border-radius: 4px;
+  flex: 1;
+  height: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.dist-bar {
+  border-radius: 4px;
+  height: 100%;
+  position: relative;
+}
+
+.dist-bar.agent {
+  background: #3b82f6;
+  width: 45%;
+}
+
+.dist-bar.override {
+  background: #10b981;
+  width: 35%;
+  box-shadow: 0 0 15px #10b98180;
+}
+
+.dist-bar.company {
+  background: #6b7280;
+  width: 20%;
+}
+
+.dist-value {
+  text-align: right;
+  min-width: 60px;
+  font-family: Geist Mono, monospace;
+  font-weight: 700;
+}
+
+.spread-highlight {
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  color: #a7f3d0;
+  text-align: center;
+  background: #10b9811a;
+  border: 1px dashed #10b9814d;
+  font-size: .875rem;
+}
+
+@media (max-width: 1024px) {
+  .agency-logic-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/*# sourceMappingURL=src_styles_pages_AgencyModel_css_bad6b30c._.single.css.map*/

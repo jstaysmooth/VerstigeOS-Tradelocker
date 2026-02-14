@@ -1,0 +1,517 @@
+/* [project]/src/components/trading/IndicatorView.css [app-client] (css) */
+.ind-view {
+  flex-direction: column;
+  gap: 20px;
+  display: flex;
+}
+
+.ind-hero {
+  border: 1px solid #ffffff0f;
+  border-radius: 16px;
+  align-items: center;
+  min-height: 280px;
+  padding: 36px 40px;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+.ind-hero-bg {
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.ind-hero-overlay {
+  z-index: 1;
+  background: linear-gradient(to right, #0a0a0a 0% 25%, #0a0a0aeb 40%, #0a0a0ab3 60%, #0a0a0a4d 80%, #0000 100%);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.ind-hero:before {
+  content: "";
+  pointer-events: none;
+  z-index: 2;
+  background: radial-gradient(circle, #2997ff0a 0%, #0000 70%);
+  width: 80%;
+  height: 220%;
+  position: absolute;
+  top: -60%;
+  left: -30%;
+}
+
+.ind-hero-content {
+  z-index: 3;
+  flex: 1;
+  max-width: 560px;
+  position: relative;
+}
+
+.ind-hero-badge {
+  letter-spacing: .3em;
+  color: #2997ff;
+  background: #2997ff1a;
+  border: 1px solid #2997ff33;
+  border-radius: 20px;
+  margin-bottom: 16px;
+  padding: 5px 14px;
+  font-size: .58rem;
+  font-weight: 900;
+  display: inline-block;
+}
+
+.ind-hero-title {
+  color: #fff;
+  letter-spacing: -.02em;
+  margin: 0 0 12px;
+  font-size: 2.2rem;
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+.ind-accent {
+  color: #2997ff;
+}
+
+.ind-hero-desc {
+  color: #fff6;
+  max-width: 560px;
+  margin: 0 0 20px;
+  font-size: .88rem;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.ind-hero-stats {
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+  display: flex;
+}
+
+.ind-stat-pill {
+  background: #ffffff08;
+  border: 1px solid #ffffff0f;
+  border-radius: 8px;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  display: flex;
+}
+
+.ind-stat-label {
+  color: #ffffff4d;
+  font-size: .65rem;
+  font-weight: 700;
+}
+
+.ind-stat-value {
+  color: #fff;
+  align-items: center;
+  gap: 4px;
+  font-size: .72rem;
+  font-weight: 800;
+  display: flex;
+}
+
+.ind-cta-btn {
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(135deg, #2997ff, #0071e3);
+  border: none;
+  border-radius: 10px;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  font-size: .82rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all .2s;
+  display: inline-flex;
+}
+
+.ind-cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px #2997ff59;
+}
+
+.ind-section {
+  flex-direction: column;
+  gap: 14px;
+  display: flex;
+}
+
+.ind-section-title {
+  color: #fff;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: .95rem;
+  font-weight: 800;
+  display: flex;
+}
+
+.ind-section-title svg {
+  color: #2997ff;
+}
+
+.ind-components-grid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  display: grid;
+}
+
+.ind-comp-card {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  background: #ffffff06;
+  border: 1px solid #ffffff0f;
+  border-radius: 14px;
+  gap: 14px;
+  padding: 18px 20px;
+  transition: all .25s;
+  display: flex;
+}
+
+.ind-comp-card:hover {
+  background: #ffffff0a;
+  border-color: #ffffff1a;
+  transform: translateY(-2px);
+}
+
+.ind-comp-icon {
+  border-radius: 10px;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  width: 42px;
+  height: 42px;
+  display: flex;
+}
+
+.ind-comp-icon.icon-blue {
+  color: #2997ff;
+  background: #2997ff1a;
+}
+
+.ind-comp-icon.icon-purple {
+  color: #af52de;
+  background: #af52de1a;
+}
+
+.ind-comp-icon.icon-green {
+  color: #30d158;
+  background: #30d1581a;
+}
+
+.ind-comp-icon.icon-orange {
+  color: #ff9500;
+  background: #ff95001a;
+}
+
+.ind-comp-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.ind-comp-top {
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  display: flex;
+}
+
+.ind-comp-top h4 {
+  color: #fff;
+  margin: 0;
+  font-size: .88rem;
+  font-weight: 800;
+}
+
+.ind-comp-tag {
+  letter-spacing: .1em;
+  white-space: nowrap;
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: .55rem;
+  font-weight: 900;
+}
+
+.ind-comp-tag.tag-blue {
+  color: #2997ff;
+  background: #2997ff1a;
+}
+
+.ind-comp-tag.tag-purple {
+  color: #af52de;
+  background: #af52de1a;
+}
+
+.ind-comp-tag.tag-green {
+  color: #30d158;
+  background: #30d1581a;
+}
+
+.ind-comp-tag.tag-orange {
+  color: #ff9500;
+  background: #ff95001a;
+}
+
+.ind-comp-body p {
+  color: #ffffff59;
+  margin: 0;
+  font-size: .75rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.ind-split-layout {
+  grid-template-columns: 1fr 380px;
+  align-items: start;
+  gap: 16px;
+  display: grid;
+}
+
+.ind-strategy-panel {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  background: #ffffff06;
+  border: 1px solid #ffffff0f;
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.ind-panel-title {
+  color: #fff;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 20px;
+  font-size: .95rem;
+  font-weight: 800;
+  display: flex;
+}
+
+.ind-panel-title svg {
+  color: #2997ff;
+}
+
+.ind-flow-columns {
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  display: grid;
+}
+
+.ind-flow-block {
+  flex-direction: column;
+  gap: 12px;
+  display: flex;
+}
+
+.ind-flow-label {
+  letter-spacing: .12em;
+  border-radius: 8px;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  padding: 7px 12px;
+  font-size: .62rem;
+  font-weight: 900;
+  display: flex;
+}
+
+.ind-flow-label.long {
+  color: #30d158;
+  background: #30d1581a;
+  border: 1px solid #30d15833;
+}
+
+.ind-flow-label.short {
+  color: #ff3b30;
+  background: #ff3b301a;
+  border: 1px solid #ff3b3033;
+}
+
+.ind-flow-steps {
+  flex-direction: column;
+  gap: 8px;
+  display: flex;
+}
+
+.ind-step {
+  background: #ffffff05;
+  border: 1px solid #ffffff0a;
+  border-radius: 8px;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  transition: all .2s;
+  display: flex;
+}
+
+.ind-step:hover {
+  background: #ffffff0a;
+}
+
+.ind-step-num {
+  color: #2997ff;
+  background: #2997ff1a;
+  border-radius: 6px;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  width: 22px;
+  height: 22px;
+  font-size: .65rem;
+  font-weight: 900;
+  display: flex;
+}
+
+.ind-step span {
+  color: #ffffff80;
+  padding-top: 2px;
+  font-size: .78rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.ind-tips-column {
+  flex-direction: column;
+  gap: 14px;
+  display: flex;
+}
+
+.ind-alert-card {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  background: linear-gradient(135deg, #2997ff14 0%, #ffffff05 100%);
+  border: 1px solid #2997ff26;
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.ind-alert-header {
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  display: flex;
+}
+
+.ind-alert-header svg {
+  color: #2997ff;
+}
+
+.ind-alert-header h4 {
+  color: #fff;
+  margin: 0;
+  font-size: .9rem;
+  font-weight: 800;
+}
+
+.ind-alert-card p {
+  color: #fff6;
+  margin: 0;
+  font-size: .78rem;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.ind-alert-card p strong {
+  color: #2997ff;
+  font-weight: 700;
+}
+
+.ind-tips-card {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  background: #ffffff06;
+  border: 1px solid #ffffff0f;
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.ind-tips-title {
+  color: #fff;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 14px;
+  font-size: .88rem;
+  font-weight: 800;
+  display: flex;
+}
+
+.ind-tips-title svg {
+  color: #fc0;
+}
+
+.ind-tips-list {
+  flex-direction: column;
+  gap: 10px;
+  display: flex;
+}
+
+.ind-tip-item {
+  color: #ffffff73;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: .78rem;
+  font-weight: 500;
+  line-height: 1.5;
+  display: flex;
+}
+
+.ind-tip-check {
+  color: #30d158;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.val-blue {
+  color: #2997ff !important;
+}
+
+.val-green {
+  color: #30d158 !important;
+}
+
+@media (max-width: 900px) {
+  .ind-hero {
+    text-align: center;
+    flex-direction: column;
+  }
+
+  .ind-hero-desc {
+    max-width: 100%;
+  }
+
+  .ind-hero-stats {
+    justify-content: center;
+  }
+
+  .ind-hero-bg {
+    opacity: .3;
+  }
+
+  .ind-hero-overlay {
+    background: #0a0a0ad9;
+  }
+
+  .ind-hero-content {
+    max-width: 100%;
+  }
+
+  .ind-components-grid, .ind-split-layout, .ind-flow-columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+/*# sourceMappingURL=src_components_trading_IndicatorView_css_bad6b30c._.single.css.map*/

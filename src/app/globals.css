@@ -1,0 +1,219 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --font-main: var(--font-outfit), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), monospace;
+
+  /* Color Palette - Private Operating System Elegance */
+  --bg-dark: #050507;
+  --bg-card: rgba(18, 18, 18, 0.7);
+  --bg-elevated: rgba(30, 30, 30, 0.8);
+
+  --primary: #ffffff;
+  --secondary: #94949e;
+  /* Apple Gray */
+  --accent: #2997ff;
+  /* Apple Blue */
+  --fintech-green: #30d158;
+  --fintech-red: #ff453a;
+
+  /* Hero Specifics */
+  --hero-purple: #7a3e9d;
+  --hero-blue: #4a8cff;
+  --hero-gradient: linear-gradient(90deg, #4a8cff 0%, #a259ff 100%);
+
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 48px;
+  --spacing-2xl: 96px;
+
+  --border-radius-sm: 8px;
+  --border-radius-md: 16px;
+  --border-radius-lg: 24px;
+  --border-radius-full: 9999px;
+
+  --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--primary);
+  font-family: var(--font-main);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: var(--transition-smooth);
+}
+
+button {
+  font-family: var(--font-main);
+  cursor: pointer;
+  border: none;
+  background: none;
+  transition: var(--transition-smooth);
+}
+
+/* Glassmorphism Utilities */
+.glass-panel {
+  background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--glass-shadow);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--border-radius-lg);
+  transition: var(--transition-smooth);
+}
+
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-4px);
+}
+
+/* Typography Scale */
+.text-hero {
+  font-size: 5rem;
+  line-height: 1.05;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.text-title {
+  font-size: 3rem;
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.text-subtitle {
+  font-size: 1.25rem;
+  color: var(--secondary);
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.text-label {
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--secondary);
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .text-hero {
+    font-size: 2.75rem;
+  }
+
+  .text-title {
+    font-size: 2rem;
+  }
+}
+
+/* Animations */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Buttons */
+.btn-primary {
+  background: var(--primary);
+  color: var(--bg-dark);
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: var(--border-radius-full);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition-smooth);
+}
+
+.btn-primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--primary);
+  font-weight: 500;
+  padding: 12px 24px;
+  border-radius: var(--border-radius-full);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.btn-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--secondary);
+  cursor: pointer;
+}
+
+.btn-icon:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--primary);
+}

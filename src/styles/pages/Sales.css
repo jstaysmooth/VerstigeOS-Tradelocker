@@ -1,0 +1,360 @@
+.sales-page {
+    width: 100%;
+}
+
+.simulation-controls-v2 {
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius-xl);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.control-header {
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.title-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.title-group label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--secondary);
+}
+
+.payout-toggle {
+    padding: 6px 16px;
+    border-radius: var(--border-radius-full);
+    font-size: 0.75rem;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--secondary);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.payout-toggle.active {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+    box-shadow: 0 0 15px rgba(41, 151, 255, 0.3);
+}
+
+.sales-chips-container {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 15px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) transparent;
+}
+
+.sales-chips-container::-webkit-scrollbar {
+    height: 4px;
+}
+
+.sales-chips-container::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 2px;
+}
+
+.sales-chip {
+    white-space: nowrap;
+    padding: 8px 20px;
+    border-radius: var(--border-radius-full);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    color: var(--secondary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.sales-chip:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.sales-chip.active {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+    box-shadow: 0 4px 15px rgba(41, 151, 255, 0.3);
+}
+
+.sales-hero {
+    padding: var(--spacing-xl);
+    margin-bottom: var(--spacing-2xl);
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: var(--spacing-xl);
+    align-items: center;
+}
+
+.hero-main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+}
+
+.badge-new {
+    display: inline-block;
+    padding: 4px 12px;
+    background: var(--apple-blue, #2997ff);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 800;
+    border-radius: var(--border-radius-full);
+}
+
+.hero-display {
+    font-size: 3.5rem;
+    line-height: 1.1;
+    margin: var(--spacing-md) 0;
+}
+
+.gradient-text-blue {
+    background: linear-gradient(135deg, #2997ff, #0055ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-description {
+    font-size: 1.125rem;
+    color: var(--secondary);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-xl);
+}
+
+.value-props {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.v-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.v-item span {
+    font-size: 0.9rem;
+    color: var(--secondary);
+}
+
+.hero-stats-card {
+    padding: var(--spacing-lg);
+}
+
+.mini-payout-log {
+    margin-top: var(--spacing-md);
+    background: rgba(0, 0, 0, 0.2);
+    padding: 12px;
+    border-radius: var(--border-radius-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+}
+
+.log-line {
+    display: flex;
+    justify-content: space-between;
+}
+
+.commission-overview {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+.commission-overview .meta {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: center;
+}
+
+.plans-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-2xl);
+}
+
+.legal-card {
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.legal-card.highlighted {
+    border-color: var(--accent);
+    box-shadow: 0 0 30px rgba(41, 151, 255, 0.2);
+}
+
+.plan-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.plan-price .amount {
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+.plan-price .period {
+    color: var(--secondary);
+    font-size: 0.8rem;
+}
+
+.payout-box {
+    padding: var(--spacing-md);
+}
+
+.payout-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.override-teaser {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    color: var(--secondary);
+}
+
+.plan-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.plan-features li {
+    display: flex;
+    gap: 10px;
+    font-size: 0.85rem;
+    color: var(--secondary);
+}
+
+.payout-schedule {
+    margin-bottom: var(--spacing-2xl);
+    padding: var(--spacing-lg);
+}
+
+/* CSS Updates for Sales Page Colors */
+
+.text-blue {
+    color: var(--hero-blue);
+}
+
+.text-green {
+    color: var(--fintech-green);
+}
+
+.text-purple {
+    color: var(--hero-purple);
+}
+
+.text-gradient {
+    background: var(--hero-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.legal-card h3 {
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+    color: var(--primary);
+}
+
+.plan-price .amount {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.plan-price .period {
+    color: var(--secondary);
+    font-size: 1rem;
+    margin-left: 4px;
+}
+
+.payout-table-wrapper {
+    overflow-x: auto;
+    margin-top: var(--spacing-lg);
+}
+
+.payout-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.payout-table th,
+.payout-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.payout-table th {
+    font-size: 0.75rem;
+    color: var(--secondary);
+    text-transform: uppercase;
+}
+
+.legal-tools-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-lg);
+}
+
+.tool-box {
+    padding: var(--spacing-lg);
+}
+
+.section-divider {
+    margin: var(--spacing-2xl) 0 var(--spacing-lg);
+    text-align: left;
+}
+
+.section-divider h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: #fff;
+}
+
+.section-divider p {
+    color: var(--secondary);
+    font-size: 0.95rem;
+}
+
+@media (max-width: 1024px) {
+    .hero-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .legal-tools-grid {
+        grid-template-columns: 1fr;
+    }
+}

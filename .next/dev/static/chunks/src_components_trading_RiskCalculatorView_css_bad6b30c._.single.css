@@ -1,0 +1,447 @@
+/* [project]/src/components/trading/RiskCalculatorView.css [app-client] (css) */
+.rc-view {
+  flex-direction: column;
+  gap: 20px;
+  display: flex;
+}
+
+.rc-hero {
+  background: linear-gradient(135deg, #2997ff14 0%, #0a0a0af2 60%);
+  border: 1px solid #ffffff0f;
+  border-radius: 16px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 28px;
+  display: flex;
+}
+
+.rc-hero-left {
+  align-items: center;
+  gap: 16px;
+  display: flex;
+}
+
+.rc-hero-badge {
+  letter-spacing: .25em;
+  color: #2997ff;
+  white-space: nowrap;
+  background: #2997ff1a;
+  border: 1px solid #2997ff33;
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: .6rem;
+  font-weight: 900;
+}
+
+.rc-hero-title {
+  color: #fff;
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+.rc-hero-sub {
+  color: #ffffff59;
+  margin: 0;
+  font-size: .8rem;
+  font-weight: 500;
+}
+
+.rc-hero-icon {
+  color: #2997ff;
+  background: #2997ff1a;
+  border: 1px solid #2997ff33;
+  border-radius: 14px;
+  justify-content: center;
+  align-items: center;
+  width: 56px;
+  height: 56px;
+  display: flex;
+}
+
+.rc-layout {
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+  gap: 16px;
+  display: grid;
+}
+
+.rc-inputs-panel {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  background: #ffffff06;
+  border: 1px solid #ffffff0f;
+  border-radius: 16px;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px;
+  display: flex;
+}
+
+.rc-panel-title {
+  color: #fff;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: .95rem;
+  font-weight: 800;
+  display: flex;
+}
+
+.rc-panel-title svg {
+  color: #2997ff;
+}
+
+.rc-field {
+  flex-direction: column;
+  gap: 8px;
+  display: flex;
+}
+
+.rc-field label {
+  color: #ffffff59;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  align-items: center;
+  gap: 6px;
+  font-size: .68rem;
+  font-weight: 800;
+  display: flex;
+}
+
+.rc-field label svg {
+  color: #fff3;
+}
+
+.rc-input-wrap {
+  background: #ffffff0a;
+  border: 1px solid #ffffff14;
+  border-radius: 10px;
+  align-items: center;
+  transition: border-color .2s;
+  display: flex;
+  overflow: hidden;
+}
+
+.rc-input-wrap:focus-within {
+  border-color: #2997ff66;
+}
+
+.rc-prefix, .rc-suffix {
+  color: #ffffff40;
+  -webkit-user-select: none;
+  user-select: none;
+  padding: 0 12px;
+  font-size: .82rem;
+  font-weight: 700;
+}
+
+.rc-input-wrap input {
+  color: #fff;
+  font-size: .9rem;
+  font-weight: 700;
+  font-family: var(--font-mono, "SF Mono", monospace);
+  background: none;
+  border: none;
+  outline: none;
+  flex: 1;
+  min-width: 0;
+  padding: 11px 14px;
+}
+
+.rc-select {
+  color: #fff;
+  cursor: pointer;
+  appearance: none;
+  background: #ffffff0a;
+  border: 1px solid #ffffff14;
+  border-radius: 10px;
+  outline: none;
+  width: 100%;
+  padding: 11px 14px;
+  font-size: .85rem;
+  font-weight: 600;
+  transition: border-color .2s;
+}
+
+.rc-select:focus {
+  border-color: #2997ff66;
+}
+
+.rc-presets {
+  flex-wrap: wrap;
+  gap: 6px;
+  display: flex;
+}
+
+.rc-preset {
+  color: #ffffff59;
+  cursor: pointer;
+  background: #ffffff05;
+  border: 1px solid #ffffff0f;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: .65rem;
+  font-weight: 800;
+  transition: all .2s;
+}
+
+.rc-preset:hover {
+  color: #2997ff;
+  background: #2997ff14;
+  border-color: #2997ff33;
+}
+
+.rc-preset.active {
+  color: #2997ff;
+  background: #2997ff1f;
+  border-color: #2997ff4d;
+}
+
+.rc-risk-indicator {
+  border-radius: 6px;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  padding: 6px 10px;
+  font-size: .65rem;
+  font-weight: 800;
+  display: flex;
+}
+
+.rc-risk-indicator.safe {
+  color: #30d158;
+  background: #30d15814;
+  border: 1px solid #30d15826;
+}
+
+.rc-risk-indicator.moderate {
+  color: #fc0;
+  background: #ffcc0014;
+  border: 1px solid #ffcc0026;
+}
+
+.rc-risk-indicator.high {
+  color: #ff3b30;
+  background: #ff3b3014;
+  border: 1px solid #ff3b3026;
+}
+
+.rc-results-panel {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  background: #ffffff06;
+  border: 1px solid #ffffff0f;
+  border-radius: 16px;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  display: flex;
+}
+
+.rc-primary-result {
+  text-align: center;
+  background: linear-gradient(135deg, #2997ff1a 0%, #2997ff08 100%);
+  border: 1px solid #2997ff33;
+  border-radius: 14px;
+  padding: 24px;
+}
+
+.rc-result-label {
+  color: #ffffff59;
+  text-transform: uppercase;
+  letter-spacing: .15em;
+  font-size: .65rem;
+  font-weight: 800;
+}
+
+.rc-lot-display {
+  justify-content: center;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 8px;
+  display: flex;
+}
+
+.rc-lot-value {
+  color: #fff;
+  font-size: 3rem;
+  font-weight: 900;
+  font-family: var(--font-mono, "SF Mono", monospace);
+  line-height: 1;
+}
+
+.rc-lot-unit {
+  color: #2997ff;
+  letter-spacing: .1em;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.rc-results-grid {
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  display: grid;
+}
+
+.rc-result-card {
+  background: #ffffff05;
+  border: 1px solid #ffffff0d;
+  border-radius: 12px;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  transition: all .2s;
+  display: flex;
+}
+
+.rc-result-card:hover {
+  background: #ffffff0a;
+}
+
+.rc-result-icon {
+  border-radius: 8px;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  height: 36px;
+  display: flex;
+}
+
+.rc-result-icon.blue {
+  color: #2997ff;
+  background: #2997ff1a;
+}
+
+.rc-result-icon.red {
+  color: #ff3b30;
+  background: #ff3b301a;
+}
+
+.rc-result-icon.green {
+  color: #30d158;
+  background: #30d1581a;
+}
+
+.rc-result-icon.purple {
+  color: #af52de;
+  background: #af52de1a;
+}
+
+.rc-result-icon.yellow {
+  color: #fc0;
+  background: #ffcc001a;
+}
+
+.rc-result-info {
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  display: flex;
+}
+
+.rc-result-lbl {
+  color: #ffffff4d;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  font-size: .6rem;
+  font-weight: 700;
+}
+
+.rc-result-val {
+  color: #fff;
+  font-size: .95rem;
+  font-weight: 800;
+  font-family: var(--font-mono, "SF Mono", monospace);
+}
+
+.rc-breakdown {
+  background: #ffffff05;
+  border: 1px solid #ffffff0d;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.rc-breakdown-title {
+  color: #ffffff59;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  margin: 0 0 12px;
+  font-size: .72rem;
+  font-weight: 800;
+}
+
+.rc-breakdown-rows {
+  flex-direction: column;
+  display: flex;
+}
+
+.rc-bk-row {
+  border-bottom: 1px solid #ffffff0a;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 0;
+  font-size: .78rem;
+  display: flex;
+}
+
+.rc-bk-row:last-child {
+  border-bottom: none;
+}
+
+.rc-bk-row span:first-child {
+  color: #fff6;
+  font-weight: 600;
+}
+
+.rc-bk-row span:last-child {
+  color: #fff;
+  font-weight: 700;
+  font-family: var(--font-mono, "SF Mono", monospace);
+}
+
+.rc-bk-row.highlight {
+  background: #2997ff0f;
+  border: 1px solid #2997ff1f;
+  border-radius: 8px;
+  margin-top: 6px;
+  padding: 11px 12px;
+}
+
+.val-green {
+  color: #30d158 !important;
+}
+
+.val-red {
+  color: #ff3b30 !important;
+}
+
+.val-blue {
+  color: #2997ff !important;
+}
+
+.val-yellow {
+  color: #fc0 !important;
+}
+
+.rc-disclaimer {
+  color: #fff3;
+  text-align: center;
+  margin: 0;
+  font-size: .68rem;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+  .rc-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .rc-results-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/*# sourceMappingURL=src_components_trading_RiskCalculatorView_css_bad6b30c._.single.css.map*/

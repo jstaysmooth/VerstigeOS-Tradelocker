@@ -1,0 +1,79 @@
+/* [project]/src/styles/pages/CareerPath.css [app-client] (css) */
+.career-path-container {
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-lg);
+  border: 1px solid var(--glass-border);
+  margin-top: var(--spacing-lg);
+  background: #0000004d;
+}
+
+.career-header {
+  margin-bottom: var(--spacing-lg);
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+}
+
+.next-level-badge {
+  background: linear-gradient(135deg, gold, #b8860b);
+  -webkit-text-fill-color: transparent;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.requirement-grid {
+  gap: var(--spacing-md);
+  grid-template-columns: repeat(3, 1fr);
+  display: grid;
+}
+
+.req-card {
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-sm);
+  text-align: center;
+  background: #ffffff0d;
+  position: relative;
+  overflow: hidden;
+}
+
+.req-card.completed {
+  border: 1px solid var(--fintech-green);
+  background: #30d1580d;
+}
+
+.req-status-icon {
+  color: var(--fintech-green);
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+.req-value {
+  margin: 8px 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.req-target {
+  color: var(--secondary);
+  font-size: .875rem;
+}
+
+.req-progress-bar {
+  background: #ffffff1a;
+  border-radius: 2px;
+  height: 4px;
+  margin-top: 12px;
+  overflow: hidden;
+}
+
+.req-progress-fill {
+  background: var(--accent);
+  height: 100%;
+}
+
+/*# sourceMappingURL=src_styles_pages_CareerPath_css_bad6b30c._.single.css.map*/

@@ -1,0 +1,856 @@
+/* [project]/src/components/trading/TradeJournalView.css [app-client] (css) */
+.journal-v2 {
+  flex-direction: column;
+  gap: 20px;
+  display: flex;
+}
+
+.journal-hero {
+  background: linear-gradient(135deg, #2997ff14 0%, #0a0a0af2 60%);
+  border: 1px solid #ffffff0f;
+  border-radius: 16px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 28px;
+  display: flex;
+}
+
+.journal-hero-left {
+  align-items: center;
+  gap: 16px;
+  display: flex;
+}
+
+.journal-hero-badge {
+  letter-spacing: .25em;
+  color: #2997ff;
+  white-space: nowrap;
+  background: #2997ff1a;
+  border: 1px solid #2997ff33;
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: .6rem;
+  font-weight: 900;
+}
+
+.journal-hero-title {
+  color: #fff;
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+.journal-hero-sub {
+  color: #ffffff59;
+  margin: 0;
+  font-size: .8rem;
+  font-weight: 500;
+}
+
+.journal-add-btn {
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(135deg, #2997ff, #0071e3);
+  border: none;
+  border-radius: 10px;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  font-size: .82rem;
+  font-weight: 700;
+  transition: all .2s;
+  display: flex;
+}
+
+.journal-add-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px #2997ff59;
+}
+
+.journal-analytics {
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  display: grid;
+}
+
+.j-analytic-card {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  background: #ffffff06;
+  border: 1px solid #ffffff0f;
+  border-radius: 14px;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  display: flex;
+}
+
+.j-analytic-icon {
+  color: #2997ff;
+  background: #2997ff1a;
+  border-radius: 10px;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  display: flex;
+}
+
+.j-analytic-icon.icon-green {
+  color: #30d158;
+  background: #30d1581a;
+}
+
+.j-analytic-icon.icon-red {
+  color: #ff3b30;
+  background: #ff3b301a;
+}
+
+.j-analytic-data {
+  flex-direction: column;
+  gap: 2px;
+  display: flex;
+}
+
+.j-analytic-label {
+  color: #ffffff59;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  font-size: .65rem;
+  font-weight: 700;
+}
+
+.j-analytic-value {
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 800;
+  font-family: var(--font-mono, "SF Mono", monospace);
+}
+
+.journal-main-layout {
+  grid-template-columns: 1fr 380px;
+  align-items: start;
+  gap: 16px;
+  display: grid;
+}
+
+.journal-calendar-panel {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  background: #ffffff06;
+  border: 1px solid #ffffff0f;
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.journal-cal-header {
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  display: flex;
+}
+
+.j-nav-btn {
+  color: #fff9;
+  cursor: pointer;
+  background: #ffffff0d;
+  border: 1px solid #ffffff14;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  height: 36px;
+  transition: all .2s;
+  display: flex;
+}
+
+.j-nav-btn:hover {
+  color: #2997ff;
+  background: #2997ff1a;
+  border-color: #2997ff4d;
+}
+
+.j-month-title {
+  color: #fff;
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.journal-cal-weekdays {
+  text-align: center;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 8px;
+  display: grid;
+}
+
+.journal-cal-weekdays span {
+  color: #ffffff40;
+  letter-spacing: .1em;
+  padding: 8px 0;
+  font-size: .6rem;
+  font-weight: 800;
+}
+
+.journal-cal-grid {
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  display: grid;
+}
+
+.j-cal-cell {
+  aspect-ratio: 1;
+  border: 1px solid #0000;
+  border-radius: 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+  padding: 4px;
+  transition: all .2s;
+  display: flex;
+  position: relative;
+}
+
+.j-cal-cell.empty {
+  background: none;
+}
+
+.j-cal-cell:not(.empty):not(.has-data) {
+  background: #ffffff04;
+}
+
+.j-cal-cell.has-data {
+  cursor: pointer;
+}
+
+.j-cal-cell.day-win {
+  background: #30d1580f;
+  border-color: #30d1581f;
+}
+
+.j-cal-cell.day-loss {
+  background: #ff3b300f;
+  border-color: #ff3b301f;
+}
+
+.j-cal-cell.has-data:hover {
+  z-index: 2;
+  transform: scale(1.08);
+}
+
+.j-cal-cell.day-win:hover {
+  background: #30d1581f;
+  border-color: #30d1584d;
+  box-shadow: 0 4px 12px #30d15826;
+}
+
+.j-cal-cell.day-loss:hover {
+  background: #ff3b301f;
+  border-color: #ff3b304d;
+  box-shadow: 0 4px 12px #ff3b3026;
+}
+
+.j-cal-cell.selected {
+  z-index: 2;
+  transform: scale(1.08);
+}
+
+.j-cal-cell.selected.day-win {
+  background: #30d1582e;
+  border-color: #30d15880;
+  box-shadow: 0 0 16px #30d15833;
+}
+
+.j-cal-cell.selected.day-loss {
+  background: #ff3b302e;
+  border-color: #ff3b3080;
+  box-shadow: 0 0 16px #ff3b3033;
+}
+
+.j-cal-cell.today {
+  border-color: #2997ff4d;
+}
+
+.j-day-num {
+  color: #fff9;
+  font-size: .78rem;
+  font-weight: 700;
+}
+
+.j-cal-cell.has-data .j-day-num {
+  color: #fff;
+}
+
+.j-day-info {
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  display: flex;
+}
+
+.j-day-pl {
+  font-size: .6rem;
+  font-weight: 800;
+  font-family: var(--font-mono, "SF Mono", monospace);
+}
+
+.j-day-pl.pl-win {
+  color: #30d158;
+}
+
+.j-day-pl.pl-loss {
+  color: #ff3b30;
+}
+
+.j-day-count {
+  color: #ffffff40;
+  font-size: .5rem;
+  font-weight: 700;
+}
+
+.journal-cal-legend {
+  border-top: 1px solid #ffffff0a;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 16px;
+  padding-top: 12px;
+  display: flex;
+}
+
+.legend-item {
+  color: #ffffff4d;
+  align-items: center;
+  gap: 6px;
+  font-size: .65rem;
+  font-weight: 600;
+  display: flex;
+}
+
+.legend-dot {
+  border-radius: 50%;
+  width: 8px;
+  height: 8px;
+}
+
+.legend-dot.win {
+  background: #30d158;
+}
+
+.legend-dot.loss {
+  background: #ff3b30;
+}
+
+.legend-dot.today-dot {
+  background: #2997ff;
+}
+
+.journal-detail-panel {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  background: #ffffff06;
+  border: 1px solid #ffffff0f;
+  border-radius: 16px;
+  min-height: 400px;
+  padding: 24px;
+}
+
+.j-detail-header {
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+  display: flex;
+}
+
+.j-detail-header > div {
+  flex-direction: column;
+  gap: 4px;
+  display: flex;
+}
+
+.j-detail-date {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.j-detail-pl {
+  font-size: 1.3rem;
+  font-weight: 900;
+  font-family: var(--font-mono, "SF Mono", monospace);
+}
+
+.j-detail-pl.pl-win {
+  color: #30d158;
+}
+
+.j-detail-pl.pl-loss {
+  color: #ff3b30;
+}
+
+.j-close-btn {
+  color: #fff6;
+  cursor: pointer;
+  background: #ffffff0d;
+  border: 1px solid #ffffff14;
+  border-radius: 8px;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  transition: all .2s;
+  display: flex;
+}
+
+.j-close-btn:hover {
+  color: #ff3b30;
+  background: #ff3b301a;
+  border-color: #ff3b304d;
+}
+
+.j-detail-summary {
+  gap: 12px;
+  margin-bottom: 20px;
+  display: flex;
+}
+
+.j-sum-item {
+  background: #ffffff08;
+  border-radius: 10px;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+  gap: 4px;
+  padding: 10px;
+  display: flex;
+}
+
+.j-sum-label {
+  color: #ffffff4d;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  font-size: .6rem;
+  font-weight: 700;
+}
+
+.j-sum-val {
+  color: #fff;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.j-trades-list {
+  flex-direction: column;
+  gap: 10px;
+  display: flex;
+}
+
+.j-trade-card {
+  background: #ffffff05;
+  border: 1px solid #ffffff0f;
+  border-radius: 12px;
+  padding: 14px 16px;
+  transition: all .2s;
+}
+
+.j-trade-card.win {
+  border-left: 3px solid #30d158;
+}
+
+.j-trade-card.loss {
+  border-left: 3px solid #ff3b30;
+}
+
+.j-trade-card:hover {
+  background: #ffffff0a;
+}
+
+.j-trade-top {
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+}
+
+.j-trade-symbol-row {
+  align-items: center;
+  gap: 10px;
+  display: flex;
+}
+
+.j-trade-symbol {
+  color: #fff;
+  font-size: .9rem;
+  font-weight: 800;
+}
+
+.j-trade-action {
+  letter-spacing: .05em;
+  border-radius: 4px;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 8px;
+  font-size: .6rem;
+  font-weight: 800;
+  display: flex;
+}
+
+.j-trade-action.BUY {
+  color: #30d158;
+  background: #30d1581a;
+}
+
+.j-trade-action.SELL {
+  color: #ff3b30;
+  background: #ff3b301a;
+}
+
+.j-trade-result {
+  font-size: .95rem;
+  font-weight: 800;
+  font-family: var(--font-mono, "SF Mono", monospace);
+}
+
+.j-trade-result.win {
+  color: #30d158;
+}
+
+.j-trade-result.loss {
+  color: #ff3b30;
+}
+
+.j-trade-meta {
+  color: #ffffff4d;
+  gap: 12px;
+  margin-top: 6px;
+  font-size: .7rem;
+  font-weight: 600;
+  display: flex;
+}
+
+.j-trade-notes {
+  color: #fff6;
+  margin: 6px 0 0;
+  font-size: .72rem;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.j-stats-title {
+  color: #fff;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 16px;
+  font-size: .95rem;
+  font-weight: 800;
+  display: flex;
+}
+
+.j-stats-title svg {
+  color: #2997ff;
+}
+
+.j-stats-grid {
+  flex-direction: column;
+  gap: 0;
+  display: flex;
+}
+
+.j-stat-row {
+  border-bottom: 1px solid #ffffff0a;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  display: flex;
+}
+
+.j-stat-row.highlight {
+  background: #ffffff08;
+  border: 1px solid #ffffff0f;
+  border-radius: 10px;
+  margin-top: 4px;
+  padding: 14px 12px;
+}
+
+.j-stat-label {
+  color: #fff6;
+  font-size: .78rem;
+  font-weight: 600;
+}
+
+.j-stat-val {
+  color: #fff;
+  font-size: .95rem;
+  font-weight: 800;
+  font-family: var(--font-mono, "SF Mono", monospace);
+  align-items: center;
+  gap: 4px;
+  display: flex;
+}
+
+.j-stat-divider {
+  color: #ffffff26;
+  font-weight: 400;
+}
+
+.j-recent-title {
+  color: #ffffff59;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  margin: 24px 0 12px;
+  font-size: .75rem;
+  font-weight: 800;
+}
+
+.j-recent-list {
+  flex-direction: column;
+  gap: 8px;
+  display: flex;
+}
+
+.j-recent-item {
+  background: #ffffff05;
+  border: 1px solid #ffffff0a;
+  border-radius: 10px;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  transition: all .2s;
+  display: flex;
+}
+
+.j-recent-item:hover {
+  background: #ffffff0a;
+}
+
+.j-recent-badge {
+  border-radius: 6px;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  width: 28px;
+  height: 28px;
+  font-size: .65rem;
+  font-weight: 900;
+  display: flex;
+}
+
+.j-recent-badge.win {
+  color: #30d158;
+  background: #30d15826;
+}
+
+.j-recent-badge.loss {
+  color: #ff3b30;
+  background: #ff3b3026;
+}
+
+.j-recent-info {
+  flex-direction: column;
+  flex: 1;
+  gap: 2px;
+  display: flex;
+}
+
+.j-recent-sym {
+  color: #fff;
+  font-size: .8rem;
+  font-weight: 700;
+}
+
+.j-recent-date {
+  color: #ffffff40;
+  font-size: .65rem;
+}
+
+.j-recent-pl {
+  font-size: .82rem;
+  font-weight: 800;
+  font-family: var(--font-mono, "SF Mono", monospace);
+}
+
+.val-green {
+  color: #30d158 !important;
+}
+
+.val-red {
+  color: #ff3b30 !important;
+}
+
+.j-modal-overlay {
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  z-index: 2000;
+  background: #000000bf;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  display: flex;
+  position: fixed;
+  inset: 0;
+}
+
+.j-modal {
+  background: #0c0c0e;
+  border: 1px solid #ffffff14;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 520px;
+  animation: .25s j-modal-in;
+  overflow: hidden;
+  box-shadow: 0 24px 64px #0009;
+}
+
+@keyframes j-modal-in {
+  from {
+    opacity: 0;
+    transform: scale(.96)translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1)translateY(0);
+  }
+}
+
+.j-modal-header {
+  border-bottom: 1px solid #ffffff0f;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  display: flex;
+}
+
+.j-modal-header h3 {
+  color: #fff;
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.j-modal-body {
+  flex-direction: column;
+  gap: 14px;
+  padding: 24px;
+  display: flex;
+}
+
+.j-form-row {
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  display: grid;
+}
+
+.j-form-group {
+  flex-direction: column;
+  gap: 6px;
+  display: flex;
+}
+
+.j-form-group.full {
+  grid-column: 1 / -1;
+}
+
+.j-form-group label {
+  color: #ffffff59;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-size: .65rem;
+  font-weight: 800;
+}
+
+.j-form-group input, .j-form-group select, .j-form-group textarea {
+  color: #fff;
+  background: #ffffff0a;
+  border: 1px solid #ffffff14;
+  border-radius: 10px;
+  outline: none;
+  width: 100%;
+  padding: 10px 14px;
+  font-family: inherit;
+  font-size: .85rem;
+  font-weight: 600;
+  transition: border-color .2s;
+}
+
+.j-form-group input:focus, .j-form-group select:focus, .j-form-group textarea:focus {
+  border-color: #2997ff66;
+}
+
+.j-form-group textarea {
+  resize: vertical;
+  min-height: 50px;
+}
+
+.j-toggle-row {
+  gap: 6px;
+  display: flex;
+}
+
+.j-toggle {
+  color: #fff6;
+  cursor: pointer;
+  background: #ffffff08;
+  border: 1px solid #ffffff14;
+  border-radius: 8px;
+  flex: 1;
+  padding: 9px;
+  font-size: .72rem;
+  font-weight: 800;
+  transition: all .2s;
+}
+
+.j-toggle.buy.active {
+  color: #30d158;
+  background: #30d15826;
+  border-color: #30d158;
+}
+
+.j-toggle.sell.active {
+  color: #ff3b30;
+  background: #ff3b3026;
+  border-color: #ff3b30;
+}
+
+.j-toggle.win.active {
+  color: #30d158;
+  background: #30d15826;
+  border-color: #30d158;
+}
+
+.j-toggle.loss.active {
+  color: #ff3b30;
+  background: #ff3b3026;
+  border-color: #ff3b30;
+}
+
+.j-submit-btn {
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(135deg, #2997ff, #0071e3);
+  border: none;
+  border-radius: 12px;
+  width: 100%;
+  margin-top: 6px;
+  padding: 14px;
+  font-size: .88rem;
+  font-weight: 800;
+  transition: all .2s;
+}
+
+.j-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px #2997ff59;
+}
+
+@media (max-width: 900px) {
+  .journal-main-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .journal-analytics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/*# sourceMappingURL=src_components_trading_TradeJournalView_css_bad6b30c._.single.css.map*/

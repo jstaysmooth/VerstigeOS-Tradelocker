@@ -1,0 +1,136 @@
+/* Pipeline.css */
+.pipeline-container {
+    padding: var(--spacing-lg);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.pipeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.pipeline-controls {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.pipeline-board {
+    display: flex;
+    gap: var(--spacing-md);
+    overflow-x: auto;
+    padding-bottom: var(--spacing-md);
+    flex: 1;
+}
+
+.pipeline-column {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: var(--border-radius-md);
+    min-width: 300px;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 1px solid var(--glass-border);
+}
+
+.column-header {
+    padding: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.column-title {
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    color: var(--secondary);
+    letter-spacing: 0.05em;
+}
+
+.column-count {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--primary);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.column-content {
+    padding: var(--spacing-sm);
+    overflow-y: auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.deal-card {
+    background: rgba(30, 30, 30, 0.6);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--border-radius-sm);
+    padding: var(--spacing-md);
+    cursor: grab;
+    transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+}
+
+.deal-card:hover {
+    background: rgba(40, 40, 40, 0.9);
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.deal-client {
+    font-weight: 600;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.deal-value {
+    color: var(--fintech-green);
+    font-weight: 700;
+    font-size: 0.875rem;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.deal-tags {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.deal-tag {
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--secondary);
+}
+
+.add-deal-btn {
+    margin: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius-sm);
+    color: var(--secondary);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.add-deal-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--accent);
+    color: var(--accent);
+}

@@ -1,0 +1,584 @@
+/* ============================================
+   PRIME SYNC UI - Premium Widget Dashboard
+   ============================================ */
+
+.prime-sync-container {
+    padding: 2rem;
+    min-height: 100vh;
+    background: #0a0a0c;
+}
+
+.prime-sync-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+@media (max-width: 1024px) {
+    .prime-sync-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.prime-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* ============================================
+   Widget Base Styles
+   ============================================ */
+
+.prime-widget {
+    background: linear-gradient(145deg, rgba(30, 30, 35, 0.9), rgba(20, 20, 24, 0.95));
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 1.75rem;
+    backdrop-filter: blur(20px);
+    position: relative;
+    overflow: hidden;
+}
+
+.prime-widget::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.1) 50%,
+            transparent 100%);
+}
+
+/* ============================================
+   Widget Header
+   ============================================ */
+
+.widget-header {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    margin-bottom: 1.5rem;
+}
+
+.header-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.header-text h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+    letter-spacing: -0.02em;
+}
+
+.header-subtitle {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+}
+
+/* ============================================
+   Risk Selection Cards
+   ============================================ */
+
+.risk-selection {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+}
+
+.risk-option {
+    position: relative;
+    background: rgba(15, 15, 18, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    padding: 1.25rem 1rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem;
+}
+
+.risk-option:hover {
+    border-color: rgba(255, 255, 255, 0.12);
+    transform: translateY(-2px);
+}
+
+.risk-option.active {
+    border-color: rgba(34, 211, 238, 0.4);
+    background: rgba(34, 211, 238, 0.05);
+}
+
+.risk-option.active.stability {
+    border-color: rgba(34, 211, 238, 0.5);
+    box-shadow: 0 0 30px rgba(34, 211, 238, 0.15), inset 0 0 20px rgba(34, 211, 238, 0.05);
+}
+
+.risk-option.active.aggressive {
+    border-color: rgba(16, 185, 129, 0.5);
+    box-shadow: 0 0 30px rgba(16, 185, 129, 0.15), inset 0 0 20px rgba(16, 185, 129, 0.05);
+}
+
+.active-indicator {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--cyan-400, #22d3ee);
+    box-shadow: 0 0 10px var(--cyan-400, #22d3ee);
+}
+
+.risk-option.aggressive .active-indicator {
+    background: var(--emerald-400, #10b981);
+    box-shadow: 0 0 10px var(--emerald-400, #10b981);
+}
+
+.risk-value {
+    font-size: 2rem;
+    font-weight: 300;
+    color: #fff;
+    letter-spacing: -0.03em;
+    font-family: var(--font-jetbrains-mono), monospace;
+}
+
+.risk-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+}
+
+.risk-sublabel {
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+/* ============================================
+   Credentials Section
+   ============================================ */
+
+.credentials-section {
+    margin-bottom: 1.75rem;
+}
+
+.section-label {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: rgba(34, 211, 238, 0.8);
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+}
+
+.input-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 600px) {
+    .input-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.input-group label {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon {
+    position: absolute;
+    left: 1rem;
+    color: rgba(255, 255, 255, 0.3);
+    pointer-events: none;
+}
+
+.input-wrapper input {
+    width: 100%;
+    background: rgba(15, 15, 18, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 0.875rem 1rem 0.875rem 2.75rem;
+    font-size: 0.875rem;
+    color: #fff;
+    font-family: inherit;
+    transition: all 0.2s ease;
+}
+
+.input-wrapper input::placeholder {
+    color: rgba(255, 255, 255, 0.25);
+}
+
+.input-wrapper input:focus {
+    outline: none;
+    border-color: rgba(34, 211, 238, 0.4);
+    box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.1);
+}
+
+/* ============================================
+   Swipe to Approve Button
+   ============================================ */
+
+.swipe-container {
+    position: relative;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    border-radius: 16px;
+}
+
+.swipe-track {
+    position: relative;
+    height: 64px;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.08));
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.swipe-track.approved {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(16, 185, 129, 0.15));
+    border-color: rgba(16, 185, 129, 0.5);
+}
+
+.swipe-thumb {
+    position: absolute;
+    left: 6px;
+    width: 52px;
+    height: 52px;
+    background: linear-gradient(135deg, #10b981, #059669);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    cursor: grab;
+    z-index: 10;
+    box-shadow:
+        0 4px 15px rgba(16, 185, 129, 0.4),
+        0 0 30px rgba(16, 185, 129, 0.2);
+}
+
+.swipe-thumb:active {
+    cursor: grabbing;
+}
+
+.swipe-text {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: rgba(255, 255, 255, 0.9);
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.swipe-arrow {
+    color: rgba(255, 255, 255, 0.4);
+    animation: arrowPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes arrowPulse {
+
+    0%,
+    100% {
+        opacity: 0.4;
+        transform: translateX(0);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: translateX(4px);
+    }
+}
+
+.approved-icon {
+    color: #10b981;
+    margin-right: 0.5rem;
+}
+
+.deployment-note {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.4);
+    text-align: center;
+    margin: 0;
+}
+
+/* ============================================
+   Signal Widget
+   ============================================ */
+
+.signal-widget .widget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.signal-indicator {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(168, 85, 247, 0.15);
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #a855f7;
+    position: relative;
+}
+
+.signal-indicator::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    animation: signalPing 2s ease-out infinite;
+}
+
+@keyframes signalPing {
+    0% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+.signal-widget h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+}
+
+.sync-id {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.4);
+    font-family: var(--font-jetbrains-mono), monospace;
+}
+
+.signal-status-box {
+    background: rgba(10, 10, 12, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.signal-status-box p {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0;
+    line-height: 1.6;
+}
+
+.listening-animation {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.listening-animation span {
+    width: 4px;
+    height: 16px;
+    background: rgba(168, 85, 247, 0.6);
+    border-radius: 2px;
+    animation: soundWave 1s ease-in-out infinite;
+}
+
+.listening-animation span:nth-child(2) {
+    animation-delay: 0.15s;
+    height: 24px;
+}
+
+.listening-animation span:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+@keyframes soundWave {
+
+    0%,
+    100% {
+        transform: scaleY(0.5);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: scaleY(1);
+        opacity: 1;
+    }
+}
+
+/* ============================================
+   Risk Mesh Widget
+   ============================================ */
+
+.mesh-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 1.5rem 0;
+    letter-spacing: -0.02em;
+}
+
+.mesh-features {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.mesh-feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.feature-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.5);
+    flex-shrink: 0;
+}
+
+.feature-content h4 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 0.25rem 0;
+}
+
+.feature-content p {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.45);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* ============================================
+   Growth Widget
+   ============================================ */
+
+.growth-widget {
+    background: linear-gradient(145deg, rgba(30, 30, 35, 0.9), rgba(20, 20, 24, 0.95));
+    position: relative;
+    overflow: hidden;
+}
+
+.growth-widget::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.widget-badge {
+    display: inline-block;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: #10b981;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+.growth-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 0.75rem 0;
+    letter-spacing: -0.02em;
+}
+
+.growth-desc {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0;
+    line-height: 1.7;
+}
+
+/* ============================================
+   CSS Variables
+   ============================================ */
+
+.prime-sync-container {
+    --cyan-400: #22d3ee;
+    --emerald-400: #10b981;
+    --purple-500: #a855f7;
+}

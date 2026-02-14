@@ -1,0 +1,138 @@
+/* [project]/src/styles/pages/Pipeline.css [app-client] (css) */
+.pipeline-container {
+  padding: var(--spacing-lg);
+  flex-direction: column;
+  height: 100vh;
+  display: flex;
+}
+
+.pipeline-header {
+  margin-bottom: var(--spacing-lg);
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+}
+
+.pipeline-controls {
+  gap: var(--spacing-sm);
+  display: flex;
+}
+
+.pipeline-board {
+  gap: var(--spacing-md);
+  padding-bottom: var(--spacing-md);
+  flex: 1;
+  display: flex;
+  overflow-x: auto;
+}
+
+.pipeline-column {
+  border-radius: var(--border-radius-md);
+  border: 1px solid var(--glass-border);
+  background: #ffffff08;
+  flex-direction: column;
+  min-width: 300px;
+  max-width: 300px;
+  height: 100%;
+  display: flex;
+}
+
+.column-header {
+  padding: var(--spacing-md);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 1px solid #ffffff0d;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+}
+
+.column-title {
+  text-transform: uppercase;
+  color: var(--secondary);
+  letter-spacing: .05em;
+  font-size: .875rem;
+  font-weight: 600;
+}
+
+.column-count {
+  color: var(--primary);
+  background: #ffffff1a;
+  border-radius: 12px;
+  padding: 2px 8px;
+  font-size: .75rem;
+  font-weight: 700;
+}
+
+.column-content {
+  padding: var(--spacing-sm);
+  gap: var(--spacing-sm);
+  flex-direction: column;
+  flex: 1;
+  display: flex;
+  overflow-y: auto;
+}
+
+.deal-card {
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-md);
+  cursor: grab;
+  transition: var(--transition-smooth);
+  background: #1e1e1e99;
+  position: relative;
+  overflow: hidden;
+}
+
+.deal-card:hover {
+  border-color: var(--accent);
+  background: #282828e6;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px #0003;
+}
+
+.deal-client {
+  margin-bottom: 4px;
+  font-weight: 600;
+  display: block;
+}
+
+.deal-value {
+  color: var(--fintech-green);
+  margin-bottom: 8px;
+  font-size: .875rem;
+  font-weight: 700;
+  display: block;
+}
+
+.deal-tags {
+  flex-wrap: wrap;
+  gap: 4px;
+  display: flex;
+}
+
+.deal-tag {
+  color: var(--secondary);
+  background: #ffffff0d;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: .7rem;
+}
+
+.add-deal-btn {
+  margin: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  color: var(--secondary);
+  cursor: pointer;
+  background: #ffffff05;
+  border: 1px dashed #ffffff1a;
+  transition: all .2s;
+}
+
+.add-deal-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: #ffffff0d;
+}
+
+/*# sourceMappingURL=src_styles_pages_Pipeline_45da7910.css.map*/

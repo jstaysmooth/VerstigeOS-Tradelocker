@@ -1,0 +1,77 @@
+/* CareerPath.css */
+.career-path-container {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-lg);
+    border: 1px solid var(--glass-border);
+    margin-top: var(--spacing-lg);
+}
+
+.career-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.next-level-badge {
+    background: linear-gradient(135deg, #ffd700, #b8860b);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+    font-size: 1.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.requirement-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-md);
+}
+
+.req-card {
+    background: rgba(255, 255, 255, 0.05);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-sm);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.req-card.completed {
+    border: 1px solid var(--fintech-green);
+    background: rgba(48, 209, 88, 0.05);
+}
+
+.req-status-icon {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    color: var(--fintech-green);
+}
+
+.req-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 8px 0;
+}
+
+.req-target {
+    font-size: 0.875rem;
+    color: var(--secondary);
+}
+
+.req-progress-bar {
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    margin-top: 12px;
+    overflow: hidden;
+}
+
+.req-progress-fill {
+    height: 100%;
+    background: var(--accent);
+}

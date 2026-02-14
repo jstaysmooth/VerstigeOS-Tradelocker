@@ -1,0 +1,2940 @@
+(globalThis.TURBOPACK || (globalThis.TURBOPACK = [])).push([typeof document === "object" ? document.currentScript : undefined,
+"[project]/src/components/TradingViewWidget.tsx [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "default",
+    ()=>__TURBOPACK__default__export__
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+;
+var _s = __turbopack_context__.k.signature();
+;
+const TradingViewWidget = ()=>{
+    _s();
+    const container = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "TradingViewWidget.useEffect": ()=>{
+            const script = document.createElement("script");
+            script.src = "https://s3.tradingview.com/tv.js";
+            script.type = "text/javascript";
+            script.async = true;
+            script.onload = ({
+                "TradingViewWidget.useEffect": ()=>{
+                    if (container.current && window.TradingView) {
+                        new window.TradingView.widget({
+                            "width": "100%",
+                            "height": 500,
+                            "symbol": "BINANCE:BTCUSDT",
+                            "interval": "D",
+                            "timezone": "Etc/UTC",
+                            "theme": "dark",
+                            "style": "1",
+                            "locale": "en",
+                            "toolbar_bg": "#f1f3f6",
+                            "enable_publishing": false,
+                            "allow_symbol_change": true,
+                            "container_id": "tradingview_widget"
+                        });
+                    }
+                }
+            })["TradingViewWidget.useEffect"];
+            document.head.appendChild(script);
+            return ({
+                "TradingViewWidget.useEffect": ()=>{
+                    script.remove();
+                }
+            })["TradingViewWidget.useEffect"];
+        }
+    }["TradingViewWidget.useEffect"], []);
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: "tradingview-container glass-panel",
+        style: {
+            height: '550px',
+            padding: '10px'
+        },
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                id: "tradingview_widget",
+                ref: container,
+                style: {
+                    height: 'calc(100% - 40px)'
+                }
+            }, void 0, false, {
+                fileName: "[project]/src/components/TradingViewWidget.tsx",
+                lineNumber: 41,
+                columnNumber: 13
+            }, ("TURBOPACK compile-time value", void 0)),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "tradingview-footer",
+                style: {
+                    fontSize: '10px',
+                    color: 'var(--secondary)',
+                    marginTop: '10px',
+                    textAlign: 'center'
+                },
+                children: "Live Markets via TradingView Engine"
+            }, void 0, false, {
+                fileName: "[project]/src/components/TradingViewWidget.tsx",
+                lineNumber: 42,
+                columnNumber: 13
+            }, ("TURBOPACK compile-time value", void 0))
+        ]
+    }, void 0, true, {
+        fileName: "[project]/src/components/TradingViewWidget.tsx",
+        lineNumber: 40,
+        columnNumber: 9
+    }, ("TURBOPACK compile-time value", void 0));
+};
+_s(TradingViewWidget, "gP936EAkbq44zYYGRnj90r2fLhg=");
+_c = TradingViewWidget;
+const __TURBOPACK__default__export__ = TradingViewWidget;
+var _c;
+__turbopack_context__.k.register(_c, "TradingViewWidget");
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
+}
+}),
+"[project]/src/components/DashboardHeader.tsx [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "default",
+    ()=>__TURBOPACK__default__export__
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+;
+var _s = __turbopack_context__.k.signature();
+;
+;
+const DashboardHeader = ({ title, subtitle, badgeText = "Welcome back, Slade Johnson", showStatus = true })=>{
+    _s();
+    const [time, setTime] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(new Date().toLocaleTimeString());
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "DashboardHeader.useEffect": ()=>{
+            const timer = setInterval({
+                "DashboardHeader.useEffect.timer": ()=>setTime(new Date().toLocaleTimeString())
+            }["DashboardHeader.useEffect.timer"], 1000);
+            return ({
+                "DashboardHeader.useEffect": ()=>clearInterval(timer)
+            })["DashboardHeader.useEffect"];
+        }
+    }["DashboardHeader.useEffect"], []);
+    // Split title to apply gradient to the last word if it's more than one word
+    const titleParts = title.split(' ');
+    const lastWord = titleParts.length > 1 ? titleParts.pop() : '';
+    const firstPart = titleParts.join(' ');
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("header", {
+        className: "command-header animate-fade-in",
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "header-bg-glow"
+            }, void 0, false, {
+                fileName: "[project]/src/components/DashboardHeader.tsx",
+                lineNumber: 31,
+                columnNumber: 13
+            }, ("TURBOPACK compile-time value", void 0)),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "header-content-centered",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "user-badge glass-panel",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "avatar",
+                                children: "SJ"
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/DashboardHeader.tsx",
+                                lineNumber: 34,
+                                columnNumber: 21
+                            }, ("TURBOPACK compile-time value", void 0)),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                children: badgeText === "Welcome back, Slade Johnson" ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
+                                    children: [
+                                        "Welcome back, ",
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
+                                            children: "Slade Johnson"
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/DashboardHeader.tsx",
+                                            lineNumber: 36,
+                                            columnNumber: 41
+                                        }, ("TURBOPACK compile-time value", void 0))
+                                    ]
+                                }, void 0, true) : badgeText
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/DashboardHeader.tsx",
+                                lineNumber: 35,
+                                columnNumber: 21
+                            }, ("TURBOPACK compile-time value", void 0))
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/components/DashboardHeader.tsx",
+                        lineNumber: 33,
+                        columnNumber: 17
+                    }, ("TURBOPACK compile-time value", void 0)),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
+                        className: "hero-display centered-title",
+                        children: [
+                            firstPart,
+                            " ",
+                            lastWord && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                className: "gradient-text-blue",
+                                children: lastWord
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/DashboardHeader.tsx",
+                                lineNumber: 40,
+                                columnNumber: 46
+                            }, ("TURBOPACK compile-time value", void 0))
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/components/DashboardHeader.tsx",
+                        lineNumber: 39,
+                        columnNumber: 17
+                    }, ("TURBOPACK compile-time value", void 0)),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "system-status-indicator",
+                        children: [
+                            showStatus && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                className: "status-dot green"
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/DashboardHeader.tsx",
+                                lineNumber: 43,
+                                columnNumber: 36
+                            }, ("TURBOPACK compile-time value", void 0)),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                className: "text-subtitle",
+                                children: [
+                                    showStatus ? `System Time: ${time} | ` : '',
+                                    subtitle
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/components/DashboardHeader.tsx",
+                                lineNumber: 44,
+                                columnNumber: 21
+                            }, ("TURBOPACK compile-time value", void 0))
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/components/DashboardHeader.tsx",
+                        lineNumber: 42,
+                        columnNumber: 17
+                    }, ("TURBOPACK compile-time value", void 0))
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/components/DashboardHeader.tsx",
+                lineNumber: 32,
+                columnNumber: 13
+            }, ("TURBOPACK compile-time value", void 0))
+        ]
+    }, void 0, true, {
+        fileName: "[project]/src/components/DashboardHeader.tsx",
+        lineNumber: 30,
+        columnNumber: 9
+    }, ("TURBOPACK compile-time value", void 0));
+};
+_s(DashboardHeader, "jv+edrtG9vNyfyGh4+I7dCkFwt0=");
+_c = DashboardHeader;
+const __TURBOPACK__default__export__ = DashboardHeader;
+var _c;
+__turbopack_context__.k.register(_c, "DashboardHeader");
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
+}
+}),
+"[project]/src/app/dashboard/investment/page.tsx [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "default",
+    ()=>InvestmentPage
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$TradingViewWidget$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/TradingViewWidget.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trending$2d$up$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__TrendingUp$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/trending-up.js [app-client] (ecmascript) <export default as TrendingUp>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$activity$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Activity$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/activity.js [app-client] (ecmascript) <export default as Activity>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$globe$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Globe$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/globe.js [app-client] (ecmascript) <export default as Globe>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$panels$2d$top$2d$left$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Layout$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/panels-top-left.js [app-client] (ecmascript) <export default as Layout>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$calendar$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Calendar$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/calendar.js [app-client] (ecmascript) <export default as Calendar>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$cpu$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Cpu$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/cpu.js [app-client] (ecmascript) <export default as Cpu>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$book$2d$open$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__BookOpen$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/book-open.js [app-client] (ecmascript) <export default as BookOpen>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$plus$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__PlusCircle$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/circle-plus.js [app-client] (ecmascript) <export default as PlusCircle>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowRight$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/arrow-right.js [app-client] (ecmascript) <export default as ArrowRight>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$external$2d$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ExternalLink$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/external-link.js [app-client] (ecmascript) <export default as ExternalLink>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$target$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Target$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/target.js [app-client] (ecmascript) <export default as Target>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$zap$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Zap$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/zap.js [app-client] (ecmascript) <export default as Zap>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronRight$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/chevron-right.js [app-client] (ecmascript) <export default as ChevronRight>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$lock$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Lock$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/lock.js [app-client] (ecmascript) <export default as Lock>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$DashboardHeader$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/DashboardHeader.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/client/app-dir/link.js [app-client] (ecmascript)");
+;
+var _s = __turbopack_context__.k.signature();
+"use client";
+;
+;
+;
+;
+;
+;
+function InvestmentPage() {
+    _s();
+    const [activeTab, setActiveTab] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('OVERVIEW');
+    const [isConnected, setIsConnected] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    // Journal State
+    const [journalEntries, setJournalEntries] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([
+        {
+            id: 1,
+            date: 3,
+            amount: 420,
+            type: 'win',
+            symbol: 'XAUUSD'
+        },
+        {
+            id: 2,
+            date: 7,
+            amount: 315,
+            type: 'win',
+            symbol: 'EURUSD'
+        },
+        {
+            id: 3,
+            date: 12,
+            amount: 150,
+            type: 'win',
+            symbol: 'NAS100'
+        },
+        {
+            id: 4,
+            date: 14,
+            amount: 180,
+            type: 'loss',
+            symbol: 'XAUUSD'
+        },
+        {
+            id: 5,
+            date: 18,
+            amount: 240,
+            type: 'win',
+            symbol: 'XAUUSD'
+        },
+        {
+            id: 6,
+            date: 21,
+            amount: 90,
+            type: 'loss',
+            symbol: 'BTCUSD'
+        },
+        {
+            id: 7,
+            date: 24,
+            amount: 560,
+            type: 'win',
+            symbol: 'XAUUSD'
+        }
+    ]);
+    const [showModal, setShowModal] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [entryDate, setEntryDate] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(new Date().getDate());
+    const [entryAmount, setEntryAmount] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
+    const [entrySymbol, setEntrySymbol] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('XAUUSD');
+    const [entryType, setEntryType] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('win');
+    const handleAddEntry = ()=>{
+        if (!entryAmount) return;
+        const newEntry = {
+            id: Date.now(),
+            date: entryDate,
+            amount: parseFloat(entryAmount),
+            type: entryType,
+            symbol: entrySymbol
+        };
+        setJournalEntries([
+            ...journalEntries,
+            newEntry
+        ]);
+        setShowModal(false);
+        setEntryAmount('');
+    };
+    const calculateMonthlyPL = ()=>{
+        return journalEntries.reduce((acc, curr)=>{
+            return curr.type === 'win' ? acc + curr.amount : acc - curr.amount;
+        }, 0);
+    };
+    const calculateWinRate = ()=>{
+        const wins = journalEntries.filter((e)=>e.type === 'win').length;
+        return Math.round(wins / journalEntries.length * 100) || 0;
+    };
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: "investment-page",
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$DashboardHeader$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+                title: "Investment Division",
+                subtitle: "Institutional-grade liquidity bridge and asset tracking."
+            }, void 0, false, {
+                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                lineNumber: 74,
+                columnNumber: 13
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "investment-tabs glass-panel",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                        className: `tab-item ${activeTab === 'OVERVIEW' ? 'active' : ''}`,
+                        onClick: ()=>setActiveTab('OVERVIEW'),
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$panels$2d$top$2d$left$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Layout$3e$__["Layout"], {
+                                size: 18
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                lineNumber: 85,
+                                columnNumber: 21
+                            }, this),
+                            " Overview"
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                        lineNumber: 81,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                        className: `tab-item ${activeTab === 'TERMINAL' ? 'active' : ''}`,
+                        onClick: ()=>setActiveTab('TERMINAL'),
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$cpu$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Cpu$3e$__["Cpu"], {
+                                size: 18
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                lineNumber: 91,
+                                columnNumber: 21
+                            }, this),
+                            " Terminal (MT5)"
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                        lineNumber: 87,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                        className: `tab-item ${activeTab === 'JOURNAL' ? 'active' : ''}`,
+                        onClick: ()=>setActiveTab('JOURNAL'),
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$calendar$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Calendar$3e$__["Calendar"], {
+                                size: 18
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                lineNumber: 97,
+                                columnNumber: 21
+                            }, this),
+                            " Trade Journal"
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                        lineNumber: 93,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                        className: `tab-item ${activeTab === 'CALCULATOR' ? 'active' : ''}`,
+                        onClick: ()=>setActiveTab('CALCULATOR'),
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$activity$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Activity$3e$__["Activity"], {
+                                size: 18
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                lineNumber: 103,
+                                columnNumber: 21
+                            }, this),
+                            " Risk Calculator"
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                        lineNumber: 99,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                        className: `tab-item ${activeTab === 'INDICATOR' ? 'active' : ''}`,
+                        onClick: ()=>setActiveTab('INDICATOR'),
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$zap$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Zap$3e$__["Zap"], {
+                                size: 18
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                lineNumber: 109,
+                                columnNumber: 21
+                            }, this),
+                            " Verstige System™"
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                        lineNumber: 105,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+                        href: "/dashboard/investment/education",
+                        className: "tab-item",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$book$2d$open$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__BookOpen$3e$__["BookOpen"], {
+                                size: 18
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                lineNumber: 112,
+                                columnNumber: 21
+                            }, this),
+                            " Education"
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                        lineNumber: 111,
+                        columnNumber: 17
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                lineNumber: 80,
+                columnNumber: 13
+            }, this),
+            activeTab === 'OVERVIEW' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "tab-content animate-fade-in",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "account-summary-top glass-panel",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "summary-item",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                        className: "label",
+                                        children: "Total Liquidity"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 120,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                        className: "value",
+                                        children: "$1,240,492.00"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 121,
+                                        columnNumber: 29
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                lineNumber: 119,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "summary-item",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                        className: "label",
+                                        children: "24h Change"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 124,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                        className: "value positive",
+                                        children: "+4.2%"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 125,
+                                        columnNumber: 29
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                lineNumber: 123,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "summary-item",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                        className: "label",
+                                        children: "Verstige Indicator"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 128,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
+                                        href: "https://www.tradingview.com/script/xSRlmPkH-The-Verstige-Strategy/",
+                                        target: "_blank",
+                                        className: "value-link",
+                                        children: [
+                                            "Active ",
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$external$2d$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ExternalLink$3e$__["ExternalLink"], {
+                                                size: 14
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 130,
+                                                columnNumber: 40
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 129,
+                                        columnNumber: 29
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                lineNumber: 127,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                        lineNumber: 118,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "investment-grid",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "chart-main",
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$TradingViewWidget$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
+                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                    lineNumber: 137,
+                                    columnNumber: 29
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                lineNumber: 136,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "investment-side",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "glass-panel trading-tools",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                                children: "Proprietary Protocols"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 142,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "tool-list",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "tool-card",
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$target$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Target$3e$__["Target"], {
+                                                                size: 18,
+                                                                className: "icon-green"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                lineNumber: 145,
+                                                                columnNumber: 41
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                children: [
+                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
+                                                                        children: "Verstige AI Strategy"
+                                                                    }, void 0, false, {
+                                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                        lineNumber: 147,
+                                                                        columnNumber: 45
+                                                                    }, this),
+                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                        children: "Trend-mesh algorithmic execution for high-net-worth portfolios."
+                                                                    }, void 0, false, {
+                                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                        lineNumber: 148,
+                                                                        columnNumber: 45
+                                                                    }, this)
+                                                                ]
+                                                            }, void 0, true, {
+                                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                lineNumber: 146,
+                                                                columnNumber: 41
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                        lineNumber: 144,
+                                                        columnNumber: 37
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "tool-card highlight",
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$zap$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Zap$3e$__["Zap"], {
+                                                                size: 18,
+                                                                className: "icon-blue"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                lineNumber: 152,
+                                                                columnNumber: 41
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                children: [
+                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
+                                                                        children: "Liquid Brokers Onboarding"
+                                                                    }, void 0, false, {
+                                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                        lineNumber: 154,
+                                                                        columnNumber: 45
+                                                                    }, this),
+                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                        children: "Deploy your A-Book institutional account."
+                                                                    }, void 0, false, {
+                                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                        lineNumber: 155,
+                                                                        columnNumber: 45
+                                                                    }, this),
+                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                                        className: "btn-tiny mt-2",
+                                                                        children: "Initialize Setup"
+                                                                    }, void 0, false, {
+                                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                        lineNumber: 156,
+                                                                        columnNumber: 45
+                                                                    }, this)
+                                                                ]
+                                                            }, void 0, true, {
+                                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                lineNumber: 153,
+                                                                columnNumber: 41
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                        lineNumber: 151,
+                                                        columnNumber: 37
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 143,
+                                                columnNumber: 33
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 141,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "glass-panel market-stats",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                                children: "Sentiment Mesh"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 163,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "sentiment-bar",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "bullish",
+                                                        style: {
+                                                            width: '70%'
+                                                        },
+                                                        children: "70% BULL"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                        lineNumber: 165,
+                                                        columnNumber: 37
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "bearish",
+                                                        style: {
+                                                            width: '30%'
+                                                        },
+                                                        children: "30% BEAR"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                        lineNumber: 166,
+                                                        columnNumber: 37
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 164,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "mini-stats",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "stat",
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$activity$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Activity$3e$__["Activity"], {
+                                                                size: 14
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                lineNumber: 170,
+                                                                columnNumber: 41
+                                                            }, this),
+                                                            " ",
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                children: "Volatility: Low"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                lineNumber: 170,
+                                                                columnNumber: 64
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                        lineNumber: 169,
+                                                        columnNumber: 37
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "stat",
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$globe$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Globe$3e$__["Globe"], {
+                                                                size: 14
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                lineNumber: 173,
+                                                                columnNumber: 41
+                                                            }, this),
+                                                            " ",
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                children: "Liquidity: High"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                lineNumber: 173,
+                                                                columnNumber: 61
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                        lineNumber: 172,
+                                                        columnNumber: 37
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 168,
+                                                columnNumber: 33
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 162,
+                                        columnNumber: 29
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                lineNumber: 140,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                        lineNumber: 135,
+                        columnNumber: 21
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                lineNumber: 117,
+                columnNumber: 17
+            }, this),
+            activeTab === 'TERMINAL' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "tab-content terminal-view animate-fade-in",
+                children: [
+                    !isConnected ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "mt5-login-bridge glass-panel",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "lock-icon-container",
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$lock$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Lock$3e$__["Lock"], {
+                                    size: 48,
+                                    className: "text-accent"
+                                }, void 0, false, {
+                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                    lineNumber: 187,
+                                    columnNumber: 33
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                lineNumber: 186,
+                                columnNumber: 29
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                                children: "MT5 Terminal Bridge"
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                lineNumber: 189,
+                                columnNumber: 29
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "description",
+                                children: "Securely connect your institutional MT5 account to verify balance and equity in real-time."
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                lineNumber: 190,
+                                columnNumber: 29
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "input-group",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                        children: "MT5 LOGIN ID"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 193,
+                                        columnNumber: 33
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                        type: "text",
+                                        placeholder: "Enter Account Number"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 194,
+                                        columnNumber: 33
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                lineNumber: 192,
+                                columnNumber: 29
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "input-group",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                        children: "SERVER"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 197,
+                                        columnNumber: 33
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                                children: "LiquidBrokers-Live"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 199,
+                                                columnNumber: 37
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                                children: "LiquidBrokers-Demo"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 200,
+                                                columnNumber: 37
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 198,
+                                        columnNumber: 33
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                lineNumber: 196,
+                                columnNumber: 29
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "input-group",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                        children: "MASTER PASSWORD"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 204,
+                                        columnNumber: 33
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                        type: "password",
+                                        placeholder: "••••••••"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 205,
+                                        columnNumber: 33
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                lineNumber: 203,
+                                columnNumber: 29
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                className: "btn-primary full-width",
+                                onClick: ()=>setIsConnected(true),
+                                children: "Establish Connection"
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                lineNumber: 208,
+                                columnNumber: 29
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                        lineNumber: 185,
+                        columnNumber: 25
+                    }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "mt5-connected-dashboard",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "connected-header glass-panel",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "broker-logo",
+                                        children: "LIQUID BROKERS"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 215,
+                                        columnNumber: 33
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "balance-info",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "stat",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                        className: "label",
+                                                        children: "Live Balance"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                        lineNumber: 218,
+                                                        columnNumber: 41
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                        className: "value",
+                                                        children: "$42,904.52"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                        lineNumber: 219,
+                                                        columnNumber: 41
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 217,
+                                                columnNumber: 37
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "stat",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                        className: "label",
+                                                        children: "Equity"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                        lineNumber: 222,
+                                                        columnNumber: 41
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                        className: "value",
+                                                        children: "$43,120.10"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                        lineNumber: 223,
+                                                        columnNumber: 41
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 221,
+                                                columnNumber: 37
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "stat",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                        className: "label",
+                                                        children: "Margin"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                        lineNumber: 226,
+                                                        columnNumber: 41
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                        className: "value",
+                                                        children: "$2,400.00"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                        lineNumber: 227,
+                                                        columnNumber: 41
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 225,
+                                                columnNumber: 37
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 216,
+                                        columnNumber: 33
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                        className: "btn-outline-red",
+                                        onClick: ()=>setIsConnected(false),
+                                        children: "Disconnect Bridge"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 230,
+                                        columnNumber: 33
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                lineNumber: 214,
+                                columnNumber: 29
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "terminal-grid mt-6",
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "glass-panel open-positions",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                            children: "Open Positions"
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                            lineNumber: 235,
+                                            columnNumber: 37
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("table", {
+                                            className: "terminal-table",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("thead", {
+                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                                                children: "Symbol"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                lineNumber: 239,
+                                                                columnNumber: 49
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                                                children: "Type"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                lineNumber: 240,
+                                                                columnNumber: 49
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                                                children: "Volume"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                lineNumber: 241,
+                                                                columnNumber: 49
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                                                children: "Open Price"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                lineNumber: 242,
+                                                                columnNumber: 49
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                                                children: "Profit"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                lineNumber: 243,
+                                                                columnNumber: 49
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                        lineNumber: 238,
+                                                        columnNumber: 45
+                                                    }, this)
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 237,
+                                                    columnNumber: 41
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
+                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                                className: "font-bold",
+                                                                children: "XAUUSD"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                lineNumber: 248,
+                                                                columnNumber: 49
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                                className: "text-green-500",
+                                                                children: "BUY"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                lineNumber: 249,
+                                                                columnNumber: 49
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                                children: "2.00"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                lineNumber: 250,
+                                                                columnNumber: 49
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                                children: "2024.50"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                lineNumber: 251,
+                                                                columnNumber: 49
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                                className: "text-green-400",
+                                                                children: "+$215.58"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                lineNumber: 252,
+                                                                columnNumber: 49
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                        lineNumber: 247,
+                                                        columnNumber: 45
+                                                    }, this)
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 246,
+                                                    columnNumber: 41
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                            lineNumber: 236,
+                                            columnNumber: 37
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                    lineNumber: 234,
+                                    columnNumber: 33
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                lineNumber: 233,
+                                columnNumber: 29
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                        lineNumber: 213,
+                        columnNumber: 25
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "broker-onboarding-section mt-8",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "section-header",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                        children: "New Visionary Setup"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 263,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        children: "Complete your institutional deployment in 3 phases."
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 264,
+                                        columnNumber: 29
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                lineNumber: 262,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "onboarding-steps-grid",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "setup-step-card glass-panel",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "step-num",
+                                                children: "01"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 268,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
+                                                children: "Account Creation"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 269,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                children: "Register on Liquid Brokers and complete KYC verification."
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 270,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                className: "btn-secondary btn-sm mt-4",
+                                                children: [
+                                                    "Start Registration ",
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowRight$3e$__["ArrowRight"], {
+                                                        size: 14
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                        lineNumber: 271,
+                                                        columnNumber: 98
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 271,
+                                                columnNumber: 33
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 267,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "setup-step-card glass-panel",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "step-num",
+                                                children: "02"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 274,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
+                                                children: "Platform Deployment"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 275,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                children: "Install MT5 and configure the Verstige Indicator scripts."
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 276,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                className: "btn-secondary btn-sm mt-4",
+                                                children: [
+                                                    "Install Guide ",
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowRight$3e$__["ArrowRight"], {
+                                                        size: 14
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                        lineNumber: 277,
+                                                        columnNumber: 93
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 277,
+                                                columnNumber: 33
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 273,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "setup-step-card glass-panel",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "step-num",
+                                                children: "03"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 280,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
+                                                children: "Signals Mesh"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 281,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                children: "Connect to the Telegram signals protocol for real-time trade duplication."
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 282,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                className: "btn-secondary btn-sm mt-4",
+                                                children: [
+                                                    "Secure Telegram ",
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowRight$3e$__["ArrowRight"], {
+                                                        size: 14
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                        lineNumber: 283,
+                                                        columnNumber: 95
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 283,
+                                                columnNumber: 33
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 279,
+                                        columnNumber: 29
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                lineNumber: 266,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                        lineNumber: 261,
+                        columnNumber: 21
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                lineNumber: 183,
+                columnNumber: 17
+            }, this),
+            activeTab === 'JOURNAL' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "tab-content journal-view animate-fade-in",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "journal-header mb-8",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "header-text",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                                        children: "Trade Journal Command"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 294,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "text-secondary",
+                                        children: "Mission-critical execution tracking and P/L mesh."
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 295,
+                                        columnNumber: 29
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                lineNumber: 293,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                className: "btn-primary flex items-center gap-2",
+                                onClick: ()=>setShowModal(true),
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$plus$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__PlusCircle$3e$__["PlusCircle"], {
+                                        size: 18
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 298,
+                                        columnNumber: 29
+                                    }, this),
+                                    " Add Session Entry"
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                lineNumber: 297,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                        lineNumber: 292,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "journal-layout",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "calendar-section",
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "calendar-glass-container glass-panel",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "calendar-header",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                    className: "btn-icon",
+                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronRight$3e$__["ChevronRight"], {
+                                                        size: 20,
+                                                        style: {
+                                                            transform: 'rotate(180deg)'
+                                                        }
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                        lineNumber: 306,
+                                                        columnNumber: 66
+                                                    }, this)
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 306,
+                                                    columnNumber: 37
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                                    children: "February 2026"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 307,
+                                                    columnNumber: 37
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                    className: "btn-icon",
+                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronRight$3e$__["ChevronRight"], {
+                                                        size: 20
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                        lineNumber: 308,
+                                                        columnNumber: 66
+                                                    }, this)
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 308,
+                                                    columnNumber: 37
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                            lineNumber: 305,
+                                            columnNumber: 33
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "calendar-grid-labels",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                    children: "SUN"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 311,
+                                                    columnNumber: 37
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                    children: "MON"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 311,
+                                                    columnNumber: 53
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                    children: "TUE"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 311,
+                                                    columnNumber: 69
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                    children: "WED"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 311,
+                                                    columnNumber: 85
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                    children: "THU"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 311,
+                                                    columnNumber: 101
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                    children: "FRI"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 311,
+                                                    columnNumber: 117
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                    children: "SAT"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 311,
+                                                    columnNumber: 133
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                            lineNumber: 310,
+                                            columnNumber: 33
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "calendar-days",
+                                            children: [
+                                                ...Array(28)
+                                            ].map((_, i)=>{
+                                                const day = i + 1;
+                                                const dayEntries = journalEntries.filter((e)=>e.date === day);
+                                                const dailyPL = dayEntries.reduce((acc, curr)=>{
+                                                    return curr.type === 'win' ? acc + curr.amount : acc - curr.amount;
+                                                }, 0);
+                                                return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: `calendar-day ${dayEntries.length > 0 ? 'has-data' : ''}`,
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                            className: "day-num",
+                                                            children: day
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                            lineNumber: 324,
+                                                            columnNumber: 49
+                                                        }, this),
+                                                        dayEntries.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                            className: `day-stat ${dailyPL >= 0 ? 'win' : 'loss'}`,
+                                                            children: dailyPL >= 0 ? `+$${dailyPL}` : `-$${Math.abs(dailyPL)}`
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                            lineNumber: 326,
+                                                            columnNumber: 53
+                                                        }, this)
+                                                    ]
+                                                }, i, true, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 323,
+                                                    columnNumber: 45
+                                                }, this);
+                                            })
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                            lineNumber: 313,
+                                            columnNumber: 33
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                    lineNumber: 304,
+                                    columnNumber: 29
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                lineNumber: 303,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "stats-section",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "performance-overview glass-panel p-8",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                                children: "Monthly Mesh"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 339,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "stats-mesh mt-6",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "perf-metric",
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                className: "label",
+                                                                children: "Win Rate"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                lineNumber: 342,
+                                                                columnNumber: 41
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                className: "value text-accent",
+                                                                children: [
+                                                                    calculateWinRate(),
+                                                                    "%"
+                                                                ]
+                                                            }, void 0, true, {
+                                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                lineNumber: 343,
+                                                                columnNumber: 41
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                        lineNumber: 341,
+                                                        columnNumber: 37
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "perf-metric",
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                className: "label",
+                                                                children: "Monthly P/L"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                lineNumber: 346,
+                                                                columnNumber: 41
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                className: `value ${calculateMonthlyPL() >= 0 ? 'text-green-400' : 'text-red-400'}`,
+                                                                children: [
+                                                                    calculateMonthlyPL() >= 0 ? '+' : '-',
+                                                                    "$",
+                                                                    Math.abs(calculateMonthlyPL()).toFixed(2)
+                                                                ]
+                                                            }, void 0, true, {
+                                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                lineNumber: 347,
+                                                                columnNumber: 41
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                        lineNumber: 345,
+                                                        columnNumber: 37
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "perf-metric",
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                className: "label",
+                                                                children: "Active Sessions"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                lineNumber: 352,
+                                                                columnNumber: 41
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                className: "value text-white",
+                                                                children: journalEntries.length
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                lineNumber: 353,
+                                                                columnNumber: 41
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                        lineNumber: 351,
+                                                        columnNumber: 37
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 340,
+                                                columnNumber: 33
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 338,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "recent-log glass-panel p-8 mt-6",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                                children: "Recent Executions"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 359,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "log-list mt-6",
+                                                children: journalEntries.slice(-4).reverse().map((entry)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "log-item",
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                className: `entry-type ${entry.type}`,
+                                                                children: entry.type.toUpperCase()
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                lineNumber: 363,
+                                                                columnNumber: 45
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                className: "entry-info",
+                                                                children: [
+                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                        className: "symbol",
+                                                                        children: entry.symbol
+                                                                    }, void 0, false, {
+                                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                        lineNumber: 365,
+                                                                        columnNumber: 49
+                                                                    }, this),
+                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                        className: "date",
+                                                                        children: [
+                                                                            "Feb ",
+                                                                            entry.date,
+                                                                            ", 2026"
+                                                                        ]
+                                                                    }, void 0, true, {
+                                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                        lineNumber: 366,
+                                                                        columnNumber: 49
+                                                                    }, this)
+                                                                ]
+                                                            }, void 0, true, {
+                                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                lineNumber: 364,
+                                                                columnNumber: 45
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                className: `entry-result ${entry.type === 'win' ? 'positive' : 'negative'}`,
+                                                                children: [
+                                                                    entry.type === 'win' ? '+' : '-',
+                                                                    "$",
+                                                                    entry.amount
+                                                                ]
+                                                            }, void 0, true, {
+                                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                lineNumber: 368,
+                                                                columnNumber: 45
+                                                            }, this)
+                                                        ]
+                                                    }, entry.id, true, {
+                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                        lineNumber: 362,
+                                                        columnNumber: 41
+                                                    }, this))
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 360,
+                                                columnNumber: 33
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 358,
+                                        columnNumber: 29
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                lineNumber: 337,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                        lineNumber: 302,
+                        columnNumber: 21
+                    }, this),
+                    showModal && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "modal-overlay",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "modal-content glass-panel animate-scale-in",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "modal-header",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                            children: "New Session Entry"
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                            lineNumber: 383,
+                                            columnNumber: 37
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                            className: "btn-close",
+                                            onClick: ()=>setShowModal(false),
+                                            children: "×"
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                            lineNumber: 384,
+                                            columnNumber: 37
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                    lineNumber: 382,
+                                    columnNumber: 33
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "modal-body",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "input-group",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                                    children: "Session Date"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 388,
+                                                    columnNumber: 41
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
+                                                    value: entryDate,
+                                                    onChange: (e)=>setEntryDate(parseInt(e.target.value)),
+                                                    children: [
+                                                        ...Array(28)
+                                                    ].map((_, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                                            value: i + 1,
+                                                            children: [
+                                                                "February ",
+                                                                i + 1,
+                                                                ", 2026"
+                                                            ]
+                                                        }, i, true, {
+                                                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                            lineNumber: 391,
+                                                            columnNumber: 49
+                                                        }, this))
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 389,
+                                                    columnNumber: 41
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                            lineNumber: 387,
+                                            columnNumber: 37
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "input-group",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                                    children: "Trading Symbol"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 396,
+                                                    columnNumber: 41
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                    type: "text",
+                                                    value: entrySymbol,
+                                                    onChange: (e)=>setEntrySymbol(e.target.value.toUpperCase()),
+                                                    placeholder: "e.g. XAUUSD"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 397,
+                                                    columnNumber: 41
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                            lineNumber: 395,
+                                            columnNumber: 37
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "input-group",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                                    children: "Session Result ($)"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 405,
+                                                    columnNumber: 41
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                    type: "number",
+                                                    value: entryAmount,
+                                                    onChange: (e)=>setEntryAmount(e.target.value),
+                                                    placeholder: "Enter amount"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 406,
+                                                    columnNumber: 41
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                            lineNumber: 404,
+                                            columnNumber: 37
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "type-toggle mt-4",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                    className: `toggle-btn win ${entryType === 'win' ? 'active' : ''}`,
+                                                    onClick: ()=>setEntryType('win'),
+                                                    children: "PROFIT"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 414,
+                                                    columnNumber: 41
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                    className: `toggle-btn loss ${entryType === 'loss' ? 'active' : ''}`,
+                                                    onClick: ()=>setEntryType('loss'),
+                                                    children: "LOSS"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 420,
+                                                    columnNumber: 41
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                            lineNumber: 413,
+                                            columnNumber: 37
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                            className: "btn-primary full-width mt-8",
+                                            onClick: handleAddEntry,
+                                            children: "Commit to Journal"
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                            lineNumber: 427,
+                                            columnNumber: 37
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                    lineNumber: 386,
+                                    columnNumber: 33
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                            lineNumber: 381,
+                            columnNumber: 29
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                        lineNumber: 380,
+                        columnNumber: 25
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                lineNumber: 291,
+                columnNumber: 17
+            }, this),
+            activeTab === 'CALCULATOR' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "tab-content calculator-view animate-fade-in",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "calculator-container glass-panel",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "calc-header",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$target$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Target$3e$__["Target"], {
+                                    size: 48,
+                                    className: "text-accent mb-4"
+                                }, void 0, false, {
+                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                    lineNumber: 441,
+                                    columnNumber: 29
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                                    children: "Institutional Risk Architect"
+                                }, void 0, false, {
+                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                    lineNumber: 442,
+                                    columnNumber: 29
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                    children: "Determine exact position sizing and margin requirements for elite execution."
+                                }, void 0, false, {
+                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                    lineNumber: 443,
+                                    columnNumber: 29
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                            lineNumber: 440,
+                            columnNumber: 25
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "calc-grid mt-12",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "calc-inputs",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "input-field",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                                    children: "Account Balance ($)"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 449,
+                                                    columnNumber: 37
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                    type: "number",
+                                                    defaultValue: "100000",
+                                                    className: "glass-input"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 450,
+                                                    columnNumber: 37
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                            lineNumber: 448,
+                                            columnNumber: 33
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "input-field",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                                    children: "Risk Protocol (%)"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 453,
+                                                    columnNumber: 37
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                    type: "number",
+                                                    defaultValue: "1",
+                                                    className: "glass-input"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 454,
+                                                    columnNumber: 37
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                            lineNumber: 452,
+                                            columnNumber: 33
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "input-field",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                                    children: "Stop Loss Distance (Pips)"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 457,
+                                                    columnNumber: 37
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                    type: "number",
+                                                    defaultValue: "25",
+                                                    className: "glass-input"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 458,
+                                                    columnNumber: 37
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                            lineNumber: 456,
+                                            columnNumber: 33
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "input-field",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                                    children: "Asset Class"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 461,
+                                                    columnNumber: 37
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
+                                                    className: "glass-select",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                                            children: "XAUUSD (Gold)"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                            lineNumber: 463,
+                                                            columnNumber: 41
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                                            children: "BTCUSD (Bitcoin)"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                            lineNumber: 464,
+                                                            columnNumber: 41
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                                            children: "NAS100 (Nasdaq)"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                            lineNumber: 465,
+                                                            columnNumber: 41
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                                            children: "EURUSD (Euro)"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                            lineNumber: 466,
+                                                            columnNumber: 41
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 462,
+                                                    columnNumber: 37
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                            lineNumber: 460,
+                                            columnNumber: 33
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                    lineNumber: 447,
+                                    columnNumber: 29
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "calc-results-mesh",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "result-card glass-panel accent",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                    className: "label",
+                                                    children: "Recommended Size"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 473,
+                                                    columnNumber: 37
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "flex-baseline gap-2",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                            className: "value",
+                                                            children: "4.00"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                            lineNumber: 475,
+                                                            columnNumber: 41
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                            className: "unit",
+                                                            children: "LOTS"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                            lineNumber: 476,
+                                                            columnNumber: 41
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 474,
+                                                    columnNumber: 37
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                            lineNumber: 472,
+                                            columnNumber: 33
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "sub-results-grid mt-4",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "result-card glass-panel mini",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                            className: "label",
+                                                            children: "CAPITAL AT RISK"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                            lineNumber: 482,
+                                                            columnNumber: 41
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                            className: "value-sm text-red-500",
+                                                            children: "$1,000.00"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                            lineNumber: 483,
+                                                            columnNumber: 41
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 481,
+                                                    columnNumber: 37
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "result-card glass-panel mini",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                            className: "label",
+                                                            children: "PIP VALUE"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                            lineNumber: 486,
+                                                            columnNumber: 41
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                            className: "value-sm",
+                                                            children: "$40.00"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                            lineNumber: 487,
+                                                            columnNumber: 41
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 485,
+                                                    columnNumber: 37
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "result-card glass-panel mini",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                            className: "label",
+                                                            children: "REQUIRED MARGIN"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                            lineNumber: 490,
+                                                            columnNumber: 41
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                            className: "value-sm",
+                                                            children: "$2,000.00"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                            lineNumber: 491,
+                                                            columnNumber: 41
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 489,
+                                                    columnNumber: 37
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "result-card glass-panel mini",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                            className: "label",
+                                                            children: "1:100 LEVERAGE"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                            lineNumber: 494,
+                                                            columnNumber: 41
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                            className: "value-sm text-green-400",
+                                                            children: "SAFE"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                            lineNumber: 495,
+                                                            columnNumber: 41
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 493,
+                                                    columnNumber: 37
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                            lineNumber: 480,
+                                            columnNumber: 33
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                    lineNumber: 471,
+                                    columnNumber: 29
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                            lineNumber: 446,
+                            columnNumber: 25
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "calc-footer mt-10",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                    className: "btn-primary full-width",
+                                    children: "Execute Calculation Mesh"
+                                }, void 0, false, {
+                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                    lineNumber: 502,
+                                    columnNumber: 29
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                    className: "text-center text-xs text-secondary mt-4 italic",
+                                    children: "Calculations based on institutional liquidity spreads and real-time asset volatility."
+                                }, void 0, false, {
+                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                    lineNumber: 503,
+                                    columnNumber: 29
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                            lineNumber: 501,
+                            columnNumber: 25
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                    lineNumber: 439,
+                    columnNumber: 21
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                lineNumber: 438,
+                columnNumber: 17
+            }, this),
+            activeTab === 'INDICATOR' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "tab-content indicator-view animate-fade-in",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "indicator-hero glass-panel",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "hero-content",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "badge-premium",
+                                        children: "ELITE MARKET ENGINE"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 514,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
+                                        children: "The Verstige System™"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 515,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "description",
+                                        children: "Precision-Powered. Structure-Aligned. Momentum-Confirmed. The ultimate proprietary indicator engineered for institutional-level execution."
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 516,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "hero-actions",
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
+                                            href: "https://www.tradingview.com/script/xSRlmPkH-The-Verstige-Strategy/",
+                                            target: "_blank",
+                                            className: "btn-primary flex items-center gap-2",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$external$2d$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ExternalLink$3e$__["ExternalLink"], {
+                                                    size: 18
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 522,
+                                                    columnNumber: 37
+                                                }, this),
+                                                " Access on TradingView"
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                            lineNumber: 521,
+                                            columnNumber: 33
+                                        }, this)
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 520,
+                                        columnNumber: 29
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                lineNumber: 513,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "hero-visual",
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$zap$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Zap$3e$__["Zap"], {
+                                    size: 120,
+                                    className: "glow-icon"
+                                }, void 0, false, {
+                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                    lineNumber: 527,
+                                    columnNumber: 29
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                lineNumber: 526,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                        lineNumber: 512,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "indicator-section mt-8",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                className: "section-title",
+                                children: "Core System Components"
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                lineNumber: 532,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "components-grid",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "comp-card glass-panel",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "comp-icon",
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trending$2d$up$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__TrendingUp$3e$__["TrendingUp"], {
+                                                    size: 24
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 535,
+                                                    columnNumber: 60
+                                                }, this)
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 535,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
+                                                children: "200 EMA Foundation"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 536,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                children: "Directional trend filter. Long above, short below. EMA rejections confirm trend strength."
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 537,
+                                                columnNumber: 33
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 534,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "comp-card glass-panel",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "comp-icon",
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$panels$2d$top$2d$left$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Layout$3e$__["Layout"], {
+                                                    size: 24
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 540,
+                                                    columnNumber: 60
+                                                }, this)
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 540,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
+                                                children: "Order Block Detection"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 541,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                children: "Auto-identifies institutional zones based on valid structure and candle sequences."
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 542,
+                                                columnNumber: 33
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 539,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "comp-card glass-panel",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "comp-icon",
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$target$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Target$3e$__["Target"], {
+                                                    size: 24
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 545,
+                                                    columnNumber: 60
+                                                }, this)
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 545,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
+                                                children: "Fibonacci Reaction"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 546,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                children: "Auto-plots 0.618 (Prime) and 0.786 (Apex) zones for high-precision entry protocols."
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 547,
+                                                columnNumber: 33
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 544,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "comp-card glass-panel",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "comp-icon",
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$lock$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Lock$3e$__["Lock"], {
+                                                    size: 24
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                    lineNumber: 550,
+                                                    columnNumber: 60
+                                                }, this)
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 550,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
+                                                children: "Retest Lock Logic"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 551,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                children: "Prevents recalculation. Once Prime/Apex is hit, zones lock for clean historical backtesting."
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 552,
+                                                columnNumber: 33
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 549,
+                                        columnNumber: 29
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                lineNumber: 533,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                        lineNumber: 531,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "indicator-split mt-8",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "strategy-flow glass-panel",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                        children: "Elite Strategy Flow"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 559,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "flow-steps",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "flow-group",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "label long",
+                                                        children: "LONG SETUP"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                        lineNumber: 562,
+                                                        columnNumber: 37
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                                                                children: "Price above 200 EMA"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                lineNumber: 564,
+                                                                columnNumber: 41
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                                                                children: "Bullish Order Block forms"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                lineNumber: 565,
+                                                                columnNumber: 41
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                                                                children: "Retest of Prime (0.618) or Apex (0.786)"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                lineNumber: 566,
+                                                                columnNumber: 41
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                                                                children: "Buy Arrow confirmation → Execution"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                lineNumber: 567,
+                                                                columnNumber: 41
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                        lineNumber: 563,
+                                                        columnNumber: 37
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 561,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "flow-group",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "label short",
+                                                        children: "SHORT SETUP"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                        lineNumber: 571,
+                                                        columnNumber: 37
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                                                                children: "Price below 200 EMA"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                lineNumber: 573,
+                                                                columnNumber: 41
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                                                                children: "Bearish Order Block forms"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                lineNumber: 574,
+                                                                columnNumber: 41
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                                                                children: "Retest of Prime / Apex zones"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                lineNumber: 575,
+                                                                columnNumber: 41
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                                                                children: "Sell Arrow confirmation → Execution"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                                lineNumber: 576,
+                                                                columnNumber: 41
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                        lineNumber: 572,
+                                                        columnNumber: 37
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 570,
+                                                columnNumber: 33
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 560,
+                                        columnNumber: 29
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                lineNumber: 558,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "pro-tips-area gap-6",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "glass-panel p-6 highlight-accent",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "flex items-center gap-3 mb-4",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$activity$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Activity$3e$__["Activity"], {
+                                                        size: 24,
+                                                        className: "text-accent"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                        lineNumber: 585,
+                                                        columnNumber: 37
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                                        className: "m-0",
+                                                        children: "Breakout Confirmation"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                        lineNumber: 586,
+                                                        columnNumber: 37
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 584,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                className: "text-sm text-secondary",
+                                                children: [
+                                                    "Buy/Sell Arrows use ATR-session zones. Arrows are for ",
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
+                                                        children: "momentum confirmation"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                        lineNumber: 589,
+                                                        columnNumber: 91
+                                                    }, this),
+                                                    ", not standalone signals. Always align with structure first."
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 588,
+                                                columnNumber: 33
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 583,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "glass-panel p-6",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                                children: "Pro Execution Tips"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 595,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
+                                                className: "tips-list",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                                                        children: "Only trade when 200 EMA and OB align perfectly."
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                        lineNumber: 597,
+                                                        columnNumber: 37
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                                                        children: "Use Prime & Apex zones for surgical re-entries."
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                        lineNumber: 598,
+                                                        columnNumber: 37
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                                                        children: "Always wait for rejection before acting on arrows."
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                        lineNumber: 599,
+                                                        columnNumber: 37
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                                                        children: "Combine with RSI or Volume for maximum confluence."
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                        lineNumber: 600,
+                                                        columnNumber: 37
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                                lineNumber: 596,
+                                                columnNumber: 33
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                        lineNumber: 594,
+                                        columnNumber: 29
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                                lineNumber: 582,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                        lineNumber: 557,
+                        columnNumber: 21
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/app/dashboard/investment/page.tsx",
+                lineNumber: 511,
+                columnNumber: 17
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/src/app/dashboard/investment/page.tsx",
+        lineNumber: 73,
+        columnNumber: 9
+    }, this);
+}
+_s(InvestmentPage, "XyBvLLOBwB8uVjecA9BmgregrWk=");
+_c = InvestmentPage;
+var _c;
+__turbopack_context__.k.register(_c, "InvestmentPage");
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
+}
+}),
+]);
+
+//# sourceMappingURL=src_0a5eff8e._.js.map

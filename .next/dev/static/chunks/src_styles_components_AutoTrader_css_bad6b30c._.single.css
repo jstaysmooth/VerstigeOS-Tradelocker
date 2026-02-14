@@ -1,0 +1,102 @@
+/* [project]/src/styles/components/AutoTrader.css [app-client] (css) */
+.role-selector-grid {
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+  display: grid;
+}
+
+.role-card {
+  border: 1px solid var(--glass-border);
+  cursor: pointer;
+  background: #ffffff05;
+  border-radius: 16px;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  transition: all .3s;
+  display: flex;
+}
+
+.role-card:hover {
+  background: #ffffff0a;
+  border-color: #ffffff26;
+}
+
+.role-card.active {
+  border-color: var(--accent);
+  background: #2997ff1a;
+  box-shadow: 0 0 20px #2997ff1a;
+}
+
+.role-icon {
+  width: 44px;
+  height: 44px;
+  color: var(--secondary);
+  background: #ffffff0d;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  transition: all .3s;
+  display: flex;
+}
+
+.role-card.active .role-icon {
+  background: var(--accent);
+  color: #fff;
+}
+
+.role-info h4 {
+  margin: 0 0 4px;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.role-info p {
+  color: var(--secondary);
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.3;
+}
+
+.mesh-toggle-grid {
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  display: grid;
+}
+
+.mesh-toggle-card {
+  border: 1px solid var(--glass-border);
+  cursor: pointer;
+  color: var(--secondary);
+  background: #ffffff05;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 14px;
+  font-size: 12px;
+  font-weight: 700;
+  transition: all .2s;
+  display: flex;
+}
+
+.mesh-toggle-card:hover {
+  background: #ffffff0a;
+}
+
+.mesh-toggle-card.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: #2997ff1a;
+}
+
+.mesh-field.full-width {
+  grid-column: span 2;
+}
+
+.risk-value-input .input-wrapper {
+  background: #ffffff0d;
+}
+
+/*# sourceMappingURL=src_styles_components_AutoTrader_css_bad6b30c._.single.css.map*/

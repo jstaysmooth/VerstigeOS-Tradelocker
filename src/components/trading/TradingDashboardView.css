@@ -1,0 +1,750 @@
+/* ═══════════════════════════════════════════════
+   Trading Dashboard View - Live MT5 Dashboard
+   ═══════════════════════════════════════════════ */
+
+.trading-dashboard-view {
+    max-width: 448px;
+    margin: 0 auto;
+    padding: 0 1.25rem 6rem 1.25rem;
+}
+
+/* ─── Account Overview Card ─── */
+.account-card {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #1e40af 100%);
+    box-shadow:
+        0 20px 40px -15px rgba(30, 58, 138, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    border-radius: 1.75rem;
+    padding: 1.75rem;
+    margin-bottom: 1.25rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.account-card-glow {
+    position: absolute;
+    top: -3rem;
+    right: -3rem;
+    width: 12rem;
+    height: 12rem;
+    background: rgba(96, 165, 250, 0.15);
+    border-radius: 50%;
+    filter: blur(60px);
+    pointer-events: none;
+}
+
+.account-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+}
+
+.connection-status {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.conn-dot {
+    width: 6px;
+    height: 6px;
+    background: #475569;
+    border-radius: 50%;
+    transition: all 0.3s;
+}
+
+.conn-dot.live {
+    background: #10b981;
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+    animation: pulse-dot 2s infinite;
+}
+
+@keyframes pulse-dot {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.conn-label {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: rgba(148, 163, 184, 0.9);
+    text-transform: uppercase;
+}
+
+.refresh-btn {
+    background: none;
+    border: none;
+    color: rgba(148, 163, 184, 0.5);
+    cursor: pointer;
+    padding: 0.25rem;
+    transition: all 0.3s;
+    border-radius: 0.5rem;
+}
+
+.refresh-btn:hover {
+    color: rgba(148, 163, 184, 1);
+}
+
+.refresh-btn.spinning svg {
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Balance Main */
+.account-balance-main {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.balance-label {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: rgba(148, 163, 184, 0.7);
+    text-transform: uppercase;
+    margin: 0 0 0.25rem 0;
+}
+
+.balance-amount {
+    font-size: 2.75rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.5rem 0;
+    color: #ffffff;
+}
+
+.currency-sign {
+    font-size: 1.75rem;
+    font-weight: 300;
+    color: rgba(148, 163, 184, 0.5);
+}
+
+.daily-change {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.change-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 0.2rem 0.6rem;
+    border-radius: 9999px;
+    font-size: 0.65rem;
+    font-weight: 700;
+}
+
+.change-pill.positive {
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.15);
+}
+
+.change-pill.negative {
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.15);
+}
+
+.change-dollar {
+    font-size: 0.65rem;
+    font-weight: 700;
+}
+
+.change-dollar.positive {
+    color: #10b981;
+}
+
+.change-dollar.negative {
+    color: #ef4444;
+}
+
+/* Account Metrics Grid */
+.account-metrics {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.625rem;
+}
+
+.metric-tile {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 0.875rem;
+    padding: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.metric-icon-wrap {
+    width: 1.75rem;
+    height: 1.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(59, 130, 246, 0.15);
+    border-radius: 0.5rem;
+    color: #60a5fa;
+    flex-shrink: 0;
+}
+
+.metric-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    min-width: 0;
+}
+
+.metric-label {
+    font-size: 0.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(148, 163, 184, 0.6);
+}
+
+.metric-value {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #e2e8f0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ─── Analytics Strip ─── */
+.analytics-strip {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.625rem;
+    margin-bottom: 1.25rem;
+}
+
+.analytics-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 1rem;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+}
+
+.analytics-icon {
+    width: 2.25rem;
+    height: 2.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.625rem;
+    flex-shrink: 0;
+}
+
+.analytics-icon.blue {
+    background: rgba(59, 130, 246, 0.12);
+    color: #60a5fa;
+}
+
+.analytics-icon.green {
+    background: rgba(16, 185, 129, 0.12);
+    color: #10b981;
+}
+
+.analytics-icon.purple {
+    background: rgba(139, 92, 246, 0.12);
+    color: #a78bfa;
+}
+
+.analytics-icon.red {
+    background: rgba(239, 68, 68, 0.12);
+    color: #ef4444;
+}
+
+.analytics-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.analytics-number {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #e2e8f0;
+}
+
+.analytics-number.positive {
+    color: #10b981;
+}
+
+.analytics-number.negative {
+    color: #ef4444;
+}
+
+.analytics-label {
+    font-size: 0.55rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgba(148, 163, 184, 0.6);
+}
+
+/* ─── Section Toggle ─── */
+.section-toggle {
+    display: flex;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 0.75rem;
+    padding: 0.25rem;
+    margin-bottom: 1rem;
+}
+
+.toggle-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    background: none;
+    border: none;
+    color: #64748b;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.625rem 0;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.toggle-btn.active {
+    background: rgba(59, 130, 246, 0.15);
+    color: #60a5fa;
+    box-shadow: 0 0 12px rgba(59, 130, 246, 0.1);
+}
+
+.toggle-btn:hover:not(.active) {
+    color: #94a3b8;
+}
+
+/* ─── Positions Section ─── */
+.positions-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+/* Position Card */
+.position-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 1.25rem;
+    padding: 1.25rem;
+    transition: border-color 0.3s;
+    animation: card-enter 0.35s ease-out;
+}
+
+@keyframes card-enter {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.position-card:hover {
+    border-color: rgba(59, 130, 246, 0.15);
+}
+
+.position-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.875rem;
+}
+
+.position-symbol-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.position-pair {
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin: 0;
+    color: #f1f5f9;
+}
+
+.direction-tag {
+    display: flex;
+    align-items: center;
+    gap: 0.15rem;
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 0.15rem 0.4rem;
+    border-radius: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.direction-tag.buy {
+    background: rgba(59, 130, 246, 0.15);
+    color: #60a5fa;
+}
+
+.direction-tag.sell {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+}
+
+.live-pnl {
+    text-align: right;
+}
+
+.pnl-value {
+    font-size: 1rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.live-pnl.positive .pnl-value {
+    color: #10b981;
+}
+
+.live-pnl.negative .pnl-value {
+    color: #ef4444;
+}
+
+/* Position Details Grid */
+.position-details {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 0.875rem;
+}
+
+.pos-detail {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.375rem;
+    text-align: center;
+}
+
+.pos-label {
+    display: block;
+    font-size: 0.5rem;
+    font-weight: 700;
+    color: rgba(148, 163, 184, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.2rem;
+}
+
+.pos-value {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #cbd5e1;
+    font-variant-numeric: tabular-nums;
+}
+
+.pos-value.sl {
+    color: #ef4444;
+}
+
+.pos-value.tp {
+    color: #10b981;
+}
+
+/* Position Footer */
+.position-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.position-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.position-provider {
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: #94a3b8;
+}
+
+.position-time {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    font-size: 0.55rem;
+    color: #64748b;
+}
+
+/* Copy Button */
+.copy-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: rgba(59, 130, 246, 0.12);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    color: #60a5fa;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.4rem 0.75rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.copy-btn:hover:not(.copied) {
+    background: rgba(59, 130, 246, 0.2);
+    box-shadow: 0 0 12px rgba(59, 130, 246, 0.15);
+}
+
+.copy-btn.copied {
+    background: rgba(16, 185, 129, 0.12);
+    border-color: rgba(16, 185, 129, 0.2);
+    color: #10b981;
+    cursor: default;
+}
+
+/* Unrealized P&L Banner */
+.unrealized-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 0.75rem;
+    padding: 0.875rem 1.25rem;
+    margin-top: 0.75rem;
+}
+
+.unrealized-banner.positive {
+    border-color: rgba(16, 185, 129, 0.15);
+}
+
+.unrealized-banner.negative {
+    border-color: rgba(239, 68, 68, 0.15);
+}
+
+.unrealized-label {
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #94a3b8;
+}
+
+.unrealized-value {
+    font-size: 1rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.unrealized-banner.positive .unrealized-value {
+    color: #10b981;
+}
+
+.unrealized-banner.negative .unrealized-value {
+    color: #ef4444;
+}
+
+/* ─── Empty State ─── */
+.empty-state {
+    text-align: center;
+    padding: 3rem 1.5rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px dashed rgba(255, 255, 255, 0.06);
+    border-radius: 1.25rem;
+}
+
+.empty-icon {
+    color: #334155;
+    margin-bottom: 0.75rem;
+}
+
+.empty-title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #94a3b8;
+    margin: 0 0 0.25rem 0;
+}
+
+.empty-desc {
+    font-size: 0.7rem;
+    color: #64748b;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* ─── Trade History ─── */
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+}
+
+.history-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 0.75rem;
+    padding: 0.875rem 1rem;
+    transition: border-color 0.2s;
+}
+
+.history-row:hover {
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.history-left {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+}
+
+.history-direction {
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    flex-shrink: 0;
+}
+
+.history-direction.buy {
+    background: rgba(59, 130, 246, 0.12);
+    color: #60a5fa;
+}
+
+.history-direction.sell {
+    background: rgba(239, 68, 68, 0.12);
+    color: #ef4444;
+}
+
+.history-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.history-pair {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #e2e8f0;
+}
+
+.history-meta {
+    font-size: 0.575rem;
+    color: #64748b;
+    font-variant-numeric: tabular-nums;
+}
+
+.history-right {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.history-profit {
+    font-size: 0.85rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.history-profit.positive {
+    color: #10b981;
+}
+
+.history-profit.negative {
+    color: #ef4444;
+}
+
+.history-time {
+    font-size: 0.55rem;
+    color: #64748b;
+}
+
+/* ═══════════════════════════════
+   Desktop Responsive
+   ═══════════════════════════════ */
+@media (min-width: 768px) {
+    .trading-dashboard-view {
+        max-width: 1200px;
+        padding: 0 2rem 2rem 2rem;
+    }
+
+    .account-card {
+        padding: 2.5rem;
+        border-radius: 2rem;
+    }
+
+    .balance-amount {
+        font-size: 3.5rem;
+    }
+
+    .account-metrics {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .analytics-strip {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .positions-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .position-card {
+        padding: 1.5rem;
+    }
+
+    .position-details {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}

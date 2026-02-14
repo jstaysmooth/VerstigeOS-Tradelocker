@@ -1,0 +1,17 @@
+.dashboard-container {
+    min-height: 100vh;
+    background-color: var(--bg-dark);
+    position: relative;
+    padding-bottom: 120px;
+    /* Space for the launcher */
+}
+
+.dash-main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-lg);
+}
+
+.dash-content {
+    width: 100%;
+}

@@ -1,0 +1,213 @@
+/* Agency Model Section */
+.agency-model-section {
+    padding: var(--spacing-3xl) var(--spacing-lg);
+    background: radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.05) 0%, transparent 70%);
+    position: relative;
+    overflow: hidden;
+}
+
+.agency-header {
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto var(--spacing-3xl);
+}
+
+.agency-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-md);
+    background: linear-gradient(135deg, #fff, #10b981);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.agency-subtitle {
+    font-size: 1.125rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+}
+
+/* Logic Grid */
+.agency-logic-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: var(--spacing-2xl);
+    max-width: 1400px;
+    margin: 0 auto;
+    align-items: center;
+}
+
+/* Advance Card */
+.model-card {
+    padding: var(--spacing-xl);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--border-radius-xl);
+    position: relative;
+    overflow: hidden;
+}
+
+.model-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #10b981, #059669);
+}
+
+.cashflow-visual {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: var(--spacing-xl) 0;
+    position: relative;
+}
+
+.flow-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    z-index: 2;
+}
+
+.node-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #10b981;
+}
+
+.flow-line {
+    flex: 1;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.1);
+    position: relative;
+    margin: 0 16px;
+}
+
+.flow-particle {
+    position: absolute;
+    top: -3px;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    background: #10b981;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #10b981;
+    animation: flowRight 2s infinite linear;
+}
+
+@keyframes flowRight {
+    0% {
+        left: 0;
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 1;
+    }
+
+    100% {
+        left: 100%;
+        opacity: 0;
+    }
+}
+
+.advance-badge {
+    background: rgba(16, 185, 129, 0.2);
+    color: #10b981;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-top: 8px;
+}
+
+/* Distribution Diagram */
+.distribution-visual {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.dist-row {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    opacity: 0.6;
+    transition: all 0.3s ease;
+}
+
+.dist-row.active {
+    opacity: 1;
+    transform: scale(1.02);
+}
+
+.dist-bar-container {
+    flex: 1;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.dist-bar {
+    height: 100%;
+    border-radius: 4px;
+    position: relative;
+}
+
+.dist-bar.agent {
+    background: #3b82f6;
+    width: 45%;
+}
+
+.dist-bar.override {
+    background: #10b981;
+    width: 35%;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+}
+
+.dist-bar.company {
+    background: #6b7280;
+    width: 20%;
+}
+
+.dist-value {
+    font-family: 'Geist Mono', monospace;
+    font-weight: 700;
+    min-width: 60px;
+    text-align: right;
+}
+
+.spread-highlight {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px dashed rgba(16, 185, 129, 0.3);
+    border-radius: var(--border-radius-md);
+    color: #a7f3d0;
+    font-size: 0.875rem;
+    text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .agency-logic-grid {
+        grid-template-columns: 1fr;
+    }
+}

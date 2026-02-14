@@ -1,0 +1,697 @@
+/* Profile.css */
+.profile-container {
+    padding: var(--spacing-lg);
+    max-width: 1600px;
+    margin: 0 auto;
+    color: var(--primary);
+    padding-bottom: 120px;
+    /* Space for launcher */
+}
+
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.user-info h1 {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-xs);
+    background: linear-gradient(90deg, #fff, #aaa);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.user-rank {
+    font-size: 0.875rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.rank-badge {
+    padding: 4px 8px;
+    background: rgba(41, 151, 255, 0.1);
+    border: 1px solid rgba(41, 151, 255, 0.2);
+    border-radius: var(--border-radius-sm);
+}
+
+/* Grid Layout */
+.profile-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--spacing-lg);
+}
+
+.grid-col-12 {
+    grid-column: span 12;
+}
+
+.grid-col-8 {
+    grid-column: span 8;
+}
+
+.grid-col-4 {
+    grid-column: span 4;
+}
+
+.grid-col-6 {
+    grid-column: span 6;
+}
+
+/* Cards */
+.profile-card {
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--secondary);
+}
+
+/* Metrics */
+.metric-large {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: var(--spacing-md) 0;
+    background: linear-gradient(135deg, var(--fintech-green), #fff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.metric-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: auto;
+}
+
+.metric-item {
+    text-align: center;
+}
+
+.metric-label {
+    font-size: 0.75rem;
+    color: var(--secondary);
+    display: block;
+    margin-bottom: 4px;
+}
+
+.metric-value {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+/* Progress Bars */
+.goal-progress {
+    margin-top: var(--spacing-md);
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    margin-bottom: 8px;
+}
+
+.progress-track {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 4px;
+    transition: width 1s ease-out;
+}
+
+/* Associate Tree / List */
+.associate-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    max-height: 400px;
+    /* limits height for scrolling */
+    overflow-y: auto;
+    padding-right: 2px;
+    /* space for scrollbar */
+}
+
+/* Custom Scrollbar for list */
+.associate-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.associate-list::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.associate-list::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.associate-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: var(--border-radius-sm);
+    border: 1px solid transparent;
+    transition: var(--transition-smooth);
+}
+
+.associate-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.associate-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.associate-avatar {
+    width: 32px;
+    height: 32px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.associate-name {
+    font-weight: 500;
+    display: block;
+}
+
+.associate-role {
+    font-size: 0.75rem;
+    color: var(--secondary);
+}
+
+.associate-status {
+    font-size: 0.75rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: rgba(48, 209, 88, 0.1);
+    color: var(--fintech-green);
+}
+
+/* Pipeline */
+.pipeline-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.pipeline-item:last-child {
+    border-bottom: none;
+}
+
+.pipeline-stage {
+    font-size: 0.75rem;
+    color: var(--secondary);
+    text-transform: uppercase;
+    margin-right: 8px;
+}
+
+/* Charts Placeholder */
+.chart-placeholder {
+    width: 100%;
+    height: 200px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: var(--border-radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--secondary);
+    font-size: 0.875rem;
+}
+
+/* Profile Page Genealogy Styles - Upgraded Binary Tree */
+
+.genealogy-section-container {
+    margin-top: var(--spacing-2xl);
+    width: 100%;
+}
+
+.genealogy-layout-grid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: var(--spacing-lg);
+    height: 750px;
+}
+
+/* Tree Scroll Area */
+.tree-area {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.02) 0%, transparent 70%);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.tree-scroll-container {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    padding: 20px;
+}
+
+.tree-canvas {
+    min-width: 100%;
+    width: max-content;
+    min-height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px;
+}
+
+/* Custom "School Board" Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+    height: 14px;
+    width: 14px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 7px;
+    margin: 2px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 7px;
+    border: 3px solid rgba(20, 20, 20, 0.9);
+    min-width: 50px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+/* Tree Node Structure */
+.tree-branch-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.node-wrapper {
+    position: relative;
+    z-index: 2;
+    margin-bottom: 50px;
+}
+
+.tree-node-card {
+    min-width: 220px;
+    padding: 16px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: rgba(30, 30, 35, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.tree-node-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+    box-shadow: 0 12px 40px rgba(41, 151, 255, 0.15);
+    background: rgba(40, 40, 45, 0.8);
+}
+
+.node-avatar-large {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), #2b5797);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(41, 151, 255, 0.3);
+}
+
+.node-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.node-name-lg {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #fff;
+}
+
+.rank-badge {
+    font-size: 0.7rem;
+    border: 1px solid;
+    padding: 2px 8px;
+    border-radius: 12px;
+    display: inline-block;
+    width: fit-content;
+}
+
+.node-toggle {
+    margin-left: auto;
+    color: var(--secondary);
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    transition: background 0.2s;
+}
+
+.tree-node-card:hover .node-toggle {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+/* Connectors & Branches */
+.children-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.connector-vertical {
+    width: 2px;
+    height: 25px;
+    background: rgba(255, 255, 255, 0.15);
+    position: absolute;
+    top: 84px;
+}
+
+.branch-split {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    position: relative;
+    padding-top: 25px;
+}
+
+.branch-leg {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    min-width: 200px;
+}
+
+/* Horizontal connectors */
+.branch-leg::before {
+    content: '';
+    position: absolute;
+    top: -25px;
+    width: 50%;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.branch-leg.left-leg::before {
+    right: 0;
+    border-top-left-radius: 8px;
+}
+
+.branch-leg.right-leg::before {
+    left: 0;
+    border-top-right-radius: 8px;
+}
+
+/* Vertical connector from horizontal bar to child node */
+.branch-leg::after {
+    content: '';
+    position: absolute;
+    top: -25px;
+    width: 2px;
+    height: 25px;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.branch-leg.left-leg::after {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.branch-leg.right-leg::after {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.connector-horizontal-left,
+.connector-horizontal-right {
+    position: absolute;
+    top: -25px;
+    height: 25px;
+    width: 50%;
+    border-top: 2px solid rgba(255, 255, 255, 0.15);
+}
+
+.left-leg .connector-horizontal-left {
+    right: 0;
+    border-right: 2px solid rgba(255, 255, 255, 0.15);
+    border-top-right-radius: 12px;
+}
+
+.right-leg .connector-horizontal-right {
+    left: 0;
+    border-left: 2px solid rgba(255, 255, 255, 0.15);
+    border-top-left-radius: 12px;
+}
+
+/* Empty Slot */
+.empty-node-slot {
+    width: 180px;
+    height: 90px;
+    border: 2px dashed rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--secondary);
+    cursor: default;
+    transition: all 0.2s;
+    background: rgba(255, 255, 255, 0.01);
+}
+
+.empty-node-slot:hover {
+    border-color: var(--accent);
+    background: rgba(41, 151, 255, 0.08);
+    color: var(--primary);
+    transform: scale(1.02);
+}
+
+.highlight-drop-zone {
+    border-color: var(--accent) !important;
+    background: rgba(41, 151, 255, 0.2) !important;
+    box-shadow: 0 0 25px rgba(41, 151, 255, 0.3);
+    transform: scale(1.05) !important;
+    color: #fff !important;
+}
+
+.dashed-circle {
+    margin-bottom: 6px;
+    opacity: 0.5;
+}
+
+.slot-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+}
+
+/* Holding Tank Upgrades */
+.tank-sidebar {
+    height: 100%;
+}
+
+.holding-tank {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.tank-header {
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.header-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #fff;
+}
+
+.count-badge {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.tank-scroll-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+}
+
+.tank-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.tank-item {
+    padding: 16px;
+    border-radius: 12px;
+    background: rgba(30, 30, 35, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: grab;
+    transition: border-color 0.2s;
+    user-select: none;
+}
+
+.tank-item:active {
+    cursor: grabbing;
+}
+
+.tank-item:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.drag-indicator {
+    color: var(--secondary);
+    opacity: 0.5;
+    cursor: grab;
+}
+
+.user-meta {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.user-meta .name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #fff;
+}
+
+.meta-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.rank-pill {
+    font-size: 0.65rem;
+    background: rgba(41, 151, 255, 0.15);
+    color: var(--accent);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.user-meta .time {
+    font-size: 0.75rem;
+    color: var(--secondary);
+}
+
+.tank-footer {
+    padding: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: center;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.tank-footer p {
+    font-size: 0.8rem;
+    color: var(--secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+/* Adjust grid for mobile */
+@media (max-width: 1024px) {
+    .genealogy-layout-grid {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+
+    .tree-scroll-container {
+        height: 500px;
+    }
+
+    .tank-sidebar {
+        height: 300px;
+    }
+}
+
+@media (max-width: 1024px) {
+
+    .grid-col-8,
+    .grid-col-6,
+    .grid-col-4 {
+        grid-column: span 12;
+    }
+}

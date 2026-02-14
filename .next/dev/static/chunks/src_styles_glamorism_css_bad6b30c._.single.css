@@ -1,0 +1,167 @@
+/* [project]/src/styles/glamorism.css [app-client] (css) */
+@layer utilities {
+  .glass-glamor {
+    -webkit-backdrop-filter: blur(20px);
+    background: #ffffff08;
+    border: 1px solid #ffffff1a;
+  }
+
+  .glass-glamor-heavy {
+    -webkit-backdrop-filter: blur(30px);
+    background: #ffffff0d;
+    border: 1px solid #ffffff26;
+  }
+
+  .glow-profit {
+    box-shadow: 0 0 20px #10b98166;
+  }
+
+  .glow-profit-strong {
+    box-shadow: 0 0 30px #10b98199, 0 0 60px #10b9814d;
+  }
+
+  .glow-loss {
+    box-shadow: 0 0 20px #ef444466;
+  }
+
+  .glow-loss-strong {
+    box-shadow: 0 0 30px #ef444499, 0 0 60px #ef44444d;
+  }
+
+  .glow-accent {
+    box-shadow: 0 0 20px #3b82f666;
+  }
+
+  .glow-purple {
+    box-shadow: 0 0 20px #a259ff66;
+  }
+
+  .glow-gold {
+    box-shadow: 0 0 25px #fbbf2480, 0 0 50px #fbbf2433;
+  }
+
+  .border-profit-neon {
+    border-color: #10b98180;
+  }
+
+  .border-loss-neon {
+    border-color: #ef444480;
+  }
+
+  .border-accent-neon {
+    border-color: #3b82f680;
+  }
+
+  .pulse-profit {
+    animation: 2s cubic-bezier(.4, 0, .6, 1) infinite pulse-profit;
+  }
+
+  .pulse-loss {
+    animation: 2s cubic-bezier(.4, 0, .6, 1) infinite pulse-loss;
+  }
+
+  .pulse-data {
+    animation: 1.5s ease-in-out infinite pulse-data;
+  }
+
+  @keyframes pulse-profit {
+    0%, 100% {
+      box-shadow: 0 0 20px #10b98166;
+    }
+
+    50% {
+      box-shadow: 0 0 30px #10b98199, 0 0 60px #10b9814d;
+    }
+  }
+
+  @keyframes pulse-loss {
+    0%, 100% {
+      box-shadow: 0 0 20px #ef444466;
+    }
+
+    50% {
+      box-shadow: 0 0 30px #ef444499, 0 0 60px #ef44444d;
+    }
+  }
+
+  @keyframes pulse-data {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    50% {
+      opacity: .7;
+      transform: scale(1.05);
+    }
+  }
+
+  .bg-gradient-profit {
+    background: linear-gradient(135deg, #10b9811a 0%, #10b9810d 100%);
+  }
+
+  .bg-gradient-loss {
+    background: linear-gradient(135deg, #ef44441a 0%, #ef44440d 100%);
+  }
+
+  .bg-gradient-gold {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+  }
+
+  .bg-gradient-silver {
+    background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 50%, #94a3b8 100%);
+  }
+
+  .bg-gradient-bronze {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #b45309 100%);
+  }
+
+  .haptic-feedback {
+    transition: transform .1s ease-out;
+  }
+
+  .haptic-feedback:active {
+    transform: scale(.98);
+  }
+
+  .command-grid {
+    grid-template-columns: 300px 1fr 350px;
+    gap: 20px;
+    height: calc(100vh - 80px);
+    display: grid;
+  }
+
+  @media (max-width: 1536px) {
+    .command-grid {
+      grid-template-columns: 280px 1fr 320px;
+    }
+  }
+
+  @media (max-width: 1280px) {
+    .command-grid {
+      grid-template-rows: auto 1fr auto;
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .frosted-overlay {
+    -webkit-backdrop-filter: blur(10px);
+    background: #000000b3;
+  }
+
+  .prison-lock {
+    pointer-events: none;
+    opacity: .7;
+    position: relative;
+  }
+
+  .prison-lock:after {
+    content: "";
+    pointer-events: none;
+    background: repeating-linear-gradient(45deg, #0000, #0000 10px, #ef44440d 10px 20px);
+    position: absolute;
+    inset: 0;
+  }
+}
+
+/*# sourceMappingURL=src_styles_glamorism_css_bad6b30c._.single.css.map*/

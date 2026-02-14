@@ -1,0 +1,405 @@
+/* Sales Division Section */
+.sales-division-section {
+    padding: 120px var(--spacing-lg) 100px;
+    background: linear-gradient(180deg, #0a0a0a 0%, #000 50%, #0a0a0a 100%);
+    position: relative;
+}
+
+.sales-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Earning Paths Grid */
+.earning-paths-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-2xl);
+    margin-bottom: var(--spacing-3xl);
+}
+
+.path-card {
+    padding: var(--spacing-2xl);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius-xl);
+    transition: all 0.3s ease;
+}
+
+.path-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(168, 85, 247, 0.3);
+    box-shadow: 0 20px 60px rgba(168, 85, 247, 0.2);
+}
+
+.path-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.path-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: var(--border-radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.personal-gradient {
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(251, 191, 36, 0.05));
+    border: 1px solid rgba(251, 191, 36, 0.3);
+    color: #fbbf24;
+}
+
+.team-gradient {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(168, 85, 247, 0.05));
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    color: #a855f7;
+}
+
+.path-header h3 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin: 0;
+}
+
+.path-description {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-xl);
+}
+
+.commission-breakdown {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
+}
+
+.commission-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm) 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.commission-item:last-of-type {
+    border-bottom: none;
+}
+
+.commission-label {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.commission-value {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.commission-highlight {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(168, 85, 247, 0.05));
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    border-radius: var(--border-radius-md);
+}
+
+.highlight-label {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 600;
+}
+
+.highlight-value {
+    font-size: 1.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #a855f7, #fbbf24);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Rank Progression */
+.rank-progression-section {
+    margin-bottom: var(--spacing-3xl);
+}
+
+.progression-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+    color: var(--primary);
+}
+
+.progression-subtitle {
+    font-size: 1.125rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto var(--spacing-2xl);
+}
+
+.ranks-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: var(--spacing-lg);
+}
+
+.rank-card {
+    padding: var(--spacing-xl);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--border-radius-lg);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.rank-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(168, 85, 247, 0.3);
+}
+
+.rank-card.featured {
+    border: 2px solid rgba(251, 191, 36, 0.4);
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.05), rgba(168, 85, 247, 0.05));
+}
+
+.rank-card.featured:hover {
+    border-color: rgba(251, 191, 36, 0.6);
+    box-shadow: 0 20px 60px rgba(251, 191, 36, 0.2);
+}
+
+.rank-badge {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: var(--border-radius-md);
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--spacing-lg);
+}
+
+.rank-badge.associate {
+    background: linear-gradient(135deg, rgba(100, 100, 100, 0.2), rgba(100, 100, 100, 0.05));
+    border: 1px solid rgba(150, 150, 150, 0.3);
+    color: #999;
+}
+
+.rank-badge.manager {
+    background: linear-gradient(135deg, rgba(41, 151, 255, 0.2), rgba(41, 151, 255, 0.05));
+    border: 1px solid rgba(41, 151, 255, 0.3);
+    color: #2997ff;
+}
+
+.rank-badge.director {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.05));
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: #10b981;
+}
+
+.rank-badge.executive {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(168, 85, 247, 0.05));
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    color: #a855f7;
+}
+
+.rank-badge.elite {
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.3), rgba(251, 191, 36, 0.1));
+    border: 1px solid rgba(251, 191, 36, 0.5);
+    color: #fbbf24;
+}
+
+.rank-requirements {
+    margin-bottom: var(--spacing-lg);
+}
+
+.req-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) 0;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.req-item svg {
+    color: #10b981;
+    flex-shrink: 0;
+}
+
+.rank-or-divider {
+    text-align: center;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #fbbf24;
+    padding: var(--spacing-sm) 0;
+    margin: 4px 0;
+    letter-spacing: 0.1em;
+}
+
+.rank-earnings {
+    padding-top: var(--spacing-md);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.earnings-label {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+}
+
+.earnings-value {
+    font-size: 1.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #fff, #a855f7);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.elite-badge {
+    position: absolute;
+    top: -12px;
+    right: 20px;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: #000;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.625rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+}
+
+/* Sales Tools */
+.sales-tools-section {
+    margin-bottom: var(--spacing-3xl);
+}
+
+.tools-section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    color: var(--primary);
+}
+
+.sales-tools-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-lg);
+}
+
+.sales-tool-card {
+    padding: var(--spacing-xl);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--border-radius-lg);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.sales-tool-card:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(168, 85, 247, 0.3);
+    transform: translateY(-4px);
+}
+
+.tool-icon-sales {
+    color: #a855f7;
+    margin-bottom: var(--spacing-md);
+}
+
+.sales-tool-card h4 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.sales-tool-card p {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.5;
+}
+
+/* Sales CTA */
+.sales-cta {
+    text-align: center;
+    padding: var(--spacing-3xl);
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(251, 191, 36, 0.05));
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    border-radius: var(--border-radius-xl);
+}
+
+.sales-cta h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: var(--spacing-md);
+}
+
+.sales-cta p {
+    font-size: 1.125rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: var(--spacing-xl);
+}
+
+.sales-cta .btn-primary {
+    display: inline-block;
+    padding: 16px 48px;
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .earning-paths-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .sales-tools-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .sales-division-section {
+        padding: 80px var(--spacing-md) 60px;
+    }
+
+    .sales-tools-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ranks-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .progression-title {
+        font-size: 2rem;
+    }
+
+    .sales-cta h3 {
+        font-size: 1.5rem;
+    }
+
+    .sales-cta p {
+        font-size: 1rem;
+    }
+}

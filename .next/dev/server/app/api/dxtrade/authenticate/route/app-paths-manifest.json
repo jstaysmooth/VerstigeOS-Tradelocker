@@ -1,0 +1,3 @@
+{
+  "/api/dxtrade/authenticate/route": "app/api/dxtrade/authenticate/route.js"
+}

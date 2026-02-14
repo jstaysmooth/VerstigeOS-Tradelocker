@@ -1,0 +1,97 @@
+/* [project]/src/components/Divisions.css [app-client] (css) */
+.divisions-section {
+  padding: var(--spacing-2xl) var(--spacing-lg);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.divisions-grid {
+  gap: var(--spacing-lg);
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  display: grid;
+}
+
+.division-card {
+  padding: var(--spacing-xl);
+  flex-direction: column;
+  height: 100%;
+  display: flex;
+}
+
+.div-icon {
+  border-radius: var(--border-radius-md);
+  width: 56px;
+  height: 56px;
+  margin-bottom: var(--spacing-lg);
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.division-card h3 {
+  margin-bottom: var(--spacing-sm);
+  font-size: 1.5rem;
+}
+
+.division-card p {
+  color: var(--secondary);
+  margin-bottom: var(--spacing-lg);
+  flex-grow: 1;
+  font-size: 1rem;
+}
+
+.div-features {
+  margin-bottom: var(--spacing-xl);
+  list-style: none;
+}
+
+.div-features li {
+  color: var(--primary);
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+  font-size: .9rem;
+  display: flex;
+}
+
+.div-features .dot {
+  border-radius: 50%;
+  width: 6px;
+  height: 6px;
+}
+
+.div-actions {
+  gap: 12px;
+  display: flex;
+}
+
+.unlock-btn {
+  background: var(--primary);
+  color: var(--bg-dark);
+  border-radius: var(--border-radius-sm);
+  flex: 1;
+  padding: 12px;
+  font-weight: 600;
+}
+
+.enter-btn {
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius-sm);
+  width: 48px;
+  height: 48px;
+  color: var(--primary);
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.enter-btn:hover {
+  background: #ffffff0d;
+}
+
+/*# sourceMappingURL=src_components_Divisions_css_bad6b30c._.single.css.map*/

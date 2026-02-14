@@ -1,0 +1,340 @@
+.community-page {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-lg);
+    display: grid;
+    grid-template-columns: 280px 1fr 300px;
+    gap: var(--spacing-xl);
+    align-items: start;
+}
+
+/* Sidebar Profile Card */
+.community-sidebar {
+    position: sticky;
+    top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.profile-summary-card {
+    padding: 0;
+    overflow: hidden;
+}
+
+.card-header-bg {
+    height: 60px;
+    background: linear-gradient(135deg, var(--accent), var(--hero-purple));
+    opacity: 0.3;
+}
+
+.profile-avatar-wrapper {
+    margin-top: -30px;
+    padding: 0 var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.avatar-large {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: var(--glass-panel);
+    border: 3px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 800;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.profile-avatar-wrapper h3 {
+    margin-top: 12px;
+    font-size: 1.1rem;
+}
+
+.profile-avatar-wrapper p {
+    font-size: 0.8rem;
+    color: var(--secondary);
+    margin-bottom: 16px;
+}
+
+.profile-stats {
+    display: flex;
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.stat-item {
+    flex: 1;
+    padding: 12px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-item:first-child {
+    border-right: 1px solid var(--glass-border);
+}
+
+.stat-val {
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.stat-label {
+    font-size: 0.7rem;
+    color: var(--secondary);
+    text-transform: uppercase;
+}
+
+.social-links {
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+.social-link {
+    color: var(--secondary);
+    transition: color 0.2s ease;
+}
+
+.social-link:hover {
+    color: var(--accent);
+}
+
+/* Feed & Content */
+.community-feed {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.post-composer {
+    padding: var(--spacing-lg);
+}
+
+.composer-input-row {
+    display: flex;
+    gap: 12px;
+}
+
+.avatar-small {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.composer-input-row textarea {
+    flex: 1;
+    background: transparent;
+    border: none;
+    resize: none;
+    color: #fff;
+    padding: 8px 0;
+    font-size: 1rem;
+    min-height: 40px;
+}
+
+.composer-input-row textarea:focus {
+    outline: none;
+}
+
+.composer-actions {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.composer-btn {
+    padding: 8px 12px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: var(--secondary);
+    transition: background 0.2s ease;
+}
+
+.composer-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Post Cards */
+.post-card {
+    padding: var(--spacing-lg);
+}
+
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.user-info {
+    display: flex;
+    gap: 12px;
+}
+
+.user-name-group h4 {
+    font-size: 0.95rem;
+    margin-bottom: 2px;
+}
+
+.user-name-group p {
+    font-size: 0.75rem;
+    color: var(--secondary);
+}
+
+.post-content {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 16px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.post-image {
+    width: 100%;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    border: 1px solid var(--glass-border);
+}
+
+/* Poll Styles */
+.poll-container {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+    border: 1px solid var(--glass-border);
+}
+
+.poll-option {
+    margin-bottom: 12px;
+    cursor: pointer;
+}
+
+.poll-option-bg {
+    height: 40px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    transition: all 0.2s ease;
+}
+
+.poll-option:hover .poll-option-bg {
+    border-color: var(--accent);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.poll-progress {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background: var(--accent);
+    opacity: 0.1;
+    z-index: 0;
+}
+
+.option-text {
+    position: relative;
+    z-index: 1;
+    font-size: 0.85rem;
+    flex: 1;
+}
+
+.option-pct {
+    position: relative;
+    z-index: 1;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.post-actions {
+    display: flex;
+    gap: 24px;
+    padding-top: 12px;
+    border-top: 1px solid var(--glass-border);
+}
+
+.post-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: var(--secondary);
+    transition: color 0.2s ease;
+}
+
+.post-action-btn:hover {
+    color: var(--accent);
+}
+
+/* Trending / Suggestions */
+.community-extra {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.trend-item {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.trend-item:last-child {
+    border-bottom: none;
+}
+
+.trend-item span {
+    font-size: 0.7rem;
+    color: var(--secondary);
+    text-transform: uppercase;
+}
+
+.trend-item h4 {
+    font-size: 0.9rem;
+    margin: 4px 0;
+}
+
+.trend-item p {
+    font-size: 0.75rem;
+    color: var(--secondary);
+}
+
+@media (max-width: 1100px) {
+    .community-page {
+        grid-template-columns: 1fr;
+    }
+
+    .community-sidebar,
+    .community-extra {
+        display: none;
+    }
+}

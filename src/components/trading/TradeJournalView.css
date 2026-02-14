@@ -1,0 +1,875 @@
+/* ===== Trade Journal V2 — Premium Dark Glassmorphism ===== */
+
+.journal-v2 {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* ===== Hero ===== */
+.journal-hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 28px;
+    background: linear-gradient(135deg, rgba(41, 151, 255, 0.08) 0%, rgba(10, 10, 10, 0.95) 60%);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+}
+
+.journal-hero-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.journal-hero-badge {
+    font-size: 0.6rem;
+    font-weight: 900;
+    letter-spacing: 0.25em;
+    color: #2997ff;
+    padding: 4px 12px;
+    background: rgba(41, 151, 255, 0.1);
+    border: 1px solid rgba(41, 151, 255, 0.2);
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+.journal-hero-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #fff;
+    margin: 0;
+}
+
+.journal-hero-sub {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.35);
+    margin: 0;
+    font-weight: 500;
+}
+
+.journal-add-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #2997ff, #0071e3);
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.journal-add-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(41, 151, 255, 0.35);
+}
+
+/* ===== Analytics Strip ===== */
+.journal-analytics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.j-analytic-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    backdrop-filter: blur(8px);
+}
+
+.j-analytic-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: rgba(41, 151, 255, 0.1);
+    color: #2997ff;
+    flex-shrink: 0;
+}
+
+.j-analytic-icon.icon-green {
+    background: rgba(48, 209, 88, 0.1);
+    color: #30d158;
+}
+
+.j-analytic-icon.icon-red {
+    background: rgba(255, 59, 48, 0.1);
+    color: #ff3b30;
+}
+
+.j-analytic-data {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.j-analytic-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.35);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.j-analytic-value {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #fff;
+    font-family: var(--font-mono, 'SF Mono', monospace);
+}
+
+/* ===== Main Layout ===== */
+.journal-main-layout {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 16px;
+    align-items: start;
+}
+
+/* ===== Calendar Panel ===== */
+.journal-calendar-panel {
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    padding: 24px;
+    backdrop-filter: blur(8px);
+}
+
+.journal-cal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.j-nav-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.j-nav-btn:hover {
+    background: rgba(41, 151, 255, 0.1);
+    border-color: rgba(41, 151, 255, 0.3);
+    color: #2997ff;
+}
+
+.j-month-title {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #fff;
+    margin: 0;
+}
+
+.journal-cal-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.journal-cal-weekdays span {
+    font-size: 0.6rem;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.25);
+    letter-spacing: 0.1em;
+    padding: 8px 0;
+}
+
+.journal-cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+}
+
+/* Day Cells */
+.j-cal-cell {
+    aspect-ratio: 1;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    padding: 4px;
+    transition: all 0.2s ease;
+    position: relative;
+    border: 1px solid transparent;
+}
+
+.j-cal-cell.empty {
+    background: transparent;
+}
+
+.j-cal-cell:not(.empty):not(.has-data) {
+    background: rgba(255, 255, 255, 0.015);
+}
+
+.j-cal-cell.has-data {
+    cursor: pointer;
+}
+
+.j-cal-cell.day-win {
+    background: rgba(48, 209, 88, 0.06);
+    border-color: rgba(48, 209, 88, 0.12);
+}
+
+.j-cal-cell.day-loss {
+    background: rgba(255, 59, 48, 0.06);
+    border-color: rgba(255, 59, 48, 0.12);
+}
+
+.j-cal-cell.has-data:hover {
+    transform: scale(1.08);
+    z-index: 2;
+}
+
+.j-cal-cell.day-win:hover {
+    background: rgba(48, 209, 88, 0.12);
+    border-color: rgba(48, 209, 88, 0.3);
+    box-shadow: 0 4px 12px rgba(48, 209, 88, 0.15);
+}
+
+.j-cal-cell.day-loss:hover {
+    background: rgba(255, 59, 48, 0.12);
+    border-color: rgba(255, 59, 48, 0.3);
+    box-shadow: 0 4px 12px rgba(255, 59, 48, 0.15);
+}
+
+.j-cal-cell.selected {
+    transform: scale(1.08);
+    z-index: 2;
+}
+
+.j-cal-cell.selected.day-win {
+    background: rgba(48, 209, 88, 0.18);
+    border-color: rgba(48, 209, 88, 0.5);
+    box-shadow: 0 0 16px rgba(48, 209, 88, 0.2);
+}
+
+.j-cal-cell.selected.day-loss {
+    background: rgba(255, 59, 48, 0.18);
+    border-color: rgba(255, 59, 48, 0.5);
+    box-shadow: 0 0 16px rgba(255, 59, 48, 0.2);
+}
+
+.j-cal-cell.today {
+    border-color: rgba(41, 151, 255, 0.3);
+}
+
+.j-day-num {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.j-cal-cell.has-data .j-day-num {
+    color: #fff;
+}
+
+.j-day-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+}
+
+.j-day-pl {
+    font-size: 0.6rem;
+    font-weight: 800;
+    font-family: var(--font-mono, 'SF Mono', monospace);
+}
+
+.j-day-pl.pl-win {
+    color: #30d158;
+}
+
+.j-day-pl.pl-loss {
+    color: #ff3b30;
+}
+
+.j-day-count {
+    font-size: 0.5rem;
+    color: rgba(255, 255, 255, 0.25);
+    font-weight: 700;
+}
+
+/* Calendar Legend */
+.journal-cal-legend {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.3);
+    font-weight: 600;
+}
+
+.legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.legend-dot.win {
+    background: #30d158;
+}
+
+.legend-dot.loss {
+    background: #ff3b30;
+}
+
+.legend-dot.today-dot {
+    background: #2997ff;
+}
+
+/* ===== Detail Panel ===== */
+.journal-detail-panel {
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    padding: 24px;
+    backdrop-filter: blur(8px);
+    min-height: 400px;
+}
+
+/* Day Detail */
+.j-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+}
+
+.j-detail-header>div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.j-detail-date {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #fff;
+}
+
+.j-detail-pl {
+    font-size: 1.3rem;
+    font-weight: 900;
+    font-family: var(--font-mono, 'SF Mono', monospace);
+}
+
+.j-detail-pl.pl-win {
+    color: #30d158;
+}
+
+.j-detail-pl.pl-loss {
+    color: #ff3b30;
+}
+
+.j-close-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.j-close-btn:hover {
+    background: rgba(255, 59, 48, 0.1);
+    border-color: rgba(255, 59, 48, 0.3);
+    color: #ff3b30;
+}
+
+/* Day Summary Row */
+.j-detail-summary {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.j-sum-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+}
+
+.j-sum-label {
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.j-sum-val {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #fff;
+}
+
+/* Trade Cards */
+.j-trades-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.j-trade-card {
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.02);
+    transition: all 0.2s ease;
+}
+
+.j-trade-card.win {
+    border-left: 3px solid #30d158;
+}
+
+.j-trade-card.loss {
+    border-left: 3px solid #ff3b30;
+}
+
+.j-trade-card:hover {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.j-trade-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.j-trade-symbol-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.j-trade-symbol {
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: #fff;
+}
+
+.j-trade-action {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 0.6rem;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.05em;
+}
+
+.j-trade-action.BUY {
+    background: rgba(48, 209, 88, 0.1);
+    color: #30d158;
+}
+
+.j-trade-action.SELL {
+    background: rgba(255, 59, 48, 0.1);
+    color: #ff3b30;
+}
+
+.j-trade-result {
+    font-size: 0.95rem;
+    font-weight: 800;
+    font-family: var(--font-mono, 'SF Mono', monospace);
+}
+
+.j-trade-result.win {
+    color: #30d158;
+}
+
+.j-trade-result.loss {
+    color: #ff3b30;
+}
+
+.j-trade-meta {
+    display: flex;
+    gap: 12px;
+    margin-top: 6px;
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.3);
+    font-weight: 600;
+}
+
+.j-trade-notes {
+    margin: 6px 0 0;
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.4);
+    font-style: italic;
+    line-height: 1.4;
+}
+
+/* ===== Stats Panel (right side default) ===== */
+.j-stats-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #fff;
+    margin: 0 0 16px;
+}
+
+.j-stats-title svg {
+    color: #2997ff;
+}
+
+.j-stats-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.j-stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.j-stat-row.highlight {
+    padding: 14px 12px;
+    margin-top: 4px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.j-stat-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.j-stat-val {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #fff;
+    font-family: var(--font-mono, 'SF Mono', monospace);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.j-stat-divider {
+    color: rgba(255, 255, 255, 0.15);
+    font-weight: 400;
+}
+
+/* Recent Trades (stats panel) */
+.j-recent-title {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.35);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 24px 0 12px;
+}
+
+.j-recent-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.j-recent-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    transition: all 0.2s ease;
+}
+
+.j-recent-item:hover {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.j-recent-badge {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    font-size: 0.65rem;
+    font-weight: 900;
+    flex-shrink: 0;
+}
+
+.j-recent-badge.win {
+    background: rgba(48, 209, 88, 0.15);
+    color: #30d158;
+}
+
+.j-recent-badge.loss {
+    background: rgba(255, 59, 48, 0.15);
+    color: #ff3b30;
+}
+
+.j-recent-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.j-recent-sym {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.j-recent-date {
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.25);
+}
+
+.j-recent-pl {
+    font-size: 0.82rem;
+    font-weight: 800;
+    font-family: var(--font-mono, 'SF Mono', monospace);
+}
+
+/* ===== Reusable Val Colors ===== */
+.val-green {
+    color: #30d158 !important;
+}
+
+.val-red {
+    color: #ff3b30 !important;
+}
+
+/* ===== Modal ===== */
+.j-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 20px;
+}
+
+.j-modal {
+    width: 100%;
+    max-width: 520px;
+    background: #0c0c0e;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+    animation: j-modal-in 0.25s ease;
+}
+
+@keyframes j-modal-in {
+    from {
+        opacity: 0;
+        transform: scale(0.96) translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.j-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.j-modal-header h3 {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #fff;
+    margin: 0;
+}
+
+.j-modal-body {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.j-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.j-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.j-form-group.full {
+    grid-column: 1 / -1;
+}
+
+.j-form-group label {
+    font-size: 0.65rem;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.35);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.j-form-group input,
+.j-form-group select,
+.j-form-group textarea {
+    width: 100%;
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: border-color 0.2s ease;
+    outline: none;
+    font-family: inherit;
+}
+
+.j-form-group input:focus,
+.j-form-group select:focus,
+.j-form-group textarea:focus {
+    border-color: rgba(41, 151, 255, 0.4);
+}
+
+.j-form-group textarea {
+    resize: vertical;
+    min-height: 50px;
+}
+
+/* Toggle Buttons */
+.j-toggle-row {
+    display: flex;
+    gap: 6px;
+}
+
+.j-toggle {
+    flex: 1;
+    padding: 9px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.03);
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.72rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.j-toggle.buy.active {
+    background: rgba(48, 209, 88, 0.15);
+    border-color: #30d158;
+    color: #30d158;
+}
+
+.j-toggle.sell.active {
+    background: rgba(255, 59, 48, 0.15);
+    border-color: #ff3b30;
+    color: #ff3b30;
+}
+
+.j-toggle.win.active {
+    background: rgba(48, 209, 88, 0.15);
+    border-color: #30d158;
+    color: #30d158;
+}
+
+.j-toggle.loss.active {
+    background: rgba(255, 59, 48, 0.15);
+    border-color: #ff3b30;
+    color: #ff3b30;
+}
+
+.j-submit-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #2997ff, #0071e3);
+    border: none;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 0.88rem;
+    font-weight: 800;
+    cursor: pointer;
+    margin-top: 6px;
+    transition: all 0.2s ease;
+}
+
+.j-submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(41, 151, 255, 0.35);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 900px) {
+    .journal-main-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .journal-analytics {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

@@ -1,0 +1,679 @@
+/* Account Page Styles */
+
+.account-page {
+    position: relative;
+    max-width: 448px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background: var(--background-dark, #0a0a0a);
+    color: var(--text-primary, #ffffff);
+    overflow: hidden;
+    padding-bottom: 2rem;
+}
+
+/* Ambient Background Glows */
+.ambient-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.glow-top {
+    top: -10%;
+    right: -20%;
+    width: 16rem;
+    height: 16rem;
+    background: rgba(236, 91, 19, 0.1);
+}
+
+.glow-bottom {
+    bottom: 20%;
+    left: -20%;
+    width: 18rem;
+    height: 18rem;
+    background: rgba(236, 91, 19, 0.05);
+}
+
+/* Header */
+.account-header {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem;
+}
+
+.back-btn,
+.help-btn {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.75rem;
+    transition: background-color 0.3s;
+    cursor: pointer;
+    border: none;
+    color: rgba(148, 163, 184, 1);
+}
+
+.back-btn:hover,
+.help-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.header-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 0;
+}
+
+/* Glass Card Effect */
+.glass-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glow-accent {
+    box-shadow: 0 0 20px rgba(236, 91, 19, 0.15);
+}
+
+/* Main Content */
+.account-main {
+    position: relative;
+    z-index: 10;
+    padding: 1rem 1.5rem;
+}
+
+/* Title Section */
+.title-section {
+    margin-bottom: 2rem;
+}
+
+.main-title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.75rem 0;
+}
+
+.main-subtitle {
+    color: rgba(148, 163, 184, 1);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Platform Selector */
+.platform-selector {
+    margin-bottom: 2rem;
+}
+
+.section-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(148, 163, 184, 1);
+    margin-bottom: 1rem;
+    margin-left: 0.25rem;
+}
+
+.platform-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.platform-card-wrapper {
+    position: relative;
+    cursor: pointer;
+}
+
+.platform-radio {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.platform-card {
+    position: relative;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    height: 100%;
+    min-height: 100px;
+}
+
+.platform-card:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.platform-card.selected {
+    border-color: #ec5b13;
+    background: rgba(236, 91, 19, 0.05);
+}
+
+.platform-icon {
+    width: 3rem;
+    height: 3rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.platform-name {
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.check-indicator {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    color: #ec5b13;
+    font-size: 1.125rem;
+    opacity: 1;
+    transition: opacity 0.3s;
+}
+
+/* Connection Form */
+.connection-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon {
+    position: absolute;
+    left: 1rem;
+    font-size: 1.25rem;
+    color: rgba(148, 163, 184, 1);
+    pointer-events: none;
+}
+
+.form-input,
+.form-select {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.75rem;
+    padding: 1rem 1rem 1rem 3rem;
+    font-size: 0.875rem;
+    color: #ffffff;
+    transition: all 0.3s;
+}
+
+.form-input::placeholder {
+    color: rgba(100, 116, 139, 1);
+}
+
+.form-input:focus,
+.form-select:focus {
+    outline: none;
+    border-color: rgba(236, 91, 19, 0.5);
+    box-shadow: 0 0 0 2px rgba(236, 91, 19, 0.3);
+}
+
+.form-select {
+    appearance: none;
+    cursor: pointer;
+    padding-right: 3rem;
+}
+
+.select-icon {
+    position: absolute;
+    right: 1rem;
+    color: rgba(148, 163, 184, 1);
+    pointer-events: none;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: rgba(148, 163, 184, 1);
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s;
+}
+
+.password-toggle:hover {
+    color: rgba(203, 213, 225, 1);
+}
+
+/* Form Footer */
+.form-footer {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.error-message {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: 0.75rem;
+}
+
+.error-icon {
+    font-size: 1.125rem;
+}
+
+.error-text {
+    font-size: 0.875rem;
+    color: #ef4444;
+    font-weight: 500;
+}
+
+.btn-connect {
+    width: 100%;
+    background: #ec5b13;
+    color: #ffffff;
+    font-weight: 700;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(236, 91, 19, 0.2);
+}
+
+.btn-connect:hover:not(:disabled) {
+    background: rgba(236, 91, 19, 0.9);
+    transform: scale(0.98);
+}
+
+.btn-connect:active:not(:disabled) {
+    transform: scale(0.96);
+}
+
+.btn-connect:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-icon {
+    font-size: 1.25rem;
+}
+
+.security-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+}
+
+.security-icon {
+    color: #10b981;
+}
+
+.security-text {
+    font-size: 0.75rem;
+    color: rgba(148, 163, 184, 1);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+}
+
+/* Balance Section */
+.balance-section {
+    margin-bottom: 2rem;
+}
+
+.balance-card {
+    padding: 2rem;
+    border-radius: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #1e3a8a 100%);
+    box-shadow: 0 10px 30px -10px rgba(37, 99, 235, 0.5);
+}
+
+.balance-card::before {
+    content: '';
+    position: absolute;
+    top: -10%;
+    right: -10%;
+    width: 10rem;
+    height: 10rem;
+    background: rgba(96, 165, 250, 0.2);
+    border-radius: 50%;
+    filter: blur(60px);
+}
+
+.balance-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.status-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    background: #10b981;
+    border-radius: 50%;
+}
+
+.status-label {
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: rgba(191, 219, 254, 1);
+}
+
+.refresh-btn {
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.3s;
+}
+
+.refresh-btn:hover {
+    opacity: 1;
+}
+
+.balance-main {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.balance-amount {
+    font-size: 3rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.5rem 0;
+}
+
+.currency,
+.decimals {
+    font-size: 1.875rem;
+    font-weight: 300;
+    color: rgba(191, 219, 254, 0.6);
+}
+
+.balance-change {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.change-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    font-size: 0.625rem;
+}
+
+.change-icon {
+    font-size: 0.75rem;
+}
+
+.change-percent {
+    color: #10b981;
+    font-weight: 700;
+}
+
+.change-amount {
+    font-size: 0.625rem;
+    font-weight: 700;
+    color: rgba(191, 219, 254, 0.6);
+}
+
+.balance-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.stat-card {
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+.stat-card .stat-icon {
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(30, 58, 138, 0.4);
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.stat-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.stat-label {
+    font-size: 0.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(191, 219, 254, 0.6);
+    margin: 0;
+}
+
+.stat-value {
+    font-size: 0.875rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.stat-value.positive {
+    color: #10b981;
+}
+
+/* Trade History */
+.history-section {
+    margin-top: 2rem;
+    padding: 0 0.5rem;
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding: 0 0.25rem;
+}
+
+.history-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.see-all-btn {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #60a5fa;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.see-all-btn:hover {
+    color: #93c5fd;
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.history-item {
+    padding: 1.25rem;
+    border-radius: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.history-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.trade-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(17, 24, 39, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.625rem;
+    font-weight: 700;
+}
+
+.trade-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.trade-header-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.trade-symbol {
+    font-size: 0.875rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.trade-type {
+    font-size: 0.5625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.trade-type.sell {
+    color: #ef4444;
+}
+
+.trade-type.buy {
+    color: #60a5fa;
+}
+
+.trade-time {
+    font-size: 0.625rem;
+    color: rgba(148, 163, 184, 1);
+    margin: 0;
+}
+
+.history-right {
+    text-align: right;
+}
+
+.trade-profit {
+    font-size: 0.875rem;
+    font-weight: 700;
+    margin: 0 0 0.25rem 0;
+}
+
+.trade-profit.positive {
+    color: #10b981;
+}
+
+.trade-profit.negative {
+    color: #ef4444;
+}
+
+.trade-status {
+    font-size: 0.5625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(148, 163, 184, 1);
+    margin: 0;
+}
+
+/* Disconnect Section */
+.disconnect-section {
+    margin-top: 2rem;
+    padding: 0 0.5rem;
+}
+
+.btn-disconnect {
+    width: 100%;
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    font-weight: 600;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: all 0.3s;
+}
+
+.btn-disconnect:hover {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.3);
+}

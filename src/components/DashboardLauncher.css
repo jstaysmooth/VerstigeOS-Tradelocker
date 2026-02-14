@@ -1,0 +1,110 @@
+.os-launcher {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    z-index: 1000;
+}
+
+.launcher-nav {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.launcher-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    padding: 0 16px;
+    /* Increased padding for pill shape */
+    color: var(--secondary);
+    border-radius: var(--border-radius-full);
+    text-decoration: none;
+    cursor: pointer;
+    /* Remove default transitions that fight concurrent layout animations */
+}
+
+/* Background pill for active state */
+.active-bg {
+    position: absolute;
+    inset: 0;
+    background: rgba(41, 151, 255, 0.15);
+    /* Stronger active bg */
+    border-radius: var(--border-radius-full);
+    z-index: 0;
+}
+
+.launcher-item:hover {
+    color: #fff;
+    /* Highlight text on hover */
+}
+
+.launcher-item.active {
+    color: var(--primary);
+    /* Keep active text color */
+}
+
+.launcher-content {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    /* Let motion div handle spacing via width */
+    z-index: 1;
+    /* Sit above active-bg */
+}
+
+.icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+}
+
+.launcher-label-container {
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.launcher-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding-left: 10px;
+    display: block;
+}
+
+.launcher-divider {
+    width: 1px;
+    height: 32px;
+    background: var(--glass-border);
+    margin: 0 8px;
+}
+
+.launcher-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.animate-slide-up {
+    animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+    from {
+        transform: translate(-50%, 100px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
+}
