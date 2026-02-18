@@ -50,7 +50,10 @@ const ONBOARDING_STEPS = [
 // Mock data removed in favor of API
 
 
+import { useUser } from '@/context/UserContext';
+
 export default function DashboardPage() {
+    const { profile, loading: authLoading } = useUser();
     const [activeTab, setActiveTab] = useState('ALL');
     const [newPostContent, setNewPostContent] = useState('');
     const [showPostComposer, setShowPostComposer] = useState(false);
@@ -93,6 +96,7 @@ export default function DashboardPage() {
         const interval = setInterval(fetchPosts, 10000);
         return () => clearInterval(interval);
     }, []);
+
     const [tradeData, setTradeData] = useState({
         pair: '',
         profit: '',
@@ -100,13 +104,15 @@ export default function DashboardPage() {
         direction: 'LONG'
     });
 
+    const userDisplayName = profile ? `${profile.firstName} ${profile.lastName}` : "Your Name";
+
     const handleShareTrade = () => {
         // Create new trade post
         const newPost = {
             id: posts.length + 1,
             type: 'trade_win' as const,
             user: {
-                name: 'Your Name',
+                name: userDisplayName,
                 avatar: '👤',
                 occupation: 'Professional Trader',
                 rank: 'Manager'
@@ -134,27 +140,48 @@ export default function DashboardPage() {
     };
 
     const [leaderboardData, setLeaderboardData] = useState<any[]>([]);
-    const [currentUserId, setCurrentUserId] = useState<string | null>(null);
     const [activeCommentPostId, setActiveCommentPostId] = useState<string | null>(null);
     const [commentText, setCommentText] = useState('');
 
-    // Initialize User
     useEffect(() => {
-        const initUser = async () => {
-            let uid = localStorage.getItem('v2_user_id');
-            if (!uid) {
-                uid = await api.createTestUser("user_" + Math.floor(Math.random() * 10000));
-                if (uid) localStorage.setItem('v2_user_id', uid);
-            }
-            setCurrentUserId(uid);
+        const fetchLeaderboard = async () => {
+            const data = await api.getLeaderboard(activeTab);
+            const mapped = data.map((u: ApiUser, idx: number) => {
+                const sales = u.sales_revenue || 0;
+                const trading = u.trading_yield || 0;
+                const total = sales + trading;
+
+                let roles = [];
+                try {
+                    roles = JSON.parse(u.roles || "[]");
+                } catch (e) {
+                    roles = ["Member"];
+                }
+
+                return {
+                    rank: idx + 1,
+                    name: u.username,
+                    sales: `$${sales.toLocaleString()}`,
+                    trading: `$${trading.toLocaleString()}`,
+                    total: `$${total.toLocaleString()}`,
+                    roles: roles,
+                    trend: u.trend || "+0%"
+                };
+            });
+            setLeaderboardData(mapped);
         };
-        initUser();
-    }, []);
+        fetchLeaderboard();
+
+        // Poll leaderboard every 30 seconds
+        const interval = setInterval(fetchLeaderboard, 30000);
+        return () => clearInterval(interval);
+    }, [activeTab]);
 
     const handleLike = async (post: any) => {
-        if (!currentUserId) return;
+        const uid = localStorage.getItem('v2_user_id');
+        if (!uid) return;
         try {
-            const res = await api.likePost(post.id, currentUserId);
+            const res = await api.likePost(post.id, uid);
             if (res.status === 'success') {
                 setPosts(prev => prev.map(p => p.id === post.id ? { ...p, likes: res.likes_count } : p));
             }
@@ -164,9 +191,10 @@ export default function DashboardPage() {
     };
 
     const handleCommentSubmit = async (postId: string) => {
-        if (!currentUserId || !commentText.trim()) return;
+        const uid = localStorage.getItem('v2_user_id');
+        if (!uid || !commentText.trim()) return;
         try {
-            const res = await api.commentPost(postId, currentUserId, commentText);
+            const res = await api.commentPost(postId, uid, commentText);
             if (res.status === 'success') {
                 setPosts(prev => prev.map(p => p.id === postId ? { ...p, comments: res.comments_count } : p));
                 setActiveCommentPostId(null);

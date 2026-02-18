@@ -13,8 +13,12 @@ import SalesPipeline from '@/components/sales/SalesPipeline';
 import { useMetaStats } from '@/hooks/useMetaStats';
 import '@/styles/pages/Profile.css';
 
+import { useUser } from '@/context/UserContext';
+import './DashboardHeader.css';
+
 const ProfilePage = () => {
     const router = useRouter();
+    const { user, profile, loading: userLoading } = useUser();
     const [closedDeals, setClosedDeals] = useState(0);
     const [totalCommissions, setTotalCommissions] = useState(0);
     const [pendingCommissions, setPendingCommissions] = useState(0);
@@ -47,13 +51,9 @@ const ProfilePage = () => {
         return () => window.removeEventListener('dealClosed', calculateStats);
     }, []);
 
-    const user = {
-        name: "Slade Wilson",
-        rank: "Executive Director",
-        joinDate: "Jan 2024",
-        totalSales: 842000,
-        id: "VS-9428-ID"
-    };
+    const userDisplayName = profile ? `${profile.firstName} ${profile.lastName}` : "Verstige User";
+    const displayId = user ? `VS-${user.id.substring(0, 4).toUpperCase()}-ID` : "VS-AUTH-ID";
+    const joinDate = profile?.joinDate || "Jan 2024";
 
     return (
         <div className="profile-container animate-fade-in">
@@ -66,19 +66,19 @@ const ProfilePage = () => {
 
                 <div className="profile-hero-content">
                     <div className="user-identity-block">
-                        <div className="text-[10px] font-black uppercase tracking-[0.4em] text-secondary mb-2 opacity-60">Identity Verified · {user.id}</div>
-                        <h1>{user.name}</h1>
+                        <div className="text-[10px] font-black uppercase tracking-[0.4em] text-secondary mb-2 opacity-60">Identity Verified · {displayId}</div>
+                        <h1>{userLoading ? "Loading Identity..." : userDisplayName}</h1>
                         <div className="user-rank-strip">
-                            <span className="rank-text">{user.rank}</span>
+                            <span className="rank-text">{profile?.divisions?.includes('sales') ? 'Executive Director' : 'Active Trader'}</span>
                             <span className="h-1 w-1 rounded-full bg-white/20"></span>
-                            <span className="member-since">Member Since {user.joinDate}</span>
+                            <span className="member-since">Member Since {joinDate}</span>
                         </div>
                     </div>
 
                     <div className="hero-stats-mesh">
                         <div className="hero-stat-item">
                             <span className="hero-stat-label">Network Volume</span>
-                            <span className="hero-stat-value">${user.totalSales.toLocaleString()}</span>
+                            <span className="hero-stat-value">$842,000</span>
                         </div>
                         <div className="hero-stat-item">
                             <span className="hero-stat-label">Direct Assets</span>

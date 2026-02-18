@@ -103,6 +103,8 @@ export default function GetStartedPage() {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
+    const [signupSuccess, setSignupSuccess] = useState(false);
+
     const handleCreateAccount = async () => {
         setError(null);
         if (formData.password !== formData.confirmPassword) {
@@ -128,26 +130,41 @@ export default function GetStartedPage() {
 
             if (error) throw error;
 
-            // Auto-signin often happens on signup if email confirmation is disabled. 
-            // If email confirmation is enabled, data.session will be null.
-            if (data.session) {
+            setSignupSuccess(true);
+
+            // If session is present, it means auto-login happened. 
+            // If not, they must confirm email. 
+            setTimeout(() => {
                 router.push('/dashboard/trading');
-            } else {
-                // Even if session is null (email confirmation needed), we redirect or show message. 
-                // For now, assume dev environment allows auto-login or user can check email.
-                // But wait, if we redirect without session, the signals will still fail.
-                // We should alert the user.
-                alert("Account created! Please check your email to confirm if required.");
-                router.push('/dashboard/trading');
-            }
+            }, data.session ? 1500 : 5000);
 
         } catch (err: any) {
             console.error("Signup failed:", err);
             setError(err.message || "Failed to create account");
-        } finally {
             setLoading(false);
         }
     };
+
+    if (signupSuccess) {
+        return (
+            <div className="get-started-page flex items-center justify-center p-8">
+                <div className="glass-panel p-12 max-w-md w-full text-center animate-fade-in-up">
+                    <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <Check size={40} className="text-green-500" />
+                    </div>
+                    <h1 className="text-3xl font-black mb-4">Account Created!</h1>
+                    <p className="text-secondary mb-8 leading-relaxed">
+                        Initializing your ecosystem protocols.
+                        {!supabase.auth.getSession() && " Please check your email inbox to verify your account before accessing the full terminal."}
+                    </p>
+                    <div className="loading-bar-mini mb-4">
+                        <div className="loading-fill-animated"></div>
+                    </div>
+                    <p className="text-[10px] uppercase tracking-widest font-bold opacity-50">Redirecting to Dashboard...</p>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="get-started-page animate-fade-in">

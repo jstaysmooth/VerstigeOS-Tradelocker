@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useUser } from '@/context/UserContext';
 import './DashboardHeader.css';
 
 interface DashboardHeaderProps {
@@ -11,9 +12,10 @@ interface DashboardHeaderProps {
 const DashboardHeader: React.FC<DashboardHeaderProps> = ({
     title,
     subtitle,
-    badgeText = "Welcome back, Slade Johnson",
+    badgeText,
     showStatus = true
 }) => {
+    const { profile, loading } = useUser();
     const [time, setTime] = useState<string>("");
     const [mounted, setMounted] = useState(false);
 
@@ -23,6 +25,9 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
         const timer = setInterval(() => setTime(new Date().toLocaleTimeString()), 1000);
         return () => clearInterval(timer);
     }, []);
+
+    const userFullName = profile ? `${profile.firstName} ${profile.lastName}` : "Trader";
+    const initials = profile ? `${profile.firstName[0]}${profile.lastName[0] || ""}` : "TR";
 
     // Split title to apply gradient to the last word if it's more than one word
     const titleParts = title.split(' ');
@@ -34,10 +39,12 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
             <div className="header-bg-glow" />
             <div className="header-content-centered">
                 <div className="user-badge glass-panel">
-                    <div className="avatar">SJ</div>
-                    <span>{badgeText === "Welcome back, Slade Johnson" ? (
-                        <>Welcome back, <strong>Slade Johnson</strong></>
-                    ) : badgeText}</span>
+                    <div className="avatar">{initials}</div>
+                    <span>
+                        {loading ? "Aligning systems..." : (
+                            badgeText || <>Welcome back, <strong>{userFullName}</strong></>
+                        )}
+                    </span>
                 </div>
                 <h1 className="hero-display centered-title">
                     {firstPart} {lastWord && <span className="gradient-text-blue">{lastWord}</span>}
