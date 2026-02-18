@@ -1,5 +1,6 @@
 
-const API_BASE = 'http://localhost:8000/api';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const API_BASE = `${API_URL}/api`;
 
 export interface ApiUser {
     id: string;

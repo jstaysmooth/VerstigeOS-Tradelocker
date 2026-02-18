@@ -70,7 +70,8 @@ export default function AccountConnectionModal({ onClose }: AccountConnectionMod
 
             console.log("Selecting Account:", { accountId, selectedAccountId, userId });
 
-            const response = await fetch('http://localhost:8000/api/tradelocker/select-account', {
+            const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+            const response = await fetch(`${API_URL}/api/tradelocker/select-account`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -147,7 +148,8 @@ export default function AccountConnectionModal({ onClose }: AccountConnectionMod
 
         try {
             if (selectedPlatform === 'tradelocker') {
-                const response = await fetch('http://localhost:8000/api/tradelocker/authenticate', {
+                const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+                const response = await fetch(`${API_URL}/api/tradelocker/authenticate`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({

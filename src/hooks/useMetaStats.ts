@@ -22,8 +22,8 @@ export const useMetaStats = (accountId: string | null) => {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        // In a real app, accountId might be used to filter events or authenticate
-        const socket: Socket = io('http://localhost:8000', {
+        const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+        const socket: Socket = io(API_URL, {
             transports: ['websocket'],
             autoConnect: true,
         });

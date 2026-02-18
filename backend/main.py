@@ -38,12 +38,20 @@ logger = logging.getLogger("VerstigeBackend")
 app = FastAPI()
 
 # Initialize Socket.IO globally
-sio = socketio.AsyncServer(async_mode="asgi", cors_allowed_origins=["http://localhost:3000", "http://127.0.0.1:3000"])
+ALLOWED_ORIGINS = [
+    "http://localhost:3000", 
+    "http://127.0.0.1:3000",
+    "https://verstige.io",
+    "http://verstige.io",
+    "https://verstige-os-v2.netlify.app" # Adding just in case they use netlify subdomain
+]
+
+sio = socketio.AsyncServer(async_mode="asgi", cors_allowed_origins=ALLOWED_ORIGINS)
 
 # Add CORS middleware to allow frontend requests
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
