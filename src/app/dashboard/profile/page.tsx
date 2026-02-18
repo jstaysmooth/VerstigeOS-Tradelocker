@@ -14,7 +14,7 @@ import { useMetaStats } from '@/hooks/useMetaStats';
 import '@/styles/pages/Profile.css';
 
 import { useUser } from '@/context/UserContext';
-import './DashboardHeader.css';
+import '@/components/DashboardHeader.css';
 
 const ProfilePage = () => {
     const router = useRouter();
