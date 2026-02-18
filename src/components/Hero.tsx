@@ -3,9 +3,13 @@ import React, { useState } from 'react';
 import HeroBackground from './HeroBackground';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ChevronRight, Shield, Zap, TrendingUp, Activity, Users, Cpu } from 'lucide-react';
+import { useUser } from '@/context/UserContext';
+import { useRouter } from 'next/navigation';
 import './Hero.css';
 
 const Hero: React.FC = () => {
+    const { user } = useUser();
+    const router = useRouter();
     const { scrollY } = useScroll();
     const y1 = useTransform(scrollY, [0, 500], [0, -100]);
     const y2 = useTransform(scrollY, [0, 500], [0, -200]);
@@ -63,10 +67,19 @@ const Hero: React.FC = () => {
                     transition={{ duration: 0.8, delay: 0.6 }}
                     className="hero-actions"
                 >
-                    <button className="btn-primary">
+                    <button
+                        className="btn-primary"
+                        onClick={() => router.push(user ? '/dashboard' : '/get-started')}
+                    >
                         Enter the Ecosystem <ChevronRight size={18} />
                     </button>
-                    <button className="btn-secondary">
+                    <button
+                        className="btn-secondary"
+                        onClick={() => {
+                            const divisionsSection = document.querySelector('.divisions-section');
+                            divisionsSection?.scrollIntoView({ behavior: 'smooth' });
+                        }}
+                    >
                         View Divisions
                     </button>
                 </motion.div>

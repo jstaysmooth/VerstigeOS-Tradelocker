@@ -2,9 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Menu, X, Command } from 'lucide-react';
+import { useUser } from '@/context/UserContext';
 import './Navbar.css';
 
 const Navbar: React.FC = () => {
+    const { user } = useUser();
     const [scrolled, setScrolled] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
 
@@ -26,7 +28,11 @@ const Navbar: React.FC = () => {
                     <Link href="/" onClick={() => setIsOpen(false)}>Ecosystem</Link>
                     <Link href="/" onClick={() => setIsOpen(false)}>Divisions</Link>
                     <Link href="/" onClick={() => setIsOpen(false)}>Updates</Link>
-                    <Link href="/dashboard" className="btn-nav" onClick={() => setIsOpen(false)}>Dashboard</Link>
+                    {user ? (
+                        <Link href="/dashboard" className="btn-nav" onClick={() => setIsOpen(false)}>Dashboard</Link>
+                    ) : (
+                        <Link href="/get-started" className="btn-nav" onClick={() => setIsOpen(false)}>Get Started</Link>
+                    )}
                 </div>
 
                 <button className="nav-mobile-toggle" onClick={() => setIsOpen(!isOpen)}>
