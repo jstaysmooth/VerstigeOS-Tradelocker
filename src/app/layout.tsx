@@ -1,18 +1,10 @@
 import type { Metadata } from "next";
-import { Outfit, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import CodeDripBackground from "@/components/CodeDripBackground";
 import NavbarWrapper from "@/components/NavbarWrapper";
 
-const outfit = Outfit({
-    variable: "--font-outfit",
-    subsets: ["latin"],
-});
-
-const jetbrainsMono = JetBrains_Mono({
-    variable: "--font-jetbrains-mono",
-    subsets: ["latin"],
-});
+const outfitVariable = "font-outfit";
+const jetbrainsMonoVariable = "font-jetbrains-mono";
 
 export const metadata: Metadata = {
     title: "Verstige | The Private Operating System for Visionaries",
@@ -25,7 +17,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" className={`${outfit.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
+        <html lang="en" className={`${outfitVariable} ${jetbrainsMonoVariable}`} suppressHydrationWarning>
             <body>
                 <CodeDripBackground />
                 <NavbarWrapper />
