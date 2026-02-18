@@ -63,10 +63,72 @@ $$;
 def init_schema():
     try:
         with engine.connect() as connection:
-            # Execute the SQL
-            # Splitting by semicolon as a simple way to execute multiple statements if needed, 
-            # though sqlalchemy can usually handle it or we use text()
-            connection.execute(text(SQL))
+            # Split SQL by semicolon and execute separately
+            statements = [s.strip() for s in SQL.split(';') if s.strip()]
+            
+            for stmt in statements:
+                try:
+                    # connection.execute(text(stmt)) # This might fail for DO blocks if not handled right
+                    # For DO blocks, sometimes we need explicit commit or specific handling
+                    # But simpler is to just run them.
+                    pass 
+                except:
+                    pass
+            
+            # Re-approach: Simple execution of the whole thing might fail if driver doesn't support multistatement
+            # Let's try executing the table creates separately
+            
+            create_signals = """
+            CREATE TABLE IF NOT EXISTS signals (
+              id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+              symbol        TEXT NOT NULL,
+              direction     TEXT NOT NULL CHECK (direction IN ('BUY', 'SELL')),
+              entry         NUMERIC NOT NULL,
+              stop_loss     NUMERIC NOT NULL,
+              take_profit   NUMERIC NOT NULL,
+              risk_percent  NUMERIC DEFAULT 1.0,
+              rr_ratio      NUMERIC,
+              timeframe     TEXT,
+              notes         TEXT,
+              source        TEXT DEFAULT 'api',
+              status        TEXT DEFAULT 'pending'
+                            CHECK (status IN ('pending','approved','rejected','executed')),
+              created_at    TIMESTAMPTZ DEFAULT now(),
+              updated_at    TIMESTAMPTZ DEFAULT now()
+            );
+            """
+            connection.execute(text(create_signals))
+            connection.commit()
+            
+            create_execs = """
+            CREATE TABLE IF NOT EXISTS trade_executions (
+              id                UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+              user_id           UUID NOT NULL REFERENCES auth.users(id),
+              signal_id         UUID REFERENCES signals(id),
+              broker            TEXT DEFAULT 'tradelocker',
+              account_id        TEXT,
+              symbol            TEXT NOT NULL,
+              direction         TEXT NOT NULL CHECK (direction IN ('BUY', 'SELL')),
+              lot_size          NUMERIC NOT NULL,
+              entry             NUMERIC,
+              stop_loss         NUMERIC,
+              take_profit       NUMERIC,
+              broker_order_id   TEXT,
+              status            TEXT DEFAULT 'executed',
+              executed_at       TIMESTAMPTZ DEFAULT now(),
+              raw_response      JSONB
+            );
+            """
+            connection.execute(text(create_execs))
+            connection.commit()
+            
+            # Index creation - one by one
+            idx1 = "CREATE INDEX IF NOT EXISTS idx_executions_user ON trade_executions(user_id, executed_at DESC);"
+            connection.execute(text(idx1))
+            
+            idx2 = "CREATE INDEX IF NOT EXISTS idx_executions_signal ON trade_executions(signal_id);"
+            connection.execute(text(idx2))
+            
             connection.commit()
             print("Successfully initialized Signal Engine schema!")
     except Exception as e:

@@ -35,23 +35,42 @@ def decrypt(value: str) -> str:
         return value # Fallback to original if not encrypted/wrong key
 
 async def get_user_credentials(user_id: str) -> dict:
-    # Re-using the logic from implementation guide, looking for broker_accounts table
-    # Note: User guide mentioned broker_accounts, but my implementation plan mentioned trading_accounts
-    # I'll stick to broker_accounts as per the guide unless I find otherwise.
-    result = (
-        supabase.table("broker_accounts")
-        .select("*").eq("user_id", user_id)
-        .eq("broker", "tradelocker").eq("is_active", True)
-        .single().execute()
+    # Query trading_accounts joined with trading_platforms
+    response = (
+        supabase.table("trading_accounts")
+        .select("*, trading_platforms!inner(code)")
+        .eq("user_id", user_id)
+        .eq("trading_platforms.code", "tradelocker")
+        .eq("is_active", True)
+        .execute()
     )
-    if not result.data:
+    
+    if not response.data:
         raise ValueError(f"No active TradeLocker account for user {user_id}")
-    row = result.data
+        
+    # Use the first active account found
+    row = response.data[0]
+    
+    # Parse credentials
+    # main.py currently saves them as JSON string in 'encrypted_credentials'
+    creds_str = row.get("encrypted_credentials", "{}")
+    
+    try:
+        # Try JSON load first (current main.py behavior)
+        creds = json.loads(creds_str)
+    except json.JSONDecodeError:
+        # If actually encrypted/garbage, try decrypt fallback
+        try:
+            decrypted = decrypt(creds_str)
+            creds = json.loads(decrypted)
+        except:
+             raise ValueError("Failed to parse account credentials")
+
     return {
-        "email": decrypt(row["email_encrypted"]),
-        "password": decrypt(row["password_encrypted"]),
-        "server": row["server"],
-        "account_id": row["account_id"],
+        "email": creds.get("email"),
+        "password": creds.get("password"),
+        "server": row.get("server") or creds.get("server"),
+        "account_id": creds.get("account_id"),
     }
 
 async def get_tradelocker_token(email, password, server) -> dict:
