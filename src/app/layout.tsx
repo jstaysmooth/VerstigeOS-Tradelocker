@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import CodeDripBackground from "@/components/CodeDripBackground";
 import NavbarWrapper from "@/components/NavbarWrapper";
+import { UserProvider } from "@/context/UserContext";
 
 const outfitVariable = "font-outfit";
 const jetbrainsMonoVariable = "font-jetbrains-mono";
@@ -19,9 +20,11 @@ export default function RootLayout({
     return (
         <html lang="en" className={`${outfitVariable} ${jetbrainsMonoVariable}`} suppressHydrationWarning>
             <body>
-                <CodeDripBackground />
-                <NavbarWrapper />
-                {children}
+                <UserProvider>
+                    <CodeDripBackground />
+                    <NavbarWrapper />
+                    {children}
+                </UserProvider>
             </body>
         </html>
     );
