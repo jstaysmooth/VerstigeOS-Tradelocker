@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTrading } from '@/context/TradingContext';
 import { Eye, EyeOff, Lock, ChevronDown, X } from 'lucide-react';
+import { API_URL } from '@/lib/config';
 import '@/styles/pages/Account.css'; // Reuse existing styles for now, might need adjustment for modal
 
 type Platform = 'mt5' | 'dxtrade' | 'tradovate' | 'tradelocker';
@@ -70,7 +71,6 @@ export default function AccountConnectionModal({ onClose }: AccountConnectionMod
 
             console.log("Selecting Account:", { accountId, selectedAccountId, userId });
 
-            const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
             const response = await fetch(`${API_URL}/api/tradelocker/select-account`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -148,7 +148,6 @@ export default function AccountConnectionModal({ onClose }: AccountConnectionMod
 
         try {
             if (selectedPlatform === 'tradelocker') {
-                const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
                 const response = await fetch(`${API_URL}/api/tradelocker/authenticate`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },

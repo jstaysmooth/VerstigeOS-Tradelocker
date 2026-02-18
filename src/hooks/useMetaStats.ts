@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import io from 'socket.io-client';
+import { API_URL } from '@/lib/config';
 type Socket = any;
 
 interface MetaStats {
@@ -22,7 +23,6 @@ export const useMetaStats = (accountId: string | null) => {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
         const socket: Socket = io(API_URL, {
             transports: ['websocket'],
             autoConnect: true,

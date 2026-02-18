@@ -1,6 +1,4 @@
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-const API_BASE = `${API_URL}/api`;
+import { API_BASE } from '@/lib/config';
 
 export interface ApiUser {
     id: string;

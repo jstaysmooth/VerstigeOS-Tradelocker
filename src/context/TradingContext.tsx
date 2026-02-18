@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect, useMemo, ReactNode } from 'react';
 import io from "socket.io-client";
+import { API_URL } from '@/lib/config';
 type Socket = any;
 
 // Types for live MT5 data
@@ -161,7 +162,6 @@ export const TradingProvider: React.FC<{ children: ReactNode }> = ({ children })
 
     // Initialize Socket
     useEffect(() => {
-        const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
         const newSocket = io(API_URL, {
             transports: ["polling", "websocket"], // Allow polling first for stability
             path: "/socket.io",
@@ -283,7 +283,6 @@ export const TradingProvider: React.FC<{ children: ReactNode }> = ({ children })
             if (!userId) return;
 
             try {
-                const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
                 const res = await fetch(`${API_URL}/api/tradelocker/status?user_id=${userId}`);
                 const data = await res.json();
                 if (data.connected) {
@@ -304,7 +303,6 @@ export const TradingProvider: React.FC<{ children: ReactNode }> = ({ children })
             const userId = localStorage.getItem('v2_user_id');
             if (!userId) return;
 
-            const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
             await fetch(`${API_URL}/api/tradelocker/disconnect`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -322,7 +320,6 @@ export const TradingProvider: React.FC<{ children: ReactNode }> = ({ children })
 
     const refreshTradeLockerData = async (email: string) => {
         try {
-            const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
             const response = await fetch(`${API_URL}/api/tradelocker/account-data?email=${email}`);
             const data = await response.json();
             console.log("TradingContext: refreshTradeLockerData response:", data);
@@ -409,7 +406,6 @@ export const TradingProvider: React.FC<{ children: ReactNode }> = ({ children })
                 tp: signalData?.tp1 // Default to TP1
             };
 
-            const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
             const response = await fetch(`${API_URL}/api/tradelocker/execute`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
