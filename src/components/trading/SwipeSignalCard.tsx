@@ -1,13 +1,6 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
-import { createClient } from "@supabase/supabase-js";
-import { Signal } from "@/hooks/useSignals";
-import { Check, ChevronRight, Share2, Timer, TrendingUp, User, X } from "lucide-react";
-
-const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL || "",
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ""
-);
+import { supabase } from "@/lib/supabase";
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 interface SwipeSignalCardProps {
