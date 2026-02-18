@@ -1,7 +1,10 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+import { Signal } from "@/hooks/useSignals";
+import { Check, ChevronRight, Share2, Timer, TrendingUp, User, X } from "lucide-react";
+
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://verstige.io";
 
 interface SwipeSignalCardProps {
     signal: Signal;
