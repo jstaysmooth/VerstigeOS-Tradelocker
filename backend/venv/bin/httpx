@@ -1,5 +1,5 @@
 #!/bin/sh
-'''exec' "/Users/slade/Documents/Projects/Verstige V2/backend/venv/bin/python3" "$0" "$@"
+'''exec' "/Users/julylan/Projects/Verstige OS V2/VerstigeOS/backend/venv/bin/python3" "$0" "$@"
 ' '''
 # -*- coding: utf-8 -*-
 import re

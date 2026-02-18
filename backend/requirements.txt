@@ -8,3 +8,10 @@ janus
 requests
 colorlog
 pydantic-settings
+supabase
+httpx
+cryptography
+sqlalchemy
+psycopg2-binary
+metaapi-cloud-sdk
+websocket-client

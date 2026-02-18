@@ -1,350 +1,408 @@
 "use client";
 import React, { useState } from 'react';
-import { DollarSign, Briefcase, Megaphone, Check, Shield, Globe, Target, Zap, Rocket, Cpu } from 'lucide-react';
+import { DollarSign, Megaphone, Shield, Rocket, Check, ArrowRight, User, Mail, Lock, Phone, CreditCard, ChevronLeft } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import '@/styles/pages/GetStarted.css';
 
 interface PricingTier {
     id: string;
-    name: string;
+    title: string;
     description: string;
-    monthlyPrice: number;
-    oneTimePrice: number;
+    priceOneTime: number;
+    priceMonthly: number;
+    features: string[];
     icon: React.ReactNode;
 }
 
-const INSURANCE_ADDON: PricingTier = {
-    id: 'insurance',
-    name: 'Business Legal Insurance',
-    description: 'Protect your venture with professional legal support and insurance protocols.',
-    monthlyPrice: 99.00,
-    oneTimePrice: 0,
-    icon: <Shield size={32} />
+const DIVISIONS: PricingTier[] = [
+    {
+        id: 'trading',
+        title: 'Trading Division',
+        description: 'Institutional-grade signal execution, copy trading, and live capital tracking.',
+        priceOneTime: 149.00,
+        priceMonthly: 99.00,
+        features: ['Copy Trading Engine', 'Live Capital Tracking', 'Trade Journal', 'Signal Network Access'],
+        icon: <DollarSign size={24} />
+    },
+    {
+        id: 'sales',
+        title: 'Sales Division',
+        description: 'Monetize the referral engine. Build your organization and access the rank simulator.',
+        priceOneTime: 149.99,
+        priceMonthly: 75.00,
+        features: ['Commission System', 'Genealogy Dashboard', 'CRM Pipeline', 'Rank Simulator'],
+        icon: <Megaphone size={24} />
+    }
+];
+
+const MENTORSHIP_ADDON = {
+    id: 'mentorship',
+    title: 'Mentorship & Guidance',
+    description: 'Direct access to expert mentorship for your business foundation.',
+    priceOneTime: 249.99,
+    priceMonthly: 0,
+    icon: <Shield size={24} />
 };
 
-const TRADING_ADDON: PricingTier = {
-    id: 'trading',
-    name: 'Trading Division',
-    description: 'Advanced fintech tools, liquid terminals, and institutional risk protocols.',
-    monthlyPrice: 149.00,
-    oneTimePrice: 0,
-    icon: <DollarSign size={32} />
-};
+import { createClient } from '@supabase/supabase-js';
 
-const SALES_ADDON: PricingTier = {
-    id: 'sales',
-    name: 'Sales Division',
-    description: 'Access to the Rank Simulator, Genealogy Visualizer, and Earning Logic.',
-    monthlyPrice: 75.00,
-    oneTimePrice: 149.99,
-    icon: <Megaphone size={32} />
-};
-
-const AUTO_TRADER_ADDON: PricingTier = {
-    id: 'autotrader',
-    name: 'Auto Trader Protocol',
-    description: 'Hands-free execution of Telegram signals with automated TPs and risk mesh.',
-    monthlyPrice: 100.00,
-    oneTimePrice: 0,
-    icon: <Cpu size={32} />
-};
+const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL || "",
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ""
+);
 
 export default function GetStartedPage() {
-    const [path, setPath] = useState<'BUILD' | 'TRADE' | 'SALES'>('BUILD');
-    const [addons, setAddons] = useState<string[]>([]);
+    const router = useRouter();
+    const [step, setStep] = useState<1 | 2>(1);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
-    const toggleAddon = (id: string) => {
-        if (addons.includes(id)) {
-            setAddons(addons.filter(a => a !== id));
+    // Selection State
+    const [selectedDivisions, setSelectedDivisions] = useState<string[]>([]);
+    const [addMentorship, setAddMentorship] = useState(false);
+
+    // Form State
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        password: '',
+        confirmPassword: ''
+    });
+
+    const toggleDivision = (id: string) => {
+        if (selectedDivisions.includes(id)) {
+            setSelectedDivisions(selectedDivisions.filter(d => d !== id));
         } else {
-            setAddons([...addons, id]);
+            setSelectedDivisions([...selectedDivisions, id]);
         }
     };
 
     // Calculations
-    const baseCorePrice = 49.99;
-    const coreDiscount = (path === 'SALES') ? 25.00 : 0;
-    const coreMonthly = path === 'BUILD' ? 0.00 : (baseCorePrice - coreDiscount);
+    let oneTimeTotal = 0;
+    let monthlyTotal = 0;
 
-    let totalMonthly = coreMonthly;
-    let totaltoday = coreMonthly;
-
-    if (addons.includes('insurance')) {
-        totalMonthly += INSURANCE_ADDON.monthlyPrice;
-        totaltoday += INSURANCE_ADDON.monthlyPrice;
+    // Business Division (Base) is technically FREE but always included in the logic
+    // Add Mentorship if selected
+    if (addMentorship) {
+        oneTimeTotal += MENTORSHIP_ADDON.priceOneTime;
     }
 
-    if (addons.includes('trading')) {
-        totalMonthly += TRADING_ADDON.monthlyPrice;
-        totaltoday += TRADING_ADDON.monthlyPrice;
-    }
+    // Add Selected Divisions
+    selectedDivisions.forEach(divId => {
+        const div = DIVISIONS.find(d => d.id === divId);
+        if (div) {
+            oneTimeTotal += div.priceOneTime;
+            monthlyTotal += div.priceMonthly;
+        }
+    });
 
-    if (addons.includes('sales')) {
-        totalMonthly += SALES_ADDON.monthlyPrice;
-        // If they are on the direct SALES path, dont charge the $75 monthly upfront
-        const upfrontMonthly = (path === 'SALES') ? 0 : SALES_ADDON.monthlyPrice;
-        totaltoday += SALES_ADDON.oneTimePrice + upfrontMonthly;
-    }
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
 
-    if (addons.includes('autotrader')) {
-        totalMonthly += AUTO_TRADER_ADDON.monthlyPrice;
-        totaltoday += AUTO_TRADER_ADDON.monthlyPrice;
-    }
+    const handleCreateAccount = async () => {
+        setError(null);
+        if (formData.password !== formData.confirmPassword) {
+            setError("Passwords do not match");
+            return;
+        }
+
+        setLoading(true);
+        try {
+            const { data, error } = await supabase.auth.signUp({
+                email: formData.email,
+                password: formData.password,
+                options: {
+                    data: {
+                        first_name: formData.firstName,
+                        last_name: formData.lastName,
+                        phone: formData.phone,
+                        selected_divisions: selectedDivisions,
+                        add_mentorship: addMentorship
+                    }
+                }
+            });
+
+            if (error) throw error;
+
+            // Auto-signin often happens on signup if email confirmation is disabled. 
+            // If email confirmation is enabled, data.session will be null.
+            if (data.session) {
+                router.push('/dashboard/trading');
+            } else {
+                // Even if session is null (email confirmation needed), we redirect or show message. 
+                // For now, assume dev environment allows auto-login or user can check email.
+                // But wait, if we redirect without session, the signals will still fail.
+                // We should alert the user.
+                alert("Account created! Please check your email to confirm if required.");
+                router.push('/dashboard/trading');
+            }
+
+        } catch (err: any) {
+            console.error("Signup failed:", err);
+            setError(err.message || "Failed to create account");
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div className="get-started-page animate-fade-in">
             <div className="gs-container">
-                {/* Left Column: Selection */}
+
+                {/* LEFT COLUMN: Main Content */}
                 <div className="selection-area">
-                    <div className="gs-header">
-                        <h1>Select Your Direction</h1>
-                        <p>How do you plan to interact with the Verstige Operating System?</p>
-                    </div>
-
-                    {/* PATH SELECTION */}
-                    <div className="path-selection-grid mb-12">
-                        <div
-                            className={`path-card ${path === 'BUILD' ? 'selected' : ''}`}
-                            onClick={() => {
-                                setPath('BUILD');
-                                setAddons([]); // Reset for free path
-                            }}
-                        >
-                            <div className="path-icon"><Rocket size={24} /></div>
-                            <div className="path-info">
-                                <h4>Foundation Builder</h4>
-                                <p>Start for free. Build your business infrastructure first.</p>
-                                <span className="path-price">Free Entry</span>
+                    {step === 1 ? (
+                        <>
+                            <div className="gs-header">
+                                <h1>Build Your Ecosystem</h1>
+                                <p>Select the divisions and tools you need to launch your vision.</p>
                             </div>
-                        </div>
 
-                        <div
-                            className={`path-card ${path === 'TRADE' ? 'selected' : ''}`}
-                            onClick={() => {
-                                setPath('TRADE');
-                                setAddons(['trading']);
-                            }}
-                        >
-                            <div className="path-icon"><Zap size={24} /></div>
-                            <div className="path-info">
-                                <h4>Trading Specialist</h4>
-                                <p>Skip the setup. Immediate access to terminals and elite tools.</p>
-                                <span className="path-price">$49.99/mo OS Access</span>
-                            </div>
-                        </div>
+                            {/* Base Business Division (Always Active/Free) */}
+                            <div className="division-card base-card selected mb-6">
+                                <div className="div-header">
+                                    <div className="div-icon base-gradient"><Rocket size={24} /></div>
+                                    <div className="div-info">
+                                        <h4>Business Division</h4>
+                                        <p>Your foundation. LLC blueprints, community access, and education.</p>
+                                    </div>
+                                    <div className="div-price">
+                                        <span className="price-tag free">INCLUDED</span>
+                                    </div>
+                                </div>
 
-                        <div
-                            className={`path-card ${path === 'SALES' ? 'selected' : ''}`}
-                            onClick={() => {
-                                setPath('SALES');
-                                setAddons(['sales']);
-                            }}
-                        >
-                            <div className="path-icon"><Target size={24} /></div>
-                            <div className="path-info">
-                                <h4>Sales Executive</h4>
-                                <p>Skip the setup. Immediate access to referral commissions.</p>
-                                <span className="path-price">$24.99/mo <span className="line-through opacity-50">$49.99</span></span>
+                                {/* Mentorship Upsell */}
+                                <div
+                                    className={`upsell-row ${addMentorship ? 'active' : ''}`}
+                                    onClick={() => setAddMentorship(!addMentorship)}
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <div className={`checkbox ${addMentorship ? 'checked' : ''}`}>
+                                            {addMentorship && <Check size={12} />}
+                                        </div>
+                                        <div className="flex-1">
+                                            <span className="upsell-title">Add Professional Mentorship & Guidance</span>
+                                            <span className="upsell-desc">One-time expert consultation session.</span>
+                                        </div>
+                                        <span className="upsell-price">+$249.99</span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
 
-                    <h3 className="text-lg font-bold mb-4 uppercase text-secondary tracking-wider">Dynamic Configuration</h3>
-
-                    {path === 'BUILD' ? (
-                        <div className="core-plan-card mb-8">
-                            <div className="core-info">
-                                <h3>Initial Access <span className="badge-included" style={{ background: 'var(--fintech-green)', color: '#000' }}>FREE</span></h3>
-                                <p className="text-secondary text-sm mb-2">Build your LLC and foundation at zero cost.</p>
-                                <ul className="text-sm text-secondary space-y-1">
-                                    <li className="flex items-center gap-2"><Check size={14} className="text-green-500" /> Business Setup Blueprint</li>
-                                    <li className="flex items-center gap-2"><Check size={14} className="text-green-500" /> Educational Resource Mesh</li>
-                                </ul>
+                            <h3 className="section-title">Specialized Divisions</h3>
+                            <div className="divisions-grid">
+                                {DIVISIONS.map(div => (
+                                    <div
+                                        key={div.id}
+                                        className={`division-card selectable ${selectedDivisions.includes(div.id) ? 'selected' : ''}`}
+                                        onClick={() => toggleDivision(div.id)}
+                                    >
+                                        <div className="div-header">
+                                            <div className="div-icon">{div.icon}</div>
+                                            <div className="div-info">
+                                                <h4>{div.title}</h4>
+                                                <p>{div.description}</p>
+                                            </div>
+                                            <div className="div-select-indicator">
+                                                {selectedDivisions.includes(div.id) && <Check size={16} />}
+                                            </div>
+                                        </div>
+                                        <div className="div-pricing-row">
+                                            <div className="price-item">
+                                                <span className="label">One-Time</span>
+                                                <span className="value">${div.priceOneTime.toFixed(0)}</span>
+                                            </div>
+                                            <div className="price-divider"></div>
+                                            <div className="price-item">
+                                                <span className="label">Monthly</span>
+                                                <span className="value">${div.priceMonthly.toFixed(0)}/mo</span>
+                                            </div>
+                                        </div>
+                                        <ul className="div-features">
+                                            {div.features.map((feat, idx) => (
+                                                <li key={idx}><Check size={12} /> {feat}</li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                ))}
                             </div>
-                            <div className="core-price">
-                                <span className="price-large">$0.00</span>
-                            </div>
-                        </div>
+                        </>
                     ) : (
-                        <div className="core-plan-card mb-8 active">
-                            <div className="core-info">
-                                <h3>Core OS Access</h3>
-                                <p className="text-secondary text-sm mb-2">Direct access to tools, software, consultations, and custom CRM.</p>
-                                <ul className="text-sm text-secondary space-y-1">
-                                    <li className="flex items-center gap-2"><Check size={14} className="text-accent" /> Private CRM & Sales Tracker</li>
-                                    <li className="flex items-center gap-2"><Check size={14} className="text-accent" /> Expert Consultations & Software</li>
-                                    <li className="flex items-center gap-2"><Check size={14} className="text-accent" /> Secure Visionary Network</li>
-                                </ul>
+                        // STEP 2: ACCOUNT CREATION
+                        <div className="account-form-section animate-fade-in-up">
+                            <button className="back-btn" onClick={() => setStep(1)}>
+                                <ChevronLeft size={16} /> Back to Selection
+                            </button>
+
+                            <div className="gs-header">
+                                <h1>Create Your Account</h1>
+                                <p>Secure your identity and finalize your ecosystem configuration.</p>
                             </div>
-                            <div className="core-price">
-                                {path === 'SALES' ? (
-                                    <>
-                                        <span className="price-large">$24.99</span>
-                                        <span className="text-xs block text-green-500 font-bold">-$25.00 DISCOUNT</span>
-                                    </>
-                                ) : (
-                                    <span className="price-large">$49.99</span>
-                                )}
-                                <span className="price-period">/ month</span>
+
+                            <div className="form-grid">
+                                <div className="form-group">
+                                    <label>First Name</label>
+                                    <div className="input-wrapper">
+                                        <User size={18} />
+                                        <input
+                                            type="text"
+                                            name="firstName"
+                                            placeholder="Enter first name"
+                                            value={formData.firstName}
+                                            onChange={handleInputChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <label>Last Name</label>
+                                    <div className="input-wrapper">
+                                        <User size={18} />
+                                        <input
+                                            type="text"
+                                            name="lastName"
+                                            placeholder="Enter last name"
+                                            value={formData.lastName}
+                                            onChange={handleInputChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="form-group full">
+                                    <label>Email Address</label>
+                                    <div className="input-wrapper">
+                                        <Mail size={18} />
+                                        <input
+                                            type="email"
+                                            name="email"
+                                            placeholder="name@example.com"
+                                            value={formData.email}
+                                            onChange={handleInputChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="form-group full">
+                                    <label>Phone Number</label>
+                                    <div className="input-wrapper">
+                                        <Phone size={18} />
+                                        <input
+                                            type="tel"
+                                            name="phone"
+                                            placeholder="(555) 000-0000"
+                                            value={formData.phone}
+                                            onChange={handleInputChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <label>Password</label>
+                                    <div className="input-wrapper">
+                                        <Lock size={18} />
+                                        <input
+                                            type="password"
+                                            name="password"
+                                            placeholder="Create a password"
+                                            value={formData.password}
+                                            onChange={handleInputChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <label>Confirm Password</label>
+                                    <div className="input-wrapper">
+                                        <Lock size={18} />
+                                        <input
+                                            type="password"
+                                            name="confirmPassword"
+                                            placeholder="Confirm password"
+                                            value={formData.confirmPassword}
+                                            onChange={handleInputChange}
+                                        />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     )}
-
-                    <div className="addon-grid">
-                        {/* INSURANCE ADDON */}
-                        <div
-                            className={`addon-card ${addons.includes('insurance') ? 'selected' : ''}`}
-                            onClick={() => toggleAddon('insurance')}
-                        >
-                            <div className="selection-indicator"></div>
-                            <div className="addon-icon"><Shield size={32} /></div>
-                            <div className="addon-content">
-                                <h4>Business Legal Insurance</h4>
-                                <p className="addon-desc">Essential protection. Unlocks IP modules.</p>
-                                <div className="addon-pricing">
-                                    <span className="price-tag highlight">+$99.00 / mo</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* TRADING ADDON - Enabled by default for TRADE path */}
-                        <div
-                            className={`addon-card ${(addons.includes('trading') || path === 'TRADE') ? 'selected' : ''}`}
-                            onClick={() => path !== 'TRADE' && toggleAddon('trading')}
-                            style={{ opacity: path === 'TRADE' ? 0.8 : 1 }}
-                        >
-                            <div className="selection-indicator"></div>
-                            <div className="addon-icon">{TRADING_ADDON.icon}</div>
-                            <div className="addon-content">
-                                <h4>{TRADING_ADDON.name}</h4>
-                                <p className="addon-desc">{TRADING_ADDON.description}</p>
-                                <div className="addon-pricing">
-                                    <span className="price-tag highlight">+$149.00 / mo</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* SALES ADDON - Enabled by default for SALES path */}
-                        <div
-                            className={`addon-card ${(addons.includes('sales') || path === 'SALES') ? 'selected' : ''}`}
-                            onClick={() => path !== 'SALES' && toggleAddon('sales')}
-                            style={{ opacity: path === 'SALES' ? 0.8 : 1 }}
-                        >
-                            <div className="selection-indicator"></div>
-                            <div className="addon-icon">{SALES_ADDON.icon}</div>
-                            <div className="addon-content">
-                                <h4>{SALES_ADDON.name}</h4>
-                                <p className="addon-desc">{SALES_ADDON.description}</p>
-                                <div className="addon-pricing flex-col gap-0">
-                                    <span className="price-tag highlight">+$75.00 / mo</span>
-                                    {path !== 'SALES' && <span className="text-xs text-secondary">+$149.99 Activation</span>}
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* AUTO TRADER ADDON */}
-                        <div
-                            className={`addon-card ${addons.includes('autotrader') ? 'selected' : ''}`}
-                            onClick={() => toggleAddon('autotrader')}
-                        >
-                            <div className="selection-indicator"></div>
-                            <div className="addon-icon">{AUTO_TRADER_ADDON.icon}</div>
-                            <div className="addon-content">
-                                <h4>{AUTO_TRADER_ADDON.name}</h4>
-                                <p className="addon-desc">{AUTO_TRADER_ADDON.description}</p>
-                                <div className="addon-pricing">
-                                    <span className="price-tag highlight">+$100.00 / mo</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
-                {/* Right Column: Summary */}
+                {/* RIGHT COLUMN: Summary & Action */}
                 <div className="order-summary">
                     <div className="summary-header">
-                        <h3>Configuration Summary</h3>
-                        <div className="path-badge">{path === 'BUILD' ? 'Foundation' : path === 'TRADE' ? 'Trading Specialist' : 'Sales Executive'}</div>
+                        <h3>Your Configuration</h3>
+                        <div className="step-indicator">Step {step} of 2</div>
                     </div>
 
                     <div className="summary-section">
-                        <div className="section-label">Core Protocol</div>
+                        {/* BASE */}
                         <div className="summary-row">
-                            <span>{path === 'BUILD' ? 'Builder Access' : 'Core OS Access'}</span>
-                            <span className={path === 'BUILD' ? 'text-green' : 'text-white'}>
-                                {path === 'BUILD' ? 'FREE' : (path === 'SALES' ? '$24.99' : '$49.99')}
-                            </span>
+                            <span>Business Division (Base)</span>
+                            <span className="text-green-400">FREE</span>
                         </div>
+                        {addMentorship && (
+                            <div className="summary-row animate-fade-in">
+                                <span>Mentorship Addon</span>
+                                <span>${MENTORSHIP_ADDON.priceOneTime.toFixed(2)}</span>
+                            </div>
+                        )}
+
+                        {/* SELECTED DIVISIONS */}
+                        {selectedDivisions.map(divId => {
+                            const div = DIVISIONS.find(d => d.id === divId);
+                            if (!div) return null;
+                            return (
+                                <React.Fragment key={div.id}>
+                                    <div className="summary-row animate-fade-in sub-header">
+                                        <span className="font-bold text-white">{div.title}</span>
+                                    </div>
+                                    <div className="summary-row sub-item">
+                                        <span>One-Time Setup</span>
+                                        <span>${div.priceOneTime.toFixed(2)}</span>
+                                    </div>
+                                    <div className="summary-row sub-item">
+                                        <span>Monthly Subscription</span>
+                                        <span>${div.priceMonthly.toFixed(2)}/mo</span>
+                                    </div>
+                                </React.Fragment>
+                            );
+                        })}
                     </div>
-
-                    {(addons.length > 0 || path !== 'BUILD') && (
-                        <div className="summary-section">
-                            <div className="section-label">Active Divisions & Protection</div>
-                            {addons.includes('insurance') && (
-                                <div className="summary-row animate-fade-in">
-                                    <span>Business Insurance</span>
-                                    <span>$99.00</span>
-                                </div>
-                            )}
-
-                            {(addons.includes('trading') || path === 'TRADE') && (
-                                <div className="summary-row animate-fade-in">
-                                    <span>Trading Add-on</span>
-                                    <span>$149.00</span>
-                                </div>
-                            )}
-
-                            {(addons.includes('sales') || path === 'SALES') && (
-                                <>
-                                    <div className="summary-row animate-fade-in">
-                                        <span>Sales Monthly Protocol</span>
-                                        <span className={path === 'SALES' ? 'text-xs text-secondary italic' : 'text-white'}>
-                                            {path === 'SALES' ? 'Deferred (Month 2)' : '$75.00'}
-                                        </span>
-                                    </div>
-                                    <div className="summary-row sub-item animate-fade-in">
-                                        <span>Sales Activation Fee</span>
-                                        <span>$149.99</span>
-                                    </div>
-                                </>
-                            )}
-
-                            {addons.includes('autotrader') && (
-                                <div className="summary-row animate-fade-in">
-                                    <span>Auto Trader Protocol</span>
-                                    <span>$100.00</span>
-                                </div>
-                            )}
-                        </div>
-                    )}
 
                     <div className="summary-footer">
                         <div className="total-group today">
                             <div className="total-row">
-                                <span className="label">Investment Today</span>
-                                <span className="value grand">${totaltoday.toFixed(2)}</span>
+                                <span className="label">Total Due Today</span>
+                                <span className="value grand">${oneTimeTotal.toFixed(2)}</span>
                             </div>
-                            <p className="text-[10px] text-secondary text-right mt-1">One-time setup & initial billing</p>
+                            <p className="footer-note">Includes all one-time setup fees.</p>
                         </div>
 
                         <div className="total-group recurrent">
                             <div className="total-row">
                                 <span className="label">Monthly Recurring</span>
-                                <span className="value">${totalMonthly.toFixed(2)}</span>
+                                <span className="value">${monthlyTotal.toFixed(2)}</span>
                             </div>
-                            <p className="text-[10px] text-secondary text-right mt-1">Due every 30 days</p>
+                            <p className="footer-note">Unbilled today. Starts in 30 days.</p>
                         </div>
                     </div>
 
-                    <button className="btn-checkout">
-                        Finalize Configuration
-                    </button>
+                    {step === 1 ? (
+                        <button className="btn-checkout" onClick={() => setStep(2)}>
+                            Continue <ArrowRight size={18} />
+                        </button>
+                    ) : (
+                        <button className="btn-checkout" onClick={handleCreateAccount}>
+                            Create Account & Pay <CreditCard size={18} />
+                        </button>
+                    )}
 
                     <div className="trust-footer">
-                        <p className="text-xs text-center text-secondary">
-                            {path === 'BUILD' ? 'No payment method required for initiation.' : 'Secured via Verstige Encryption Mesh.'}
-                        </p>
+                        <Shield size={14} />
+                        <span>Secured by Verstige Encryption Mesh</span>
                     </div>
                 </div>
+
             </div>
         </div>
     );

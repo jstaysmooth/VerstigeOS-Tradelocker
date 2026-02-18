@@ -12,7 +12,10 @@ from typing import Optional, Dict
 from pydantic import BaseModel
 import asyncio
 import logging
+import sys
+print(f"DEBUG SYS PATH: {sys.path}")
 import os
+
 import sys
 
 from backend.internal import SocketIOServerClient
@@ -23,6 +26,9 @@ from backend.dxtrade import DxTradeClient, CopierEngine
 from backend.services.matchtrader_client import MatchTraderClient
 from backend.services.tradelocker_client import TradeLockerClient
 from backend.meta_api_service import meta_api_service
+from backend.models.db_models import TradingAccount, TradingPlatform
+from backend.signal_approval_router import router as signal_router
+import json
 
 # Initialize Logger
 logging.basicConfig(level=logging.INFO)
@@ -31,22 +37,19 @@ logger = logging.getLogger("VerstigeBackend")
 # Initialize FastAPI
 app = FastAPI()
 
-# Add CORS middleware to allow frontend requests
-# Custom CORS Middleware to skip /socket.io (handled by engineio)
-class SmartCORSMiddleware(CORSMiddleware):
-    async def __call__(self, scope, receive, send):
-        if scope["type"] == "http" and scope.get("path", "").startswith("/socket.io"):
-            await self.app(scope, receive, send)
-            return
-        await super().__call__(scope, receive, send)
+# Initialize Socket.IO globally
+sio = socketio.AsyncServer(async_mode="asgi", cors_allowed_origins=["http://localhost:3000", "http://127.0.0.1:3000"])
 
+# Add CORS middleware to allow frontend requests
 app.add_middleware(
-    SmartCORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000", "*"],
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(signal_router)
 
 # Input Models
 class TradeSignal(BaseModel):
@@ -79,7 +82,8 @@ class DxTradeLoginRequest(BaseModel):
 
 # Global components
 request_handler: Optional[RequestHandler] = None
-sio: Optional[socketio.AsyncServer] = None
+# sio is already initialized above
+# sio: Optional[socketio.AsyncServer] = None
 copier_engine: Optional[CopierEngine] = None
 master_client: Optional[DxTradeClient] = None
 
@@ -96,9 +100,9 @@ async def startup_event():
 
     # Initialize Socket.IO server with explicit CORS
     # Use specific origin to avoid wildcard+credentials issues
-    sio = socketio.AsyncServer(async_mode="asgi", cors_allowed_origins=["http://localhost:3000"])
-    sio_app = socketio.ASGIApp(sio) # Default socketio_path='socket.io'
-    app.mount("/socket.io", sio_app)
+    # sio = socketio.AsyncServer(async_mode="asgi", cors_allowed_origins=["http://localhost:3000"])
+    # We init sio globally but attach it later
+    pass
 
     # Initialize MT5 Clients
     # server_client = SocketIOServerClient(sio)
@@ -576,19 +580,148 @@ async def matchtrader_execute(req: GenericExecuteRequest):
 
 # --- TradeLocker Endpoints ---
 
+class TradeLockerAccountSelectRequest(BaseModel):
+    email: str
+    account_id: str
+    user_id: str # Required for persistence
+
+class TradeLockerDisconnectRequest(BaseModel):
+    user_id: str
+
 @app.post("/api/tradelocker/authenticate")
 async def tradelocker_authenticate(creds: TradeLockerAuthRequest):
     try:
+        logger.info(f"Attempting TradeLocker Login for: {creds.email} on {creds.server}")
         client = TradeLockerClient(creds.email, creds.password, creds.server, creds.broker_url)
-        if client.login():
-            session_id = creds.email
-            tradelocker_sessions[session_id] = client
-            balance = client.get_account_balance()
-            return {"status": "success", "session_id": session_id, "balance": balance}
+        success, message = client.login()
+        if success:
+            # Login successful, now fetch accounts
+            success_acc, accounts, msg_acc = client.get_all_accounts()
+            
+            if success_acc:
+                session_id = creds.email
+                tradelocker_sessions[session_id] = client
+                
+                return {
+                    "status": "requires_account_selection", 
+                    "session_id": session_id, 
+                    "accounts": accounts
+                }
+            else:
+                 raise HTTPException(status_code=401, detail=f"Login successful but failed to fetch accounts: {msg_acc}")
         else:
-            raise HTTPException(status_code=401, detail="Authentication failed")
+            raise HTTPException(status_code=401, detail=f"Authentication failed: {message}")
+    except HTTPException as he:
+        logger.error(f"TradeLocker Auth HTTPException: {he.detail}")
+        raise he
     except Exception as e:
-         raise HTTPException(status_code=500, detail=str(e))
+        logger.error(f"TradeLocker Auth Unexpected Error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+from datetime import datetime
+
+@app.post("/api/tradelocker/select-account")
+async def tradelocker_select_account(req: TradeLockerAccountSelectRequest, db: Session = Depends(get_db)):
+    try:
+        session_id = req.email
+        client = tradelocker_sessions.get(session_id)
+        
+        if not client:
+             raise HTTPException(status_code=401, detail="Session not found or expired")
+
+        if client.select_account(req.account_id):
+            balance = client.get_account_balance()
+            positions = client.get_positions()
+            analytics = client.get_account_analytics()
+            history = client.get_history()
+            
+            # Persistence Logic
+            try:
+                # 1. Get/Create Platform
+                platform = db.query(TradingPlatform).filter(TradingPlatform.code == 'tradelocker').first()
+                if not platform:
+                    platform = TradingPlatform(name="TradeLocker", code="tradelocker", api_endpoint="https://live.tradelocker.com/backend-api")
+                    db.add(platform)
+                    db.commit()
+                    db.refresh(platform)
+                
+                # 2. Prepare Credentials
+                creds = {
+                    "email": client.email,
+                    "password": client.password,
+                    "server": client.server,
+                    "access_token": client.access_token,
+                    "refresh_token": client.refresh_token,
+                    "account_id": client.account_id,
+                    "acc_num": client.acc_num
+                }
+                
+                # 3. Update/Create Account
+                account = db.query(TradingAccount).filter(
+                    TradingAccount.user_id == req.user_id,
+                    TradingAccount.platform_id == platform.id
+                ).first()
+                
+                if not account:
+                    account = TradingAccount(
+                        user_id=req.user_id,
+                        platform_id=platform.id,
+                        account_name=f"TradeLocker {client.acc_num}",
+                        account_number=str(client.acc_num) if client.acc_num else "Unknown",
+                        account_type="LIVE" if "live" in client.base_url else "DEMO",
+                        currency="USD",
+                        server=client.server
+                    )
+                    db.add(account)
+                
+                account.balance = balance.get('balance')
+                account.equity = balance.get('equity')
+                account.margin = balance.get('margin_used')
+                account.free_margin = balance.get('free_margin')
+                account.encrypted_credentials = json.dumps(creds)
+                account.last_sync_at = datetime.now()
+                db.commit()
+            except Exception as db_e:
+                logger.error(f"Failed to persist account: {db_e}")
+                # Don't fail the request if persistence fails, but log it
+            
+            return {
+                "status": "success", 
+                "session_id": session_id, 
+                "balance": balance,
+                "positions": positions,
+                "history": history,
+                "analytics": analytics
+            }
+        else:
+            raise HTTPException(status_code=400, detail="Failed to select account")
+    except HTTPException as he:
+        raise he
+    except Exception as e:
+        logger.exception("Error in select_account")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/tradelocker/account-data")
+async def tradelocker_account_data(email: str):
+    client = tradelocker_sessions.get(email)
+    if not client:
+        raise HTTPException(status_code=401, detail="Session expired or not found")
+    
+    try:
+        balance = client.get_account_balance()
+        positions = client.get_positions()
+        analytics = client.get_account_analytics()
+        history = client.get_history()
+        
+        return {
+            "status": "success",
+            "balance": balance,
+            "positions": positions,
+            "history": history,
+            "analytics": analytics
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/api/tradelocker/execute")
 async def tradelocker_execute(req: GenericExecuteRequest):
@@ -683,3 +816,198 @@ def add_post_comment(post_id: str, payload: dict = Body(...), db: Session = Depe
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+# --- TradeLocker Status & Disconnect ---
+
+@app.get("/api/tradelocker/status")
+async def tradelocker_status(user_id: str, db: Session = Depends(get_db)):
+    try:
+        platform = db.query(TradingPlatform).filter(TradingPlatform.code == 'tradelocker').first()
+        if not platform:
+             return {"connected": False}
+        
+        account = db.query(TradingAccount).filter(
+            TradingAccount.user_id == user_id,
+            TradingAccount.platform_id == platform.id
+        ).first()
+        
+        if account and account.encrypted_credentials:
+            creds = json.loads(account.encrypted_credentials)
+            # Rehydrate session if missing
+            session_id = creds.get('email')
+            if session_id and session_id not in tradelocker_sessions:
+                 try:
+                    client = TradeLockerClient(creds['email'], creds['password'], creds['server'])
+                    # Try efficient refresh first if token exists
+                    refreshed = False
+                    if creds.get('refresh_token'):
+                         refreshed = client.refresh_session(creds['refresh_token'])
+                    
+                    if not refreshed:
+                         # Fallback to full login
+                         success, _ = client.login()
+                         if not success:
+                             return {"connected": False} # Invalid credentials
+                    
+                    client.select_account(creds.get('account_id'))
+                    # Force set acc_num if we have it stored and it didn't get set
+                    if not client.acc_num and creds.get('acc_num'):
+                        client.acc_num = creds.get('acc_num')
+                        client.session.headers.update({"accNum": str(client.acc_num)})
+                    
+                    tradelocker_sessions[session_id] = client
+                 except Exception:
+                     # Silently fail rehydration if credentials changed/invalid
+                     return {"connected": False}
+
+            return {
+                "connected": True, 
+                "account_id": account.account_number, 
+                "email": creds.get('email'),
+                "balance": float(account.balance) if account.balance else 0
+            }
+            
+        return {"connected": False}
+    except Exception as e:
+        print(f"Status check error: {e}")
+        return {"connected": False}
+
+@app.post("/api/tradelocker/disconnect")
+async def tradelocker_disconnect(req: TradeLockerDisconnectRequest, db: Session = Depends(get_db)):
+    try:
+        platform = db.query(TradingPlatform).filter(TradingPlatform.code == 'tradelocker').first()
+        if platform:
+            db.query(TradingAccount).filter(
+                TradingAccount.user_id == req.user_id,
+                TradingAccount.platform_id == platform.id
+            ).delete()
+            db.commit()
+        return {"status": "disconnected"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))# --- Master Account & Copy Trading ---
+
+MASTER_TL_EMAIL = os.getenv("MASTER_TL_EMAIL", "master@verstige.com")
+MASTER_TL_PASSWORD = os.getenv("MASTER_TL_PASSWORD", "MasterPass123!")
+MASTER_TL_SERVER = os.getenv("MASTER_TL_SERVER", "TLLive")
+MASTER_TL_ACC_NUM = os.getenv("MASTER_TL_ACC_NUM", "0") # If needed for header
+
+master_client = None
+
+def get_master_client():
+    global master_client
+    # Return existing authenticated client
+    if master_client and master_client.access_token:
+        return master_client
+
+    # Create new client and try to login
+    temp_client = TradeLockerClient(MASTER_TL_EMAIL, MASTER_TL_PASSWORD, MASTER_TL_SERVER)
+    if MASTER_TL_ACC_NUM != "0":
+        temp_client.acc_num = MASTER_TL_ACC_NUM
+        temp_client.session.headers.update({"accNum": str(MASTER_TL_ACC_NUM)})
+    
+    if temp_client.login():
+        master_client = temp_client
+        return master_client
+    
+    logger.error("Failed to login to Master Account")
+    return None
+
+@app.get("/api/signals")
+def get_master_signals(db: Session = Depends(get_db)):
+    """Fetch open positions from the master account as signals."""
+    client = get_master_client()
+    if not client:
+        # Return mock data if master not configured or login fails (for dev/demo)
+        return {
+            "status": "success",
+            "signals": [
+                {
+                    "id": 101,
+                    "symbol": "XAUUSD",
+                    "action": "BUY",
+                    "entryPrice": 2035.50,
+                    "sl": 2028.00,
+                    "tp1": 2045.00,
+                    "timestamp": "2024-02-17T10:00:00Z",
+                    "analyst": "Verstige Master",
+                    "successRate": 95,
+                    "status": "ACTIVE"
+                }
+            ]
+        }
+    
+    positions = client.get_positions()
+    # Transform positions to signals
+    signals = []
+    for pos in positions:
+        signals.append({
+            "id": pos['id'],
+            "symbol": pos.get('tradableInstrumentId'),
+            "action": pos.get('side').upper(),
+            "entryPrice": float(pos.get('avgPrice', 0)),
+            "sl": float(pos.get('stopLoss', 0)),
+            "tp1": float(pos.get('takeProfit', 0)),
+            "timestamp": pos.get('openTime'),
+            "analyst": "Verstige Master",
+            "successRate": 95,
+            "status": "ACTIVE"
+        })
+        
+    return {"status": "success", "signals": signals}
+
+@app.post("/api/tradelocker/execute")
+async def execute_copy_trade(payload: dict = Body(...), db: Session = Depends(get_db)):
+    """Execute a copied signal on the user's connected account."""
+    user_id = payload.get("user_id")
+    signal_id = payload.get("signal_id")
+    
+    # 1. Get Signal Details (from Master or Mock)
+    # For now, we'll fetch from master again or use payload details if passed.
+    # To be safe, let's assume the payload contains the critical trade info to copy.
+    symbol = payload.get("symbol")
+    action = payload.get("action")
+    sl = payload.get("sl")
+    tp = payload.get("tp")
+    
+    if not user_id or not symbol or not action:
+        raise HTTPException(status_code=400, detail="Missing trade details")
+        
+    # 2. Get User's Connected Account
+    platform = db.query(TradingPlatform).filter(TradingPlatform.code == 'tradelocker').first()
+    account = db.query(TradingAccount).filter(
+        TradingAccount.user_id == user_id,
+        TradingAccount.platform_id == platform.id
+    ).first()
+    
+    if not account:
+        raise HTTPException(status_code=400, detail="No TradeLocker account connected")
+        
+    creds = json.loads(account.encrypted_credentials)
+    
+    # 3. Execute Trade
+    # We can reuse the existing session if active, or create a new client
+    client = tradelocker_sessions.get(creds['email'])
+    if not client:
+        client = TradeLockerClient(creds['email'], creds['password'], creds['server'])
+        if creds.get('acc_num'):
+             client.acc_num = creds.get('acc_num')
+             client.session.headers.update({"accNum": str(client.acc_num)})
+        client.login()
+        client.select_account(creds.get('account_id'))
+        
+    # Default lot size for copy trading? Or use user preference?
+    # For MVP, let's use a standard 0.01 lot or what was in the signal?
+    # Let's use 0.01 for safety.
+    lot_size = 0.01 
+    
+    result = client.execute_order(symbol, action, lot_size, float(sl or 0), float(tp or 0))
+    
+    if result.get('status') == 'error': # Adjust based on actual execute_order return
+         raise HTTPException(status_code=400, detail=result.get('message', 'Execution failed'))
+         
+    return {"status": "success", "orderId": result.get('orderId')}
+
+
+# Wrap FastAPI application with Socket.IO ASGI app
+# This ensures that Socket.IO requests are handled correctly before reaching FastAPI
+# and avoids conflicts with middleware.
+app = socketio.ASGIApp(sio, app)

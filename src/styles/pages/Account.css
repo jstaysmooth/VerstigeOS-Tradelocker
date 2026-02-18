@@ -677,3 +677,92 @@
     background: rgba(239, 68, 68, 0.15);
     border-color: rgba(239, 68, 68, 0.3);
 }
+
+/* Account Selection */
+.account-selection-view {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.account-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+.account-item {
+    padding: 1.25rem;
+    border-radius: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.account-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateX(4px);
+    border-color: rgba(236, 91, 19, 0.3);
+}
+
+.account-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.account-id-label {
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(148, 163, 184, 1);
+    font-weight: 700;
+}
+
+.account-id-value {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.account-meta {
+    font-size: 0.75rem;
+    color: rgba(148, 163, 184, 0.8);
+}
+
+.account-action {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: rgba(236, 91, 19, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ec5b13;
+    font-size: 1.25rem;
+    transition: all 0.3s;
+}
+
+.account-item:hover .account-action {
+    background: #ec5b13;
+    color: #ffffff;
+}
+
+.back-link-btn {
+    background: none;
+    border: none;
+    color: rgba(148, 163, 184, 1);
+    font-size: 0.875rem;
+    cursor: pointer;
+    padding: 1rem;
+    transition: color 0.3s;
+}
+
+.back-link-btn:hover {
+    color: #ffffff;
+}

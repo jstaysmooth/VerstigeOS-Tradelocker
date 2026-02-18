@@ -1,5 +1,5 @@
 
-const API_BASE = 'http://localhost:8002/api';
+const API_BASE = 'http://localhost:8000/api';
 
 export interface ApiUser {
     id: string;

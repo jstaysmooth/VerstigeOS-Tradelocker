@@ -64,6 +64,14 @@ interface TradingContextType {
     matchTraderConnected: boolean;
     tradeLockerConnected: boolean;
 
+    // TradeLocker Data
+    tradeLockerData: {
+        balance: number;
+        equity: number;
+        positions: any[];
+        analytics: any;
+    } | null;
+
     // Actions
     setMt5Connected: (connected: boolean) => void;
     setDxConnected: (connected: boolean) => void;
@@ -71,9 +79,12 @@ interface TradingContextType {
     setTradeLockerConnected: (connected: boolean) => void;
     setAccountBalance: (balance: number) => void;
     setAccountEquity: (equity: number) => void;
-
-    // Signal Actions
-    approveSignal: (signalId: number) => Promise<void>;
+    setTradeLockerData: (data: any) => void;
+    setSignals: (signals: SignalData[]) => void;
+    setResults: React.Dispatch<React.SetStateAction<any[]>>;
+    refreshTradeLockerData: (email: string) => Promise<void>;
+    approveSignal: (signalId: number, signalData?: any) => Promise<void>;
+    disconnectTradeLocker: () => Promise<void>;
 }
 
 const TradingContext = createContext<TradingContextType | undefined>(undefined);
@@ -104,13 +115,39 @@ export const TradingProvider: React.FC<{ children: ReactNode }> = ({ children })
     const [dxConnected, setDxConnected] = useState(false);
     const [matchTraderConnected, setMatchTraderConnected] = useState(false);
     const [tradeLockerConnected, setTradeLockerConnected] = useState(false);
+    const [tradeLockerData, setTradeLockerData] = useState<any>(null);
 
     const isConnected = mt5Connected || dxConnected || matchTraderConnected || tradeLockerConnected;
 
-    // Computed Analytics
-    const totalPnL = useMemo(() => {
+    const totalTrades = useMemo(() => {
+        if (tradeLockerConnected && tradeLockerData?.analytics?.total_trades !== undefined) {
+            return tradeLockerData.analytics.total_trades;
+        }
+        return results.length;
+    }, [results.length, tradeLockerConnected, tradeLockerData?.analytics]);
+
+    const openPositions = useMemo(() => {
+        if (tradeLockerConnected && tradeLockerData?.analytics?.open_positions !== undefined) {
+            return tradeLockerData.analytics.open_positions;
+        }
+        return signals.length;
+    }, [signals.length, tradeLockerConnected, tradeLockerData?.analytics]);
+
+    const overrideWinRate = useMemo(() => {
+        if (tradeLockerConnected && tradeLockerData?.analytics?.win_rate !== undefined) {
+            return Math.round(tradeLockerData.analytics.win_rate);
+        }
+        if (results.length === 0) return 0;
+        const wins = results.filter(r => r.netProfit > 0).length;
+        return Math.round((wins / results.length) * 100);
+    }, [results, tradeLockerConnected, tradeLockerData?.analytics]);
+
+    const overrideTotalPnL = useMemo(() => {
+        if (tradeLockerConnected && tradeLockerData?.analytics?.total_pnl !== undefined) {
+            return tradeLockerData.analytics.total_pnl;
+        }
         return results.reduce((acc, r) => acc + r.netProfit, 0);
-    }, [results]);
+    }, [results, tradeLockerConnected, tradeLockerData?.analytics]);
 
     const dailyPnL = useMemo(() => {
         const today = new Date().toDateString();
@@ -122,20 +159,13 @@ export const TradingProvider: React.FC<{ children: ReactNode }> = ({ children })
             .reduce((acc, r) => acc + r.netProfit, 0);
     }, [results]);
 
-    const winRate = useMemo(() => {
-        if (results.length === 0) return 0;
-        const wins = results.filter(r => r.netProfit > 0).length;
-        return Math.round((wins / results.length) * 100);
-    }, [results]);
-
-    const totalTrades = results.length;
-    const openPositions = signals.length;
-
     // Initialize Socket
     useEffect(() => {
         const newSocket = io("http://localhost:8000", {
-            transports: ["websocket", "polling"],
+            transports: ["polling", "websocket"], // Allow polling first for stability
             path: "/socket.io",
+            withCredentials: true,
+            reconnectionAttempts: 5,
         });
 
         newSocket.on("connect", () => {
@@ -245,8 +275,155 @@ export const TradingProvider: React.FC<{ children: ReactNode }> = ({ children })
         };
     }, []);
 
-    const approveSignal = async (signalId: number) => {
-        console.log("Approving signal via context:", signalId);
+    // Check connection on mount
+    useEffect(() => {
+        const checkConnection = async () => {
+            const userId = localStorage.getItem('v2_user_id');
+            if (!userId) return;
+
+            try {
+                const res = await fetch(`http://localhost:8000/api/tradelocker/status?user_id=${userId}`);
+                const data = await res.json();
+                if (data.connected) {
+                    setTradeLockerConnected(true);
+                    if (data.email) {
+                        refreshTradeLockerData(data.email);
+                    }
+                }
+            } catch (e) {
+                console.error("Failed to check TradeLocker status:", e);
+            }
+        };
+        checkConnection();
+    }, []);
+
+    const disconnectTradeLocker = async () => {
+        try {
+            const userId = localStorage.getItem('v2_user_id');
+            if (!userId) return;
+
+            await fetch('http://localhost:8000/api/tradelocker/disconnect', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ user_id: userId })
+            });
+            setTradeLockerConnected(false);
+            setTradeLockerData(null);
+            setAccountBalance(0);
+            setAccountEquity(0);
+            setSignals([]); // Clear positions
+        } catch (error) {
+            console.error("Failed to disconnect TradeLocker:", error);
+        }
+    };
+
+    const refreshTradeLockerData = async (email: string) => {
+        try {
+            const response = await fetch(`http://localhost:8000/api/tradelocker/account-data?email=${email}`);
+            const data = await response.json();
+            console.log("TradingContext: refreshTradeLockerData response:", data);
+            if (data.status === 'success') {
+                setTradeLockerData(data);
+                if (data.balance) {
+                    setAccountBalance(data.balance.balance);
+                    setAccountEquity(data.balance.equity);
+                }
+
+                // Map TradeLocker positions to UI signals format
+                if (data.positions) {
+                    console.log('RECEIVED TL POSITIONS:', data.positions);
+                    const mappedPositions = data.positions.map((pos: any) => ({
+                        id: pos.id,
+                        provider: "TradeLocker",
+                        providerRank: "Live",
+                        pair: pos.tradableInstrumentId || pos.symbol || `ID: ${pos.instrumentId}`,
+                        action: (pos.side || pos.direction || "BUY").toUpperCase() as 'BUY' | 'SELL',
+                        pips: 0,
+                        price: (pos.avgPrice || pos.price || pos.entryPrice || "0").toString(),
+                        sl: (pos.stopLoss || pos.sl || "").toString(),
+                        tp1: (pos.takeProfit || pos.tp || "").toString(),
+                        tp2: "",
+                        tp3: "",
+                        category: "FOREX",
+                        timestamp: pos.openTime || pos.created || "Just now",
+                        winRate: 0,
+                        lotSize: parseFloat(pos.qty || pos.quantity || pos.lots || 0),
+                        profit: parseFloat(pos.unrealizedPnL || pos.floatingPnL || pos.profit || 0)
+                    }));
+                    setSignals(mappedPositions);
+                }
+
+                if (data.analytics) {
+                    console.log('RECEIVED TL ANALYTICS:', data.analytics);
+                    setTradeLockerData((prev: any) => ({
+                        ...prev,
+                        analytics: data.analytics
+                    }));
+                }
+
+                if (data.history) {
+                    console.log('RECEIVED TL HISTORY:', data.history.length, 'records');
+                    const mappedHistory = data.history.map((trade: any) => ({
+                        id: trade.id || trade.orderId || trade.ticket,
+                        pair: trade.tradableInstrumentId || trade.symbol || trade.instrument || "Unknown",
+                        type: trade.side || trade.action || trade.type || "N/A",
+                        entryPrice: parseFloat(trade.avgPrice || trade.price || trade.entryPrice || 0),
+                        closePrice: parseFloat(trade.closePrice || trade.avgPrice || trade.exitPrice || 0),
+                        netProfit: parseFloat(trade.pnl || trade.realizedPnL || trade.profit || 0),
+                        pips: parseFloat(trade.pips || 0),
+                        lotSize: parseFloat(trade.qty || trade.quantity || trade.volume || trade.lots || 0),
+                        timestamp: trade.date || trade.timestamp || trade.openTime || new Date().toISOString(),
+                        provider: "TradeLocker"
+                    }));
+                    setResults((prev: SignalResult[]) => {
+                        const newIds = new Set(mappedHistory.map((h: any) => h.id));
+                        const filteredPrev = prev.filter(p => !newIds.has(p.id));
+                        return [...mappedHistory, ...filteredPrev];
+                    });
+                }
+            }
+        } catch (error) {
+            console.error("Error refreshing TradeLocker data:", error);
+        }
+    };
+
+    const approveSignal = async (signalId: number, signalData?: any) => {
+        console.log("Approving signal via context:", signalId, signalData);
+        const userId = localStorage.getItem('v2_user_id');
+        if (!userId) {
+            console.error("No user ID found, cannot execute trade");
+            return;
+        }
+
+        try {
+            const payload = {
+                user_id: userId,
+                signal_id: signalId,
+                symbol: signalData?.symbol,
+                action: signalData?.action,
+                sl: signalData?.sl,
+                tp: signalData?.tp1 // Default to TP1
+            };
+
+            const response = await fetch('http://localhost:8000/api/tradelocker/execute', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                console.log("Trade executed successfully:", result);
+                // Refresh data to show new position
+                if (isConnected) refreshTradeLockerData(localStorage.getItem('v2_user_email') || '');
+            } else {
+                console.error("Trade execution failed:", result);
+                throw new Error(result.detail || "Execution failed");
+            }
+        } catch (error) {
+            console.error("Error executing signal:", error);
+            throw error;
+        }
     };
 
     return (
@@ -261,22 +438,28 @@ export const TradingProvider: React.FC<{ children: ReactNode }> = ({ children })
             margin,
             freeMargin,
             marginLevel,
-            totalPnL,
+            totalPnL: overrideTotalPnL,
             dailyPnL,
-            winRate,
+            winRate: overrideWinRate,
             totalTrades,
             openPositions,
             mt5Connected,
             dxConnected,
             matchTraderConnected,
             tradeLockerConnected,
+            tradeLockerData,
             setMt5Connected,
             setDxConnected,
             setMatchTraderConnected,
             setTradeLockerConnected,
             setAccountBalance,
             setAccountEquity,
-            approveSignal
+            setTradeLockerData,
+            setSignals,
+            setResults,
+            refreshTradeLockerData,
+            approveSignal,
+            disconnectTradeLocker
         }}>
             {children}
         </TradingContext.Provider>

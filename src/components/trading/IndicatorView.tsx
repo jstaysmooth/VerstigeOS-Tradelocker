@@ -113,16 +113,6 @@ const IndicatorView: React.FC = () => {
                         <ArrowUpRight size={14} />
                     </a>
                 </div>
-
-                <div className="ind-hero-visual">
-                    <div className="ind-chart-frame">
-                        <img
-                            src="/verstige-indicator-chart.png"
-                            alt="The Verstige Strategy - TradingView Indicator"
-                            className="ind-chart-img"
-                        />
-                    </div>
-                </div>
             </div>
 
             {/* Core Components */}

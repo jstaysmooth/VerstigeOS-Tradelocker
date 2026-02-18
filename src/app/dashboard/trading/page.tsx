@@ -31,6 +31,7 @@ import '@/styles/pages/Trading.css';
 
 import TradingDashboardView from '@/components/trading/TradingDashboardView';
 import ResultsView from '@/components/trading/ResultsView';
+import SignalsView from '@/components/trading/SignalsView';
 import TradeJournalView from '@/components/trading/TradeJournalView';
 import RiskCalculatorView from '@/components/trading/RiskCalculatorView';
 import IndicatorView from '@/components/trading/IndicatorView';
@@ -46,7 +47,7 @@ export default function TradingPage() {
 }
 
 function TradingPageContent() {
-    const [activeTab, setActiveTab] = useState<'DASHBOARD' | 'RESULTS' | 'OVERVIEW' | 'JOURNAL' | 'CALCULATOR' | 'INDICATOR' | 'AUTOTRADER'>('DASHBOARD');
+    const [activeTab, setActiveTab] = useState<'DASHBOARD' | 'RESULTS' | 'OVERVIEW' | 'JOURNAL' | 'CALCULATOR' | 'INDICATOR' | 'AUTOTRADER' | 'SIGNALS'>('DASHBOARD');
     const [isConnected, setIsConnected] = useState(false);
 
     // ... existing state ...
@@ -121,6 +122,13 @@ function TradingPageContent() {
                 </button>
 
                 <button
+                    className={`tab-item ${activeTab === 'SIGNALS' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('SIGNALS')}
+                >
+                    <Activity size={18} /> Signals
+                </button>
+
+                <button
                     className={`tab-item ${activeTab === 'RESULTS' ? 'active' : ''}`}
                     onClick={() => setActiveTab('RESULTS')}
                 >
@@ -163,6 +171,10 @@ function TradingPageContent() {
 
             {activeTab === 'DASHBOARD' && (
                 <TradingDashboardView />
+            )}
+
+            {activeTab === 'SIGNALS' && (
+                <SignalsView />
             )}
 
 

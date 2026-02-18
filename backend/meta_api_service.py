@@ -58,10 +58,7 @@ class SynchronizationListener:
 
 class MetaApiService:
     def __init__(self):
-        self.api = MetaApi(token=token, opts={
-            'clientApiUrl': 'https://mt-client-api-v1.london.agiliumtrade.ai',
-            'provisioningApiUrl': 'https://mt-provisioning-api-v1.agiliumtrade.agiliumtrade.ai'
-        })
+        self.api = MetaApi(token=token)
         self.master_account_id = os.getenv("MASTER_ACCOUNT_ID", "031aaffb-f6be-4cad-814b-6dcbabdf1334")
         self.master_connection = None
         self.sio = None

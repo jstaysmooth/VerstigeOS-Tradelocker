@@ -23,6 +23,8 @@ import {
 import { useTrading } from '@/context/TradingContext';
 import './TradingDashboardView.css';
 
+import AccountConnectionModal from './AccountConnectionModal';
+
 export default function TradingDashboardView() {
     const {
         signals,
@@ -39,12 +41,24 @@ export default function TradingDashboardView() {
         totalTrades,
         openPositions,
         isConnected,
-        approveSignal
+        tradeLockerConnected,
+        tradeLockerData,
+        approveSignal,
+        disconnectTradeLocker
     } = useTrading();
+
+    console.log('DEBUG DASHBOARD ANALYTICS:', {
+        totalTrades,
+        winRate,
+        totalPnL,
+        tradeLockerConnected,
+        tradeLockerAnalytics: tradeLockerData?.analytics
+    });
 
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [copiedSignals, setCopiedSignals] = useState<Set<number>>(new Set());
     const [activeSection, setActiveSection] = useState<'positions' | 'history'>('positions');
+    const [showConnectionModal, setShowConnectionModal] = useState(false);
 
     const handleRefresh = () => {
         setIsRefreshing(true);
@@ -92,16 +106,68 @@ export default function TradingDashboardView() {
 
     return (
         <div className="trading-dashboard-view">
+            {showConnectionModal && (
+                <AccountConnectionModal onClose={() => setShowConnectionModal(false)} />
+            )}
+
             {/* ─── Account Overview Card ─── */}
             <section className="account-card">
                 <div className="account-card-glow"></div>
+                {!isConnected && !tradeLockerConnected && (
+                    <button
+                        className="btn-connect-account"
+                        onClick={() => setShowConnectionModal(true)}
+                        style={{
+                            position: 'absolute',
+                            top: '20px',
+                            right: '20px',
+                            zIndex: 10,
+                            padding: '10px 20px',
+                            background: 'var(--accent)',
+                            border: 'none',
+                            borderRadius: '8px',
+                            color: 'white',
+                            fontWeight: 'bold',
+                            cursor: 'pointer',
+                            boxShadow: '0 4px 12px rgba(99, 102, 241, 0.3)'
+                        }}
+                    >
+                        Connect Account
+                    </button>
+                )}
 
                 <div className="account-header">
                     <div className="connection-status">
                         <div className={`conn-dot ${isConnected ? 'live' : ''}`}></div>
                         <span className="conn-label">
-                            {isConnected ? 'MT5 Connected' : 'Waiting for Connection'}
+                            {tradeLockerConnected ? 'TradeLocker Active' : (isConnected ? 'MT5 Connected' : 'Waiting for Connection')}
                         </span>
+                        {(isConnected || tradeLockerConnected) && (
+                            <button
+                                className="disconnect-text-btn"
+                                onClick={async (e) => {
+                                    e.stopPropagation();
+                                    if (tradeLockerConnected) {
+                                        await disconnectTradeLocker();
+                                    }
+                                }}
+                                style={{
+                                    background: 'none',
+                                    border: 'none',
+                                    color: '#ef4444',
+                                    fontSize: '0.7rem',
+                                    cursor: 'pointer',
+                                    textDecoration: 'underline',
+                                    padding: '2px 0 0 0',
+                                    marginTop: '4px',
+                                    opacity: 0.8,
+                                    lineHeight: 1,
+                                    display: 'block'
+                                }}
+                            >
+                                Disconnect
+                            </button>
+                        )}
                     </div>
                     <button
                         className={`refresh-btn ${isRefreshing ? 'spinning' : ''}`}
@@ -209,12 +275,12 @@ export default function TradingDashboardView() {
                     </div>
                 </div>
                 <div className="analytics-card">
-                    <div className={`analytics-icon ${totalPnL >= 0 ? 'green' : 'red'}`}>
+                    <div className={`analytics-icon ${tradeLockerData?.analytics?.total_pnl >= 0 || totalPnL >= 0 ? 'green' : 'red'}`}>
                         <PieChart size={16} />
                     </div>
                     <div className="analytics-info">
-                        <span className={`analytics-number ${totalPnL >= 0 ? 'positive' : 'negative'}`}>
-                            {totalPnL >= 0 ? '+' : ''}${Math.abs(totalPnL).toFixed(2)}
+                        <span className={`analytics-number ${(tradeLockerData?.analytics?.total_pnl ?? totalPnL) >= 0 ? 'positive' : 'negative'}`}>
+                            {(tradeLockerData?.analytics?.total_pnl ?? totalPnL) >= 0 ? '+' : ''}${Math.abs(tradeLockerData?.analytics?.total_pnl ?? totalPnL).toFixed(2)}
                         </span>
                         <span className="analytics-label">Total P&L</span>
                     </div>

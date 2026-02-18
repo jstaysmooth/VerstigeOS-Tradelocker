@@ -14,9 +14,12 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
     badgeText = "Welcome back, Slade Johnson",
     showStatus = true
 }) => {
-    const [time, setTime] = useState(new Date().toLocaleTimeString());
+    const [time, setTime] = useState<string>("");
+    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
+        setMounted(true);
+        setTime(new Date().toLocaleTimeString());
         const timer = setInterval(() => setTime(new Date().toLocaleTimeString()), 1000);
         return () => clearInterval(timer);
     }, []);
@@ -41,7 +44,7 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
                 </h1>
                 <div className="system-status-indicator">
                     {showStatus && <span className="status-dot green" />}
-                    <span className="text-subtitle">{showStatus ? `System Time: ${time} | ` : ''}{subtitle}</span>
+                    <span className="text-subtitle">{showStatus && mounted ? `System Time: ${time} | ` : ''}{subtitle}</span>
                 </div>
             </div>
         </header>

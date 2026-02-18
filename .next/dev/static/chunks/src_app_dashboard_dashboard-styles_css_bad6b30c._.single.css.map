@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/src/app/dashboard/dashboard-styles.css"],"sourcesContent":[".dashboard-container {\n    min-height: 100vh;\n    background-color: var(--bg-dark);\n    position: relative;\n    padding-bottom: 120px;\n    /* Space for the launcher */\n}\n\n.dash-main {\n    max-width: 1400px;\n    margin: 0 auto;\n    padding: var(--spacing-xl) var(--spacing-lg);\n}\n\n.dash-content {\n    width: 100%;\n}"],"names":[],"mappings":"AAAA;;;;;;;AAQA;;;;;;AAMA"}}]
-}
