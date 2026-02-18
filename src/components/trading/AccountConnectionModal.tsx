@@ -130,6 +130,28 @@ export default function AccountConnectionModal({ onClose }: AccountConnectionMod
                     setResults(mappedHistory);
                 }
 
+                // ADD THIS: Save to database
+                const saveResponse = await fetch(`${API_URL}/api/tradelocker/save-account`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        user_id: userId,
+                        email: accountId,
+                        password: password,
+                        server: server,
+                        account_id: selectedAccountId,
+                        account_name: `${selectedPlatform} - ${selectedAccountId}`,
+                        account_type: server.includes('Demo') ? 'demo' : 'live',
+                        balance: data.balance?.balance || 0,
+                        equity: data.balance?.equity || 0,
+                        currency: 'USD'
+                    })
+                });
+
+                if (saveResponse.ok) {
+                    console.log("Account saved explicitly via save-account endpoint");
+                }
+
                 onClose(); // Close modal on success
             } else {
                 setError(data.detail || 'Failed to select account');

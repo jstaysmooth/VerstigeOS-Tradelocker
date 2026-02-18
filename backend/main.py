@@ -15,6 +15,15 @@ import logging
 import sys
 print(f"DEBUG SYS PATH: {sys.path}")
 import os
+from supabase import create_client, Client
+from dotenv import load_dotenv
+
+# Initialize Supabase Client for direct operations
+load_dotenv()
+supabase: Client = create_client(
+    os.getenv("SUPABASE_URL", ""),
+    os.getenv("SUPABASE_SERVICE_KEY", "") or os.getenv("SUPABASE_KEY", "")
+)
 
 import sys
 
@@ -729,6 +738,78 @@ async def tradelocker_account_data(email: str):
             "analytics": analytics
         }
     except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+class TradeLockerSaveRequest(BaseModel):
+    user_id: str
+    email: str
+    password: str
+    server: str
+    account_id: str
+    account_name: str
+    account_type: str
+    balance: float
+    equity: float
+    currency: str
+
+@app.post("/api/tradelocker/save-account")
+async def tradelocker_save_account(req: TradeLockerSaveRequest):
+    try:
+        logger.info(f"Saving TradeLocker account for user {req.user_id} directly to Supabase")
+        
+        # 1. Get/Create Platform
+        plat_res = supabase.table("trading_platforms").select("id").eq("code", "tradelocker").execute()
+        if not plat_res.data:
+             # Create it
+             plat_res = supabase.table("trading_platforms").insert({
+                 "name": "TradeLocker", "code": "tradelocker",
+                 "api_endpoint": "https://live.tradelocker.com/backend-api"
+             }).execute()
+        
+        platform_id = plat_res.data[0]['id']
+        
+        # 2. Prepare Credentials
+        creds = {
+            "email": req.email,
+            "password": req.password,
+            "server": req.server,
+            "account_id": req.account_id
+        }
+        
+        # 3. Upsert Account
+        # Check if exists
+        existing = supabase.table("trading_accounts").select("id").eq("user_id", req.user_id).eq("platform_id", platform_id).execute()
+        
+        payload = {
+            "user_id": req.user_id,
+            "platform_id": platform_id,
+            "account_name": req.account_name,
+            "account_number": req.account_id,
+            "account_type": req.account_type,
+            "currency": req.currency,
+            "server": req.server,
+            "balance": req.balance,
+            "equity": req.equity,
+            "encrypted_credentials": json.dumps(creds),
+            "last_sync_at": datetime.now().isoformat(),
+            "is_active": True
+        }
+        
+        if existing.data:
+            # Update
+            account_id = existing.data[0]['id']
+            supabase.table("trading_accounts").update(payload).eq("id", account_id).execute()
+        else:
+            # Insert
+            supabase.table("trading_accounts").insert(payload).execute()
+            
+        logger.info(f"Successfully saved account for user {req.user_id}")
+        return {"status": "success", "message": "Account saved successfully to Supabase"}
+        
+    except Exception as e:
+        logger.error(f"Error saving account: {e}")
+        # Log to stderr too
+        print(f"ERROR Saving Account: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/api/tradelocker/execute")

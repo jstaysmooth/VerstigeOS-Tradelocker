@@ -34,36 +34,48 @@ def decrypt(value: str) -> str:
         print(f"Decryption failed: {e}")
         return value # Fallback to original if not encrypted/wrong key
 
-async def get_user_credentials(user_id: str) -> dict:
+    print(f"DEBUG EXEC: Fetching credentials for user_id={user_id}")
     # Query trading_accounts joined with trading_platforms
-    response = (
-        supabase.table("trading_accounts")
-        .select("*, trading_platforms!inner(code)")
-        .eq("user_id", user_id)
-        .eq("trading_platforms.code", "tradelocker")
-        .eq("is_active", True)
-        .execute()
-    )
+    try:
+        response = (
+            supabase.table("trading_accounts")
+            .select("*, trading_platforms!inner(code)")
+            .eq("user_id", user_id)
+            .eq("trading_platforms.code", "tradelocker")
+            .eq("is_active", True)
+            .execute()
+        )
+        print(f"DEBUG EXEC: Database response count: {len(response.data) if response.data else 0}")
+    except Exception as e:
+        print(f"DEBUG EXEC: Database query failed: {e}")
+        raise e
     
     if not response.data:
+        print(f"DEBUG EXEC: No active TradeLocker account found for {user_id}")
         raise ValueError(f"No active TradeLocker account for user {user_id}")
         
     # Use the first active account found
     row = response.data[0]
+    print(f"DEBUG EXEC: Found account row: {row.get('id')} - {row.get('account_number')}")
     
     # Parse credentials
     # main.py currently saves them as JSON string in 'encrypted_credentials'
     creds_str = row.get("encrypted_credentials", "{}")
+    print(f"DEBUG EXEC: Raw creds string length: {len(creds_str)}")
     
     try:
         # Try JSON load first (current main.py behavior)
         creds = json.loads(creds_str)
+        print("DEBUG EXEC: Credentials parsed as JSON successfully")
     except json.JSONDecodeError:
         # If actually encrypted/garbage, try decrypt fallback
+        print("DEBUG EXEC: Credentials not JSON, attempting decryption...")
         try:
             decrypted = decrypt(creds_str)
             creds = json.loads(decrypted)
-        except:
+            print("DEBUG EXEC: Decryption successful")
+        except Exception as e:
+             print(f"DEBUG EXEC: Decryption failed: {e}")
              raise ValueError("Failed to parse account credentials")
 
     return {
