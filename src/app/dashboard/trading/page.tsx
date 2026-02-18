@@ -47,7 +47,7 @@ export default function TradingPage() {
 }
 
 function TradingPageContent() {
-    const [activeTab, setActiveTab] = useState<'DASHBOARD' | 'RESULTS' | 'OVERVIEW' | 'JOURNAL' | 'CALCULATOR' | 'INDICATOR' | 'AUTOTRADER' | 'SIGNALS'>('DASHBOARD');
+    const [activeTab, setActiveTab] = useState<'DASHBOARD' | 'RESULTS' | 'OVERVIEW' | 'JOURNAL' | 'CALCULATOR' | 'INDICATOR' | 'AUTOTRADER' | 'SIGNALS' | 'CHART'>('DASHBOARD');
     const [isConnected, setIsConnected] = useState(false);
 
     // ... existing state ...
