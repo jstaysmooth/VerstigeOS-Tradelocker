@@ -1,13 +1,8 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { createClient, User } from '@supabase/supabase-js';
-
-// Initialize Supabase client
-const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL || "",
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ""
-);
+import { User } from '@supabase/supabase-js';
+import { supabase } from '@/lib/supabase';
 
 interface UserProfile {
     firstName: string;
