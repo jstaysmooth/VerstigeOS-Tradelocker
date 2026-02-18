@@ -127,11 +127,10 @@ export default function GetStartedPage() {
 
             setSignupSuccess(true);
 
-            // If session is present, it means auto-login happened. 
-            // If not, they must confirm email. 
+            // Redirect to login page after a short delay to show success
             setTimeout(() => {
-                router.push('/dashboard/trading');
-            }, data.session ? 1500 : 5000);
+                router.push('/login?registered=true');
+            }, 3000);
 
         } catch (err: any) {
             console.error("Signup failed:", err);

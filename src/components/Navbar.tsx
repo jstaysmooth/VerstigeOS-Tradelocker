@@ -31,7 +31,10 @@ const Navbar: React.FC = () => {
                     {user ? (
                         <Link href="/dashboard" className="btn-nav" onClick={() => setIsOpen(false)}>Dashboard</Link>
                     ) : (
-                        <Link href="/get-started" className="btn-nav" onClick={() => setIsOpen(false)}>Get Started</Link>
+                        <div className="flex items-center gap-4">
+                            <Link href="/login" className="text-sm font-bold text-secondary hover:text-white transition-colors" onClick={() => setIsOpen(false)}>Login</Link>
+                            <Link href="/get-started" className="btn-nav" onClick={() => setIsOpen(false)}>Get Started</Link>
+                        </div>
                     )}
                 </div>
 

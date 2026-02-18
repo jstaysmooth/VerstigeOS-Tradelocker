@@ -16,8 +16,8 @@ export const DashboardGuard = ({ children }: { children: React.ReactNode }) => {
     useEffect(() => {
         // If loading is finished and there's no user, redirect
         if (!loading && !user) {
-            console.log("Unauthorized access attempt to:", pathname, "Redirecting to signup.");
-            router.push('/get-started');
+            console.log("Unauthorized access attempt to:", pathname, "Redirecting to login.");
+            router.push('/login');
         }
     }, [user, loading, router, pathname]);
 
