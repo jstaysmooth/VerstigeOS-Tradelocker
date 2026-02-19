@@ -317,34 +317,66 @@ class TradeLockerClient:
         """
         if not hasattr(self, '_instrument_cache'):
             self._instrument_cache = {}
-        
+
         symbol_upper = symbol.upper()
         if symbol_upper in self._instrument_cache:
+            logger.info(f"[Instrument] Cache hit: {symbol_upper} → {self._instrument_cache[symbol_upper]}")
             return self._instrument_cache[symbol_upper]
-        
+
+        logger.info(f"[Instrument] Looking up '{symbol_upper}' | account_id={self.account_id} | acc_num={self.acc_num}")
+
+        if not self.account_id:
+            logger.error("[Instrument] account_id is None — cannot call instruments endpoint")
+            return None
+
         url = f"{self.base_url}/trade/accounts/{self.account_id}/instruments"
         try:
             response = self.session.get(url)
+            logger.info(f"[Instrument] GET {url} → {response.status_code}")
+            logger.info(f"[Instrument] Raw response (first 500): {response.text[:500]}")
+
             if response.status_code == 200:
                 data = response.json()
-                # Handle 'd' wrapper
+                # Handle 'd' wrapper (TradeLocker wraps most responses)
                 api_data = data.get('d', data)
                 instruments = api_data.get('instruments', api_data if isinstance(api_data, list) else [])
+                logger.info(f"[Instrument] Total instruments found: {len(instruments)}")
+
+                if instruments:
+                    # Log a sample to see the actual field names
+                    sample = instruments[0] if instruments else {}
+                    logger.info(f"[Instrument] Sample instrument fields: {list(sample.keys())}")
+                    logger.info(f"[Instrument] Sample instrument: {str(sample)[:300]}")
+
                 for inst in instruments:
-                    # TradeLocker instruments have 'name' field for the symbol
-                    name = (inst.get('name') or inst.get('symbol') or '').upper()
+                    # Try multiple possible field names for the symbol
+                    name = (
+                        inst.get('name') or
+                        inst.get('symbol') or
+                        inst.get('instrumentName') or
+                        inst.get('tradingSymbol') or ''
+                    ).upper()
+
                     if name == symbol_upper:
-                        tid = inst.get('tradableInstrumentId') or inst.get('id')
+                        tid = (
+                            inst.get('tradableInstrumentId') or
+                            inst.get('id') or
+                            inst.get('instrumentId')
+                        )
                         if tid:
                             self._instrument_cache[symbol_upper] = int(tid)
-                            logger.info(f"[Instrument] {symbol_upper} → id={tid}")
+                            logger.info(f"[Instrument] ✅ Resolved {symbol_upper} → id={tid}")
                             return int(tid)
-                logger.warning(f"[Instrument] Symbol '{symbol_upper}' not found in instruments list")
+
+                # Log all instrument names for debugging
+                all_names = [(inst.get('name') or inst.get('symbol') or '?') for inst in instruments[:20]]
+                logger.warning(f"[Instrument] '{symbol_upper}' not found. First 20 instrument names: {all_names}")
             else:
-                logger.error(f"[Instrument] Fetch failed: {response.status_code} - {response.text[:200]}")
+                logger.error(f"[Instrument] Fetch failed: {response.status_code} - {response.text[:300]}")
         except Exception as e:
             logger.error(f"[Instrument] Lookup error: {e}")
         return None
+
 
     def execute_order(self, symbol: str, action: str, quantity: float, stop_loss: float = 0, take_profit: float = 0) -> Dict:
         """Execute a market order on TradeLocker using /trade/accounts/{accountId}/orders"""
