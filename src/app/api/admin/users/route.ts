@@ -23,8 +23,9 @@ export async function GET() {
         const SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
 
         if (!SUPABASE_URL || !SERVICE_KEY) {
+            console.error('[/api/admin/users] Missing env vars:', { url: !!SUPABASE_URL, key: !!SERVICE_KEY });
             return NextResponse.json(
-                { error: `Env vars missing — URL: ${SUPABASE_URL ? 'ok' : 'MISSING'}, SERVICE_KEY: ${SERVICE_KEY ? 'ok' : 'MISSING'}` },
+                { error: `Backend configuration error: SUPABASE_SERVICE_KEY or NEXT_PUBLIC_SUPABASE_URL is not defined in the environment. URL: ${SUPABASE_URL ? 'ok' : 'MISSING'}, SERVICE_KEY: ${SERVICE_KEY ? 'ok' : 'MISSING'}. Make sure to restart your dev server after updating .env.local.` },
                 { status: 500 }
             );
         }
