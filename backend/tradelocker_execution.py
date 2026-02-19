@@ -36,13 +36,26 @@ def decrypt(value: str) -> str:
 
 async def get_user_credentials(user_id: str) -> dict:
     print(f"DEBUG EXEC: Fetching credentials for user_id={user_id}")
-    # Query trading_accounts joined with trading_platforms
+    # Step 1: Get TradeLocker platform ID
     try:
+        platform_resp = (
+            supabase.table("trading_platforms")
+            .select("id")
+            .eq("code", "tradelocker")
+            .execute()
+        )
+        if not platform_resp.data:
+            raise ValueError("TradeLocker platform not found in database")
+        
+        platform_id = platform_resp.data[0]["id"]
+        print(f"DEBUG EXEC: Found TradeLocker platform_id={platform_id}")
+
+        # Step 2: Get Trading Account using platform_id (No JOIN)
         response = (
             supabase.table("trading_accounts")
-            .select("*, trading_platforms!inner(code)")
+            .select("*")
             .eq("user_id", user_id)
-            .eq("trading_platforms.code", "tradelocker")
+            .eq("platform_id", platform_id)
             .eq("is_active", True)
             .execute()
         )
@@ -57,6 +70,8 @@ async def get_user_credentials(user_id: str) -> dict:
         
     # Use the first active account found
     row = response.data[0]
+    # Add server fallback if needed since we aren't joining anymore
+    # The 'server' field should exist on the trading_account row itself based on previous schema work
     print(f"DEBUG EXEC: Found account row: {row.get('id')} - {row.get('account_number')}")
     
     # Parse credentials
