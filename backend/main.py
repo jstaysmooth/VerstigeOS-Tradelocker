@@ -664,11 +664,12 @@ async def tradelocker_select_account(req: TradeLockerAccountSelectRequest, db: S
                     db.commit()
                     db.refresh(platform)
                 
-                # 2. Prepare Credentials
+                # 2. Prepare Credentials (include broker_url so re-auth uses the right server)
                 creds = {
                     "email": client.email,
                     "password": client.password,
                     "server": client.server,
+                    "broker_url": client.base_url,
                     "access_token": client.access_token,
                     "refresh_token": client.refresh_token,
                     "account_id": client.account_id,
@@ -770,12 +771,18 @@ async def tradelocker_save_account(req: TradeLockerSaveRequest):
         
         platform_id = plat_res.data[0]['id']
         
-        # 2. Prepare Credentials
+        # 2. Prepare Credentials (include acc_num and broker_url for session rehydration after restart)
+        # Pull acc_num from active in-memory session if available
+        active_client = tradelocker_sessions.get(req.email)
+        acc_num = active_client.acc_num if active_client else None
+        broker_url = active_client.base_url if active_client else None
         creds = {
             "email": req.email,
             "password": req.password,
             "server": req.server,
-            "account_id": req.account_id
+            "account_id": req.account_id,
+            "acc_num": acc_num,
+            "broker_url": broker_url
         }
         
         # 3. Upsert Account
@@ -1123,19 +1130,35 @@ async def execute_copy_trade(payload: dict = Body(...), db: Session = Depends(ge
     if not client and creds:
         try:
             stored_email = creds.get('email')
-            logger.info(f"[Execute] Re-authenticating for {stored_email}")
-            new_client = TradeLockerClient(creds['email'], creds['password'], creds['server'])
-            if creds.get('acc_num'):
-                new_client.acc_num = creds.get('acc_num')
-                new_client.session.headers.update({"accNum": str(creds.get('acc_num'))})
-            success, _ = new_client.login()
-            if success:
-                new_client.select_account(creds.get('account_id'))
-                tradelocker_sessions[stored_email] = new_client
-                client = new_client
-                logger.info(f"[Execute] Re-authentication successful for {stored_email}")
+            stored_password = creds.get('password')
+            stored_server = creds.get('server')
+            stored_broker_url = creds.get('broker_url', 'https://demo.tradelocker.com/backend-api')
+            stored_acc_num = creds.get('acc_num')
+            stored_account_id = creds.get('account_id')
+
+            if not stored_email or not stored_password or not stored_server:
+                logger.warning("[Execute] Incomplete credentials — cannot re-authenticate")
+            else:
+                logger.info(f"[Execute] Re-authenticating for {stored_email} on {stored_broker_url}")
+                new_client = TradeLockerClient(stored_email, stored_password, stored_server, stored_broker_url)
+                success, login_msg = new_client.login()
+                if success:
+                    # Set acc_num directly from stored creds — avoids unreliable select_account() call
+                    if stored_acc_num:
+                        new_client.acc_num = stored_acc_num
+                        new_client.account_id = stored_account_id
+                        new_client.session.headers.update({"accNum": str(stored_acc_num)})
+                        logger.info(f"[Execute] Set acc_num={stored_acc_num} directly from stored creds")
+                    elif stored_account_id:
+                        # Fallback: try select_account if we at least have an account_id
+                        new_client.select_account(stored_account_id)
+                    tradelocker_sessions[stored_email] = new_client
+                    client = new_client
+                    logger.info(f"[Execute] Re-authentication successful for {stored_email}")
+                else:
+                    logger.error(f"[Execute] Re-authentication failed: {login_msg}")
         except Exception as auth_err:
-            logger.error(f"[Execute] Re-authentication failed: {auth_err}")
+            logger.error(f"[Execute] Re-authentication exception: {auth_err}")
 
     if not client:
         raise HTTPException(
