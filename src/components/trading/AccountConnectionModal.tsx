@@ -131,28 +131,40 @@ export default function AccountConnectionModal({ onClose }: AccountConnectionMod
                 }
 
                 // ADD THIS: Save to database
-                const saveResponse = await fetch(`${API_URL}/api/tradelocker/save-account`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        user_id: userId,
-                        email: accountId,
-                        password: password,
-                        server: server,
-                        account_id: selectedAccountId,
-                        account_name: `${selectedPlatform} - ${selectedAccountId}`,
-                        account_type: server.includes('Demo') ? 'demo' : 'live',
-                        balance: data.balance?.balance || 0,
-                        equity: data.balance?.equity || 0,
-                        currency: 'USD'
-                    })
-                });
+                console.log("Attempting to save account with User ID:", userId);
 
-                if (saveResponse.ok) {
-                    console.log("Account saved explicitly via save-account endpoint");
+                try {
+                    const saveResponse = await fetch(`${API_URL}/api/tradelocker/save-account`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            user_id: userId,
+                            email: accountId,
+                            password: password,
+                            server: server,
+                            account_id: selectedAccountId,
+                            account_name: `${selectedPlatform} - ${selectedAccountId}`,
+                            account_type: server.includes('Demo') ? 'demo' : 'live',
+                            balance: data.balance?.balance || 0,
+                            equity: data.balance?.equity || 0,
+                            currency: 'USD'
+                        })
+                    });
+
+                    if (saveResponse.ok) {
+                        console.log("Account saved explicitly via save-account endpoint");
+                        // Only close on success
+                        onClose();
+                    } else {
+                        const errorData = await saveResponse.json();
+                        console.error("Failed to save account persistence:", errorData);
+                        setError(`Connected, but failed to save account: ${errorData.detail || 'Unknown error'}`);
+                        // Do not close modal so user sees error
+                    }
+                } catch (saveError) {
+                    console.error("Network error saving account:", saveError);
+                    setError("Network error saving account details.");
                 }
-
-                onClose(); // Close modal on success
             } else {
                 setError(data.detail || 'Failed to select account');
             }
