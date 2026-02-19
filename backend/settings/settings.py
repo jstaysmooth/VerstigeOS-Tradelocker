@@ -4,7 +4,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
     METATRADER_FILES_DIR: str = os.getenv("MT_FILES_DIR", "")
     SERVER_PORT: int = int(os.getenv("PORT", 8000))

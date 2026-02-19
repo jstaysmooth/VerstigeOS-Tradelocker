@@ -23,6 +23,14 @@ interface AdminUser {
     lastSignIn: string | null;
     tradingAccountConnected: boolean;
     tradingBalance: number;
+    tradingProvider?: string | null;
+    analyticsData?: {
+        winRate: number;
+        totalTrades: number;
+        totalPnl: number;
+        growth: { time: string; balance: number }[];
+        recentTrades: any[];
+    } | null;
 }
 
 type Tab = 'all' | 'trading' | 'business' | 'sales';
@@ -58,6 +66,57 @@ function formatDate(iso: string | null) {
     return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
+// ─── Growth Chart Component ──────────────────────────────────────────────────
+function GrowthChart({ data }: { data: { time: string; balance: number }[] }) {
+    if (!data || data.length < 2) return <div className="admin-no-chart">Insufficient data for chart</div>;
+
+    const balances = data.map(d => d.balance);
+    const min = Math.min(...balances);
+    const max = Math.max(...balances);
+    const range = max - min || 1;
+
+    const width = 400;
+    const height = 120;
+    const padding = 10;
+
+    const points = data.map((d, i) => {
+        const x = (i / (data.length - 1)) * (width - padding * 2) + padding;
+        const y = height - ((d.balance - min) / range) * (height - padding * 2) - padding;
+        return `${x},${y}`;
+    }).join(' ');
+
+    const trendColor = balances[balances.length - 1] >= balances[0] ? '#10b981' : '#ef4444';
+
+    return (
+        <div className="admin-growth-chart-wrap">
+            <svg viewBox={`0 0 ${width} ${height}`} className="admin-growth-svg">
+                <defs>
+                    <linearGradient id="chartGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stopColor={trendColor} stopOpacity="0.2" />
+                        <stop offset="100%" stopColor={trendColor} stopOpacity="0" />
+                    </linearGradient>
+                </defs>
+                <polyline
+                    fill="none"
+                    stroke={trendColor}
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    points={points}
+                />
+                <path
+                    d={`M ${padding} ${height} L ${points} L ${width - padding} ${height} Z`}
+                    fill="url(#chartGradient)"
+                />
+            </svg>
+            <div className="chart-pnl-label" style={{ color: trendColor }}>
+                {balances[balances.length - 1] >= balances[0] ? '+' : ''}
+                {((balances[balances.length - 1] - balances[0]) / (balances[0] || 1) * 100).toFixed(1)}%
+            </div>
+        </div>
+    );
+}
+
 // ─── Main Component ──────────────────────────────────────────────────────────
 export default function AdminPage() {
     const { isAdmin, loading: authLoading } = useUser();
@@ -75,6 +134,7 @@ export default function AdminPage() {
     const [pendingDivisions, setPendingDivisions] = useState<Set<DivisionName>>(new Set());
     const [saving, setSaving] = useState(false);
     const [saveMsg, setSaveMsg] = useState<string | null>(null);
+    const [refreshing, setRefreshing] = useState<Record<string, boolean>>({});
 
     // Redirect non-admins
     useEffect(() => {
@@ -178,6 +238,71 @@ export default function AdminPage() {
             setSaveMsg(`Error: ${e.message}`);
         } finally {
             setSaving(false);
+        }
+    };
+
+    const refreshBalance = async (user: AdminUser) => {
+        setRefreshing(prev => ({ ...prev, [user.id]: true }));
+        try {
+            const res = await fetch('/api/admin/refresh-user-balance', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userId: user.id, email: user.email, provider: user.tradingProvider }),
+            });
+            const data = await res.json();
+            if (data.status === 'success') {
+                setUsers(prev => prev.map(u =>
+                    u.id === user.id ? { ...u, tradingBalance: data.balance } : u
+                ));
+            } else {
+                console.error('Refresh failed:', data.error);
+            }
+        } catch (e) {
+            console.error('Refresh error:', e);
+        } finally {
+            setRefreshing(prev => ({ ...prev, [user.id]: false }));
+        }
+    };
+
+    const fetchAnalytics = async (user: AdminUser) => {
+        if (user.analyticsData || !user.tradingAccountConnected) return;
+
+        try {
+            const res = await fetch('/api/admin/user-trading-analytics', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userId: user.id, email: user.email, provider: user.tradingProvider }),
+            });
+            const data = await res.json();
+            console.log('[/api/admin/user-trading-analytics] Response data:', data);
+            if (data.status === 'success') {
+                setUsers(prev => prev.map(u =>
+                    u.id === user.id ? {
+                        ...u,
+                        analyticsData: {
+                            winRate: data.analytics?.win_rate ?? 0,
+                            totalTrades: data.analytics?.total_trades ?? 0,
+                            totalPnl: data.analytics?.total_pnl ?? 0,
+                            growth: data.growth || [],
+                            recentTrades: data.history || []
+                        }
+                    } : u
+                ));
+            } else {
+                console.error('Analytics fetch failed:', data.error);
+            }
+        } catch (e) {
+            console.error('Analytics fetch error:', e);
+        }
+    };
+
+    const handleExpand = (userId: string) => {
+        const isCurrentlyExpanded = expandedUser === userId;
+        setExpandedUser(isCurrentlyExpanded ? null : userId);
+
+        if (!isCurrentlyExpanded) {
+            const user = users.find(u => u.id === userId);
+            if (user) fetchAnalytics(user);
         }
     };
 
@@ -291,7 +416,7 @@ export default function AdminPage() {
                                     <React.Fragment key={user.id}>
                                         <tr
                                             className={`admin-row ${isExpanded ? 'expanded' : ''}`}
-                                            onClick={() => setExpandedUser(isExpanded ? null : user.id)}
+                                            onClick={() => handleExpand(user.id)}
                                         >
                                             {/* User column */}
                                             <td>
@@ -326,10 +451,22 @@ export default function AdminPage() {
                                             <td>
                                                 {user.tradingAccountConnected ? (
                                                     <div className="admin-balance-cell">
-                                                        <CheckCircle2 size={14} style={{ color: '#10b981' }} />
-                                                        <span style={{ color: '#10b981', fontWeight: 600 }}>
+                                                        <div className="admin-platform-chip">
+                                                            {user.tradingProvider?.toUpperCase() || 'LIVE'}
+                                                        </div>
+                                                        <span className="admin-balance-val">
                                                             ${user.tradingBalance.toLocaleString('en-US', { minimumFractionDigits: 2 })}
                                                         </span>
+                                                        <button
+                                                            className={`admin-balance-refresh-btn ${refreshing[user.id] ? 'spin' : ''}`}
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                refreshBalance(user);
+                                                            }}
+                                                            title="Refresh balance"
+                                                        >
+                                                            <RefreshCw size={12} />
+                                                        </button>
                                                     </div>
                                                 ) : (
                                                     <div className="admin-no-account">
@@ -374,57 +511,86 @@ export default function AdminPage() {
                                                         </h4>
 
                                                         <div className="admin-analytics-grid">
-                                                            {/* Identity */}
-                                                            <div className="admin-analytics-card">
+                                                            {/* User Trading Performance */}
+                                                            <div className="admin-analytics-card chart-card">
+                                                                <div className="aac-label"><TrendingUp size={13} /> Performance Growth</div>
+                                                                {user.analyticsData ? (
+                                                                    <div className="admin-chart-area">
+                                                                        <GrowthChart data={user.analyticsData.growth} />
+                                                                        <div className="chart-stats-row">
+                                                                            <div className="cs-item">
+                                                                                <span>Win Rate</span>
+                                                                                <strong style={{ color: user.analyticsData.winRate >= 50 ? '#10b981' : '#ef4444' }}>
+                                                                                    {user.analyticsData.winRate.toFixed(1)}%
+                                                                                </strong>
+                                                                            </div>
+                                                                            <div className="cs-item">
+                                                                                <span>Total P&L</span>
+                                                                                <strong style={{ color: user.analyticsData.totalPnl >= 0 ? '#10b981' : '#ef4444' }}>
+                                                                                    ${user.analyticsData.totalPnl.toLocaleString()}
+                                                                                </strong>
+                                                                            </div>
+                                                                            <div className="cs-item">
+                                                                                <span>Trades</span>
+                                                                                <strong>{user.analyticsData.totalTrades}</strong>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                ) : user.tradingAccountConnected ? (
+                                                                    <div className="admin-analytics-loading">
+                                                                        <RefreshCw size={18} className="spin" />
+                                                                        <span>Fetching deep analytics…</span>
+                                                                    </div>
+                                                                ) : (
+                                                                    <div className="admin-no-data">Account not connected</div>
+                                                                )}
+                                                            </div>
+
+                                                            {/* Recent Trades List */}
+                                                            <div className="admin-analytics-card history-card">
+                                                                <div className="aac-label"><Clock size={13} /> Most Recent Trades</div>
+                                                                {user.analyticsData?.recentTrades && user.analyticsData.recentTrades.length > 0 ? (
+                                                                    <div className="admin-recent-trades">
+                                                                        {user.analyticsData.recentTrades.map((t: any, i: number) => (
+                                                                            <div key={i} className="trade-item">
+                                                                                <div className="trade-info">
+                                                                                    <span className="trade-symbol">{t.symbol || 'USDJPY'}</span>
+                                                                                    <span className={`trade-type ${t.side?.toLowerCase()}`}>{t.side}</span>
+                                                                                </div>
+                                                                                <div className={`trade-pnl ${parseFloat(t.pnl || 0) >= 0 ? 'plus' : 'minus'}`}>
+                                                                                    {parseFloat(t.pnl || 0) >= 0 ? '+' : ''}${Math.abs(parseFloat(t.pnl || 0)).toFixed(2)}
+                                                                                </div>
+                                                                            </div>
+                                                                        ))}
+                                                                    </div>
+                                                                ) : (
+                                                                    <div className="admin-no-data">No history available</div>
+                                                                )}
+                                                            </div>
+
+                                                            {/* User Identity */}
+                                                            <div className="admin-analytics-card identity-card">
                                                                 <div className="aac-label"><User2 size={13} /> Identity</div>
                                                                 <div className="aac-row"><span>Email</span><strong>{user.email}</strong></div>
                                                                 <div className="aac-row"><span>User ID</span><code>{user.id.slice(0, 12)}…</code></div>
                                                                 <div className="aac-row"><span>Role</span><strong>{user.isAdmin ? '🛡 Admin' : '👤 Member'}</strong></div>
                                                             </div>
 
-                                                            {/* Division Access */}
-                                                            <div className="admin-analytics-card">
-                                                                <div className="aac-label"><Shield size={13} /> Division Access</div>
-                                                                {(['trading', 'business', 'sales'] as DivisionName[]).map(div => (
-                                                                    <div key={div} className="aac-row">
-                                                                        <span style={{ textTransform: 'capitalize' }}>{div}</span>
-                                                                        {userDivs.includes(div) ? (
-                                                                            <strong style={{ color: DIVISION_CONFIG[div].color }}>✓ Granted</strong>
-                                                                        ) : (
-                                                                            <span style={{ color: '#6b7280' }}>✗ No access</span>
-                                                                        )}
-                                                                    </div>
-                                                                ))}
-                                                            </div>
-
-                                                            {/* Trading Account */}
-                                                            <div className="admin-analytics-card">
-                                                                <div className="aac-label"><Wallet size={13} /> Trading Account</div>
+                                                            {/* Account Status Card */}
+                                                            <div className="admin-analytics-card status-card">
+                                                                <div className="aac-label"><Wallet size={13} /> Account Status</div>
                                                                 <div className="aac-row">
                                                                     <span>Status</span>
                                                                     <strong style={{ color: user.tradingAccountConnected ? '#10b981' : '#6b7280' }}>
-                                                                        {user.tradingAccountConnected ? 'Connected' : 'Not connected'}
+                                                                        {user.tradingAccountConnected ? 'Connected' : 'Disconnected'}
                                                                     </strong>
                                                                 </div>
                                                                 {user.tradingAccountConnected && (
-                                                                    <div className="aac-row">
-                                                                        <span>Balance</span>
-                                                                        <strong style={{ color: '#10b981' }}>
-                                                                            ${user.tradingBalance.toLocaleString('en-US', { minimumFractionDigits: 2 })}
-                                                                        </strong>
-                                                                    </div>
+                                                                    <>
+                                                                        <div className="aac-row"><span>Provider</span><strong>{user.tradingProvider}</strong></div>
+                                                                        <div className="aac-row"><span>Balance</span><strong>${user.tradingBalance.toLocaleString()}</strong></div>
+                                                                    </>
                                                                 )}
-                                                            </div>
-
-                                                            {/* Activity */}
-                                                            <div className="admin-analytics-card">
-                                                                <div className="aac-label"><Clock size={13} /> Activity</div>
-                                                                <div className="aac-row"><span>Joined</span><strong>{formatDate(user.createdAt)}</strong></div>
-                                                                <div className="aac-row"><span>Last sign-in</span><strong>{formatDate(user.lastSignIn)}</strong></div>
-                                                                <div className="aac-row">
-                                                                    <span>Divisions held</span>
-                                                                    <strong>{user.divisions.length} / 3</strong>
-                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>

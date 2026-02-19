@@ -1,6 +1,8 @@
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
+import { createClient } from '@supabase/supabase-js';
+
 import { NextResponse } from 'next/server';
 import https from 'https';
 
@@ -42,6 +44,16 @@ export async function GET() {
         const body = JSON.parse(raw);
         const rawUsers: any[] = Array.isArray(body) ? body : (body.users ?? []);
 
+        // Fetch trading accounts to show connection status and balance
+        const supabaseAdmin = createClient(SUPABASE_URL, SERVICE_KEY);
+        const { data: accounts, error: accError } = await supabaseAdmin
+            .from('trading_accounts')
+            .select('user_id, balance, is_active, provider');
+
+        if (accError) {
+            console.error('[/api/admin/users] Error fetching trading accounts:', accError);
+        }
+
         const mapped = rawUsers.map((u: any) => {
             const meta = u.user_metadata || {};
             const firstName = meta.first_name || meta.firstName || '';
@@ -55,6 +67,9 @@ export async function GET() {
                 ? meta.selected_divisions
                 : [];
 
+            // Find matching trading account
+            const userAccount = accounts?.find(a => a.user_id === u.id);
+
             return {
                 id: u.id,
                 email: u.email ?? '',
@@ -65,8 +80,9 @@ export async function GET() {
                 isAdmin: meta.is_admin === true,
                 createdAt: u.created_at,
                 lastSignIn: u.last_sign_in_at ?? null,
-                tradingAccountConnected: false,
-                tradingBalance: 0,
+                tradingAccountConnected: !!userAccount && userAccount.is_active,
+                tradingBalance: userAccount?.balance ?? 0,
+                tradingProvider: userAccount?.provider ?? null
             };
         });
 

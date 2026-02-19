@@ -926,13 +926,54 @@ async def tradelocker_select_account(req: TradeLockerAccountSelectRequest, db: S
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/api/tradelocker/account-data")
-async def tradelocker_account_data(email: str):
+    logger.info(f"REQUEST [account-data] email={email}, user_id={user_id}")
     client = _normalize_session_url(tradelocker_sessions.get(email))
+    
+    if not client and user_id:
+        logger.info(f"Session missing for {email}, attempting re-auth using user_id {user_id}")
+        try:
+            # Look up account in Supabase
+            acc_res = supabase.table("trading_accounts").select("*").eq("user_id", user_id).eq("provider", "tradelocker").execute()
+            if acc_res.data:
+                sb_row = acc_res.data[0]
+                creds_json = sb_row.get("encrypted_credentials", "{}")
+                creds = json.loads(creds_json)
+                stored_email = creds.get('email')
+                stored_password = creds.get('password')
+                stored_server = creds.get('server')
+                stored_broker_url = creds.get('broker_url', 'https://demo.tradelocker.com/backend-api')
+                stored_acc_num = creds.get('acc_num')
+                stored_account_id = creds.get('account_id')
+
+                if stored_email and stored_password and stored_server:
+                    logger.info(f"Re-authenticating for {stored_email}...")
+                    new_client = TradeLockerClient(stored_email, stored_password, stored_server, stored_broker_url)
+                    success, login_msg = new_client.login()
+                    if success:
+                        if stored_acc_num:
+                            new_client.acc_num = stored_acc_num
+                            new_client.account_id = stored_account_id
+                            new_client.session.headers.update({"accNum": str(stored_acc_num)})
+                        elif stored_account_id:
+                            new_client.select_account(stored_account_id)
+                        
+                        tradelocker_sessions[stored_email] = new_client
+                        client = new_client
+                        logger.info(f"Re-authentication successful for {stored_email}")
+            else:
+                logger.warning(f"No trading_account found in Supabase for user_id={user_id}")
+        except Exception as auth_err:
+            logger.error(f"Auto re-auth failed: {auth_err}")
+
     if not client:
         raise HTTPException(status_code=401, detail="Session expired or not found")
     
     try:
         balance = client.get_account_balance()
+        # If balance fetch fails with 401, it means token is stale
+        if balance.get('status') == 'error' and '401' in str(balance.get('message', '')):
+             raise Exception("Token expired")
+             
         positions = client.get_positions()
         analytics = client.get_account_analytics()
         history = client.get_history()
