@@ -352,6 +352,160 @@ async def telegram_signal_webhook(signal: TelegramSignal):
     logger.info(f"Broadcasted Telegram Signal: {signal.pair} {signal.action}")
     return {"status": "success", "message": "Signal broadcasted"}
 
+
+# ── Telegram Webhook (production path — registered with Telegram API) ──────────
+import re as _re, uuid as _uuid
+from datetime import timezone as _tz
+
+TELEGRAM_BOT_TOKEN  = os.getenv("TELEGRAM_BOT_TOKEN")
+TELEGRAM_WEBHOOK_SECRET = os.getenv("TELEGRAM_WEBHOOK_SECRET")
+
+def _parse_telegram_signal(text: str):
+    """
+    Parse signals in this format:
+      BUY XAUUSD
+      Entry: 2345.50
+      SL: 2330.00
+      TP: 2375.00
+      Risk: 1%
+      TF: H1
+      Notes: Optional note
+    """
+    text = text.strip()
+    direction = "BUY" if _re.search(r"\bBUY\b", text, _re.I) else None
+    if not direction:
+        direction = "SELL" if _re.search(r"\bSELL\b", text, _re.I) else None
+    if not direction:
+        return None
+
+    m = _re.search(r"(?:BUY|SELL)\s+(\S+)", text, _re.I)
+    symbol = m.group(1).upper() if m else None
+    if not symbol:
+        return None
+
+    def _extract(pat):
+        m = _re.search(pat, text, _re.I)
+        return float(m.group(1)) if m else None
+
+    entry = _extract(r"entry[:\s]+([0-9]+(?:\.[0-9]+)?)")
+    sl    = _extract(r"sl[:\s]+([0-9]+(?:\.[0-9]+)?)")
+    tp    = _extract(r"tp[:\s]+([0-9]+(?:\.[0-9]+)?)")
+    risk  = _extract(r"risk[:\s]+([0-9]+(?:\.[0-9]+)?)%?") or 1.0
+    tf_m  = _re.search(r"tf[:\s]+(M\d+|H\d+|D\d?|W\d?)", text, _re.I)
+    notes_m = _re.search(r"notes?[:\s]+(.+)", text, _re.I)
+
+    if not all([entry, sl, tp]):
+        return None
+
+    return {
+        "symbol": symbol,
+        "direction": direction,
+        "entry": entry,
+        "stop_loss": sl,
+        "take_profit": tp,
+        "risk_percent": risk,
+        "timeframe": tf_m.group(1).upper() if tf_m else None,
+        "notes": notes_m.group(1).strip() if notes_m else None,
+        "source": "telegram",
+    }
+
+async def _publish_signal_to_supabase(sig: dict) -> str:
+    """Insert a parsed signal into Supabase signals table and return its ID."""
+    signal_id = str(_uuid.uuid4())
+    now = datetime.now(_tz.utc).isoformat()
+
+    if sig["direction"] == "BUY":
+        risk   = sig["entry"] - sig["stop_loss"]
+        reward = sig["take_profit"] - sig["entry"]
+    else:
+        risk   = sig["stop_loss"] - sig["entry"]
+        reward = sig["entry"] - sig["take_profit"]
+
+    rr_ratio = round(reward / risk, 2) if risk > 0 else 0
+
+    record = {
+        "id":           signal_id,
+        "symbol":       sig["symbol"],
+        "direction":    sig["direction"],
+        "entry":        sig["entry"],
+        "stop_loss":    sig["stop_loss"],
+        "take_profit":  sig["take_profit"],
+        "risk_percent": sig.get("risk_percent", 1.0),
+        "rr_ratio":     rr_ratio,
+        "timeframe":    sig.get("timeframe"),
+        "notes":        sig.get("notes"),
+        "source":       sig.get("source", "telegram"),
+        "status":       "pending",
+        "created_at":   now,
+    }
+
+    result = supabase.table("signals").insert(record).execute()
+    logger.info(f"[Telegram] Signal inserted to Supabase: {sig['direction']} {sig['symbol']}")
+    return signal_id
+
+async def _send_telegram_reply(chat_id: int, text: str):
+    """Send a confirmation reply back to the Telegram chat."""
+    if not TELEGRAM_BOT_TOKEN:
+        return
+    import httpx as _httpx
+    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+    async with _httpx.AsyncClient() as client:
+        await client.post(url, json={"chat_id": chat_id, "text": text})
+
+@app.post("/api/telegram/webhook")
+async def telegram_webhook(request: Request):
+    """
+    Telegram calls this URL for every new message sent to the bot.
+    Register this as your webhook: 
+      https://api.telegram.org/bot<TOKEN>/setWebhook?url=https://web-production-d3eb0.up.railway.app/api/telegram/webhook
+    """
+    # Validate secret token if configured
+    if TELEGRAM_WEBHOOK_SECRET:
+        hdr = request.headers.get("X-Telegram-Bot-Api-Secret-Token")
+        if hdr != TELEGRAM_WEBHOOK_SECRET:
+            raise HTTPException(status_code=403, detail="Invalid webhook secret")
+
+    body = await request.json()
+    message = body.get("message") or body.get("channel_post")
+    if not message:
+        return {"ok": True}
+
+    text    = message.get("text", "")
+    chat    = message.get("chat", {})
+    chat_id = chat.get("id")
+
+    logger.info(f"[Telegram] Received message: {text[:80]}")
+
+    sig = _parse_telegram_signal(text)
+    if sig:
+        try:
+            signal_id = await _publish_signal_to_supabase(sig)
+            # Also broadcast via Socket.IO for real-time update to connected dashboards
+            await sio.emit("new_signal", {
+                "id": signal_id,
+                "symbol": sig["symbol"],
+                "direction": sig["direction"],
+                "entry": sig["entry"],
+                "stop_loss": sig["stop_loss"],
+                "take_profit": sig["take_profit"],
+                "status": "pending",
+                "source": "telegram",
+            })
+            if chat_id:
+                await _send_telegram_reply(chat_id,
+                    f"✅ Signal received!\n{sig['direction']} {sig['symbol']}\n"
+                    f"Entry: {sig['entry']} | SL: {sig['stop_loss']} | TP: {sig['take_profit']}")
+        except Exception as e:
+            logger.error(f"[Telegram] Failed to publish signal: {e}")
+            if chat_id:
+                await _send_telegram_reply(chat_id, f"❌ Failed to save signal: {str(e)}")
+    else:
+        logger.info(f"[Telegram] Message not a valid signal, ignoring.")
+
+    return {"ok": True}
+
+
+
 # --- DxTrade Endpoints ---
 
 @app.post("/dxtrade/login")
