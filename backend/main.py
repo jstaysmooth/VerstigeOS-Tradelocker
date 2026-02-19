@@ -760,17 +760,17 @@ async def tradelocker_save_account(req: TradeLockerSaveRequest):
     try:
         logger.info(f"Saving TradeLocker account for user {req.user_id} directly to Supabase")
         
-        # 1. Get/Create Platform
+        # 1. Get/Create Platform row (for platform_id FK)
         plat_res = supabase.table("trading_platforms").select("id").eq("code", "tradelocker").execute()
         if not plat_res.data:
-             # Create it
-             plat_res = supabase.table("trading_platforms").insert({
-                 "name": "TradeLocker", "code": "tradelocker",
-                 "api_endpoint": "https://live.tradelocker.com/backend-api"
-             }).execute()
-        
-        platform_id = plat_res.data[0]['id']
-        
+            # Create it — use correct column name from schema
+            plat_res = supabase.table("trading_platforms").insert({
+                "name": "TradeLocker", "code": "tradelocker",
+                "api_base_url": "https://live.tradelocker.com/backend-api"
+            }).execute()
+
+        platform_id = plat_res.data[0]['id'] if plat_res.data else None
+
         # 2. Prepare Credentials (include acc_num and broker_url for session rehydration after restart)
         # Pull acc_num from active in-memory session if available
         active_client = tradelocker_sessions.get(req.email)
@@ -784,37 +784,45 @@ async def tradelocker_save_account(req: TradeLockerSaveRequest):
             "acc_num": acc_num,
             "broker_url": broker_url
         }
-        
-        # 3. Upsert Account
-        # Check if exists
-        existing = supabase.table("trading_accounts").select("id").eq("user_id", req.user_id).eq("platform_id", platform_id).execute()
-        
-        # Minimal safe payload — only write columns we know exist.
-        # (balance, equity, last_sync_at etc. are updated separately if columns exist)
+
+        # 3. Upsert Account — only columns confirmed to exist in trading_accounts schema
+        # Schema columns: id, user_id, provider, account_id, account_name, encrypted_credentials,
+        #                  server, is_active, platform_id, email, balance, equity, currency,
+        #                  account_type, created_at, updated_at, last_sync_at
+        existing = supabase.table("trading_accounts").select("id") \
+            .eq("user_id", req.user_id) \
+            .eq("provider", "tradelocker") \
+            .execute()
+
         payload = {
             "user_id": req.user_id,
-            "platform_id": platform_id,
+            "provider": "tradelocker",
+            "account_id": req.account_id,
             "account_name": req.account_name,
             "server": req.server,
+            "email": req.email,
+            "balance": req.balance,
+            "equity": req.equity,
+            "currency": req.currency,
+            "account_type": req.account_type,
             "encrypted_credentials": json.dumps(creds),
-            "is_active": True
+            "is_active": True,
+            "last_sync_at": datetime.now().isoformat(),
         }
+        if platform_id:
+            payload["platform_id"] = platform_id
 
-        
         if existing.data:
-            # Update
-            account_id = existing.data[0]['id']
-            supabase.table("trading_accounts").update(payload).eq("id", account_id).execute()
+            row_id = existing.data[0]['id']
+            supabase.table("trading_accounts").update(payload).eq("id", row_id).execute()
         else:
-            # Insert
             supabase.table("trading_accounts").insert(payload).execute()
-            
+
         logger.info(f"Successfully saved account for user {req.user_id}")
         return {"status": "success", "message": "Account saved successfully to Supabase"}
-        
+
     except Exception as e:
         logger.error(f"Error saving account: {e}")
-        # Log to stderr too
         print(f"ERROR Saving Account: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
