@@ -32,8 +32,9 @@ def decrypt(value: str) -> str:
         return fernet.decrypt(value.encode()).decode()
     except Exception as e:
         print(f"Decryption failed: {e}")
-        return value # Fallback to original if not encrypted/wrong key
+    return value # Fallback to original if not encrypted/wrong key
 
+async def get_user_credentials(user_id: str) -> dict:
     print(f"DEBUG EXEC: Fetching credentials for user_id={user_id}")
     # Query trading_accounts joined with trading_platforms
     try:
