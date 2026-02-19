@@ -37,12 +37,15 @@ import RiskCalculatorView from '@/components/trading/RiskCalculatorView';
 import IndicatorView from '@/components/trading/IndicatorView';
 import AutoTraderView from '@/components/trading/AutoTraderView';
 import { TradingProvider } from '@/context/TradingContext';
+import DivisionGuard from '@/components/DivisionGuard';
 
 export default function TradingPage() {
     return (
-        <TradingProvider>
-            <TradingPageContent />
-        </TradingProvider>
+        <DivisionGuard division="trading">
+            <TradingProvider>
+                <TradingPageContent />
+            </TradingProvider>
+        </DivisionGuard>
     );
 }
 

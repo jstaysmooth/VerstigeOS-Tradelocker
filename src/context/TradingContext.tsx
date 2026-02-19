@@ -276,26 +276,81 @@ export const TradingProvider: React.FC<{ children: ReactNode }> = ({ children })
         };
     }, []);
 
-    // Check connection on mount
+    // ---------------------------------------------------------------
+    // Auto-reconnect from localStorage on every page load / refresh.
+    // We persist credentials in 'tl_session' so we never lose the
+    // connection unless the user explicitly disconnects.
+    // ---------------------------------------------------------------
     useEffect(() => {
-        const checkConnection = async () => {
-            const userId = localStorage.getItem('v2_user_id');
-            if (!userId) return;
-
+        const autoReconnect = async () => {
             try {
-                const res = await fetch(`${API_URL}/api/tradelocker/status?user_id=${userId}`);
-                const data = await res.json();
-                if (data.connected) {
-                    setTradeLockerConnected(true);
-                    if (data.email) {
-                        refreshTradeLockerData(data.email);
-                    }
+                const raw = localStorage.getItem('tl_session');
+                if (!raw) return;           // No saved session — first visit or disconnected
+                const saved = JSON.parse(raw) as {
+                    email: string;
+                    password: string;
+                    server: string;
+                    account_id: string;
+                    broker_url: string;
+                };
+
+                if (!saved.email || !saved.password) return;
+
+                console.log('[TradingContext] Auto-reconnecting TradeLocker from localStorage…');
+
+                // Step 1: Re-authenticate to get fresh tokens / session
+                const authRes = await fetch(`${API_URL}/api/tradelocker/authenticate`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: saved.email,
+                        password: saved.password,
+                        server: saved.server,
+                        broker_url: saved.broker_url,
+                    }),
+                });
+                const authData = await authRes.json();
+
+                if (!authRes.ok && authData.status !== 'requires_account_selection' && authData.status !== 'success') {
+                    console.warn('[TradingContext] Auto-reconnect auth failed — clearing saved session');
+                    localStorage.removeItem('tl_session');
+                    return;
                 }
-            } catch (e) {
-                console.error("Failed to check TradeLocker status:", e);
+
+                // Step 2: Select the previously chosen account (skip if auth returned direct success)
+                if (authData.status === 'requires_account_selection' || !authData.balance) {
+                    const userId = localStorage.getItem('v2_user_id');
+                    const selRes = await fetch(`${API_URL}/api/tradelocker/select-account`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            email: saved.email,
+                            account_id: saved.account_id,
+                            user_id: userId,
+                        }),
+                    });
+                    const selData = await selRes.json();
+                    if (selData.status !== 'success') {
+                        console.warn('[TradingContext] Auto-reconnect account select failed');
+                        return;
+                    }
+                    console.log('[TradingContext] Auto-reconnect successful (via select-account)');
+                    setTradeLockerConnected(true);
+                } else {
+                    console.log('[TradingContext] Auto-reconnect successful (direct auth)');
+                    setTradeLockerConnected(true);
+                }
+
+                // Step 3: Load live account data
+                await refreshTradeLockerData(saved.email);
+
+            } catch (err) {
+                console.error('[TradingContext] Auto-reconnect error:', err);
             }
         };
-        checkConnection();
+
+        autoReconnect();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const disconnectTradeLocker = async () => {
@@ -308,11 +363,15 @@ export const TradingProvider: React.FC<{ children: ReactNode }> = ({ children })
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ user_id: userId })
             });
+
+            // Clear persisted session so auto-reconnect doesn't fire after deliberate disconnect
+            localStorage.removeItem('tl_session');
+
             setTradeLockerConnected(false);
             setTradeLockerData(null);
             setAccountBalance(0);
             setAccountEquity(0);
-            setSignals([]); // Clear positions
+            setSignals([]);
         } catch (error) {
             console.error("Failed to disconnect TradeLocker:", error);
         }

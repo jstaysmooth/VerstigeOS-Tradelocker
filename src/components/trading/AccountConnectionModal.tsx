@@ -153,6 +153,20 @@ export default function AccountConnectionModal({ onClose }: AccountConnectionMod
 
                     if (saveResponse.ok) {
                         console.log("Account saved explicitly via save-account endpoint");
+
+                        // ── Persist credentials for auto-reconnect on refresh ──
+                        const sessionPayload = {
+                            email: accountId,
+                            password: password,
+                            server: server,
+                            account_id: selectedAccountId,
+                            broker_url: server.includes('Demo')
+                                ? "https://demo.tradelocker.com/backend-api"
+                                : "https://live.tradelocker.com/backend-api",
+                        };
+                        localStorage.setItem('tl_session', JSON.stringify(sessionPayload));
+                        // ──────────────────────────────────────────────────────
+
                         // Only close on success
                         onClose();
                     } else {

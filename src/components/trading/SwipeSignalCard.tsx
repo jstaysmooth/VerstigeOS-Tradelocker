@@ -1,8 +1,17 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import { Signal } from "@/hooks/useSignals";
-import { Check, ChevronRight, Share2, Timer, TrendingUp, User, X } from "lucide-react";
-
+import {
+    Check,
+    ChevronRight,
+    TrendingUp,
+    TrendingDown,
+    Timer,
+    X,
+    AlertTriangle,
+    Target,
+    Zap,
+} from "lucide-react";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://verstige.io";
 
@@ -17,26 +26,28 @@ export function SwipeSignalCard({ signal, onSettled }: SwipeSignalCardProps) {
     const [isDragging, setIsDragging] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const dragStartX = useRef<number | null>(null);
+    const [maxDist, setMaxDist] = useState(250);
 
     const isBuy = signal.direction === "BUY";
+    const accentColor = isBuy ? "#10b981" : "#ef4444";
+    const accentColorSoft = isBuy ? "rgba(16,185,129,0.15)" : "rgba(239,68,68,0.15)";
+    const accentColorBorder = isBuy ? "rgba(16,185,129,0.35)" : "rgba(239,68,68,0.35)";
+
+    useEffect(() => {
+        if (containerRef.current) {
+            setMaxDist(containerRef.current.clientWidth - 58);
+        }
+    }, []);
 
     async function executeApprove() {
         setCardState("loading");
         try {
-            // Get user ID — prefer localStorage v2_user_id (Supabase auth user ID)
-            // Fallback to session user ID from Supabase
-            const userId = typeof window !== "undefined"
-                ? localStorage.getItem("v2_user_id")
-                : null;
-            const email = typeof window !== "undefined"
-                ? localStorage.getItem("v2_user_email")
-                : null;
+            const userId = typeof window !== "undefined" ? localStorage.getItem("v2_user_id") : null;
+            const email = typeof window !== "undefined" ? localStorage.getItem("v2_user_email") : null;
 
             console.log("DEBUG: SwipeSignalCard executing for user:", userId, "email:", email);
             console.log("DEBUG: Signal data:", { id: signal.id, symbol: signal.symbol, direction: signal.direction });
 
-            // Use the direct execute endpoint which uses in-memory TradeLocker sessions.
-            // This avoids the Supabase account lookup which may fail due to FK constraints.
             const resp = await fetch(`${API_BASE}/api/tradelocker/execute`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -47,8 +58,7 @@ export function SwipeSignalCard({ signal, onSettled }: SwipeSignalCardProps) {
                     action: signal.direction,
                     sl: signal.stop_loss,
                     tp: signal.take_profit,
-                    // Pass email so backend can find in-memory session as fallback
-                    email: email,
+                    email,
                 }),
             });
 
@@ -64,22 +74,14 @@ export function SwipeSignalCard({ signal, onSettled }: SwipeSignalCardProps) {
             console.log("DEBUG: Trade executed:", result);
 
             setCardState("success");
-            setTimeout(() => {
-                onSettled?.(signal.id, "approved");
-            }, 2000);
-
+            setTimeout(() => { onSettled?.(signal.id, "approved"); }, 2000);
         } catch (err: any) {
             setCardState("error");
             console.error(err);
-            // Reset slider after a short delay so user can retry
-            setTimeout(() => {
-                setSliderX(0);
-                setCardState("idle");
-            }, 2500);
+            setTimeout(() => { setSliderX(0); setCardState("idle"); }, 2500);
         }
     }
 
-    // Slider Logic
     function handlePointerDown(e: React.PointerEvent) {
         if (cardState !== "idle") return;
         dragStartX.current = e.clientX - sliderX;
@@ -89,147 +91,159 @@ export function SwipeSignalCard({ signal, onSettled }: SwipeSignalCardProps) {
 
     function handlePointerMove(e: React.PointerEvent) {
         if (!isDragging || cardState !== "idle") return;
-
         const containerWidth = containerRef.current?.clientWidth || 300;
-        const handleWidth = 48; // w-12 = 48px
-        const maxDrag = containerWidth - handleWidth - 16; // 16px padding
-
+        const handleWidth = 52;
+        const maxDrag = containerWidth - handleWidth - 16;
         let newX = e.clientX - (dragStartX.current || 0);
         newX = Math.max(0, Math.min(newX, maxDrag));
-
         setSliderX(newX);
     }
 
     function handlePointerUp() {
         if (!isDragging) return;
         setIsDragging(false);
-
         const containerWidth = containerRef.current?.clientWidth || 300;
-        const handleWidth = 48;
+        const handleWidth = 52;
         const maxDrag = containerWidth - handleWidth - 16;
-
-        if (sliderX > maxDrag * 0.9) {
-            // Snap to end and execute
+        if (sliderX > maxDrag * 0.88) {
             setSliderX(maxDrag);
             executeApprove();
         } else {
-            // Snap back
             setSliderX(0);
         }
     }
 
-    // Dynamic width calculation
-    const [maxDist, setMaxDist] = useState(250);
-    useEffect(() => {
-        if (containerRef.current) {
-            setMaxDist(containerRef.current.clientWidth - 58);
-        }
-    }, []);
-
+    const sliderProgress = maxDist > 0 ? sliderX / maxDist : 0;
 
     return (
-        <div className="signal-card p-6 mb-6 rounded-[2.5rem] relative overflow-hidden">
+        <div
+            className={`signal-card-v2 ${isBuy ? "signal-buy" : "signal-sell"} ${cardState === "success" ? "signal-executed" : ""}`}
+            style={{ "--accent": accentColor, "--accent-soft": accentColorSoft, "--accent-border": accentColorBorder } as React.CSSProperties}
+        >
+            {/* Ambient Glow Layer */}
+            <div className="signal-glow-layer" />
 
-            {/* --- TOP SECTION --- */}
-            <div className="flex justify-between items-start mb-8">
-                <div className="flex items-center gap-3">
-                    {/* Avatar Placeholder */}
-                    <div className="w-12 h-12 rounded-full border border-gray-700 flex items-center justify-center bg-gray-900 text-white font-bold text-lg">
-                        VS
+            {/* Animated top border shimmer */}
+            <div className="signal-top-shimmer" />
+
+            {/* === HEADER === */}
+            <div className="signal-header">
+                {/* Left: Author info */}
+                <div className="signal-author">
+                    <div className="signal-avatar">
+                        <span>VS</span>
+                        <div className="avatar-ring" />
                     </div>
-                    <div>
-                        <div className="flex items-center gap-2">
-                            <h3 className="font-bold text-lg text-white">Verstige AI</h3>
-                            <span className="text-[10px] font-bold bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded uppercase tracking-wider">
-                                Pro
-                            </span>
+                    <div className="signal-author-info">
+                        <div className="signal-author-name">
+                            <span>Verstige AI</span>
+                            <span className="pro-badge">PRO</span>
                         </div>
-                        <div className="flex items-center gap-2 text-slate-400 text-[11px] mt-0.5">
-                            <span className={`flex items-center gap-1 font-bold ${isBuy ? 'text-emerald-400' : 'text-red-400'}`}>
-                                {isBuy ? <TrendingUp size={12} /> : <TrendingUp size={12} className="rotate-180" />}
+                        <div className="signal-meta">
+                            <span className={`signal-direction-badge ${isBuy ? "buy-badge" : "sell-badge"}`}>
+                                {isBuy ? <TrendingUp size={11} /> : <TrendingDown size={11} />}
                                 {signal.direction}
                             </span>
-                            <span className="opacity-30">•</span>
-                            <span className="flex items-center gap-1">
-                                <Timer size={12} />
-                                {signal.timeframe || '1H'}
+                            <span className="signal-meta-divider">·</span>
+                            <span className="signal-timeframe">
+                                <Timer size={11} />
+                                {signal.timeframe || "1H"}
                             </span>
                         </div>
                     </div>
                 </div>
 
-                <div className="text-right">
-                    <h2 className="text-2xl font-bold text-white mb-1">{signal.symbol}</h2>
+                {/* Right: Symbol + status */}
+                <div className="signal-symbol-block">
+                    <div className="signal-symbol">{signal.symbol}</div>
                     {cardState === "success" ? (
-                        <div className="bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-3 py-1 rounded-full text-[10px] font-bold inline-flex items-center gap-1 uppercase tracking-wider animate-pulse">
-                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+                        <div className="signal-status-badge executed-badge">
+                            <Check size={10} />
                             Executed
                         </div>
+                    ) : cardState === "error" ? (
+                        <div className="signal-status-badge error-badge">
+                            <AlertTriangle size={10} />
+                            Failed
+                        </div>
                     ) : (
-                        <div className="bg-blue-500/10 text-blue-400 border border-blue-500/20 px-3 py-1 rounded-full text-[10px] font-bold inline-flex items-center gap-1 uppercase tracking-wider">
-                            <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-ping" style={{ animationDuration: '3s' }}></div>
-                            Active Signal
+                        <div className="signal-status-badge live-badge">
+                            <span className="pulse-ring" />
+                            Live Signal
                         </div>
                     )}
                 </div>
             </div>
 
-            {/* --- DETAILS GRID --- */}
-            <div className="grid grid-cols-3 gap-3 relative mt-4 mb-8">
+            {/* === PRICE GRID === */}
+            <div className="signal-price-grid">
                 {/* Entry */}
-                <div className="glass-effect-cell rounded-2xl py-3 px-2 text-center">
-                    <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest mb-1">Entry</p>
-                    <p className="text-lg font-bold text-white">{signal.entry}</p>
+                <div className="price-cell">
+                    <div className="price-cell-label">
+                        <Zap size={10} />
+                        Entry
+                    </div>
+                    <div className="price-cell-value neutral">{signal.entry}</div>
                 </div>
 
                 {/* Stop Loss */}
-                <div className="glass-effect-cell rounded-2xl py-3 px-2 text-center">
-                    <p className="text-[9px] text-slate-400 font-bold uppercase mb-1 whitespace-nowrap">Stop Loss</p>
-                    <p className="text-lg font-bold text-red-400">{signal.stop_loss}</p>
+                <div className="price-cell">
+                    <div className="price-cell-label">
+                        <AlertTriangle size={10} />
+                        Stop Loss
+                    </div>
+                    <div className="price-cell-value red">{signal.stop_loss}</div>
                 </div>
 
                 {/* Take Profit */}
-                <div className="glass-effect-cell rounded-2xl py-3 px-2 text-center relative overflow-visible">
-                    <div className="absolute -top-2 -right-1 bg-blue-600 text-[9px] text-white font-bold px-1.5 py-0.5 rounded-lg flex items-center gap-0.5 shadow-lg">
-                        1:{signal.rr_ratio || '2'}
+                <div className="price-cell tp-cell">
+                    <div className="rr-badge">1:{signal.rr_ratio || "2"}</div>
+                    <div className="price-cell-label">
+                        <Target size={10} />
+                        Take Profit
                     </div>
-                    <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest mb-1">Take Profit</p>
-                    <p className="text-lg font-bold text-emerald-400">{signal.take_profit}</p>
+                    <div className="price-cell-value green">{signal.take_profit}</div>
                 </div>
             </div>
 
-            {/* --- STATUS BAR --- */}
-            <div className="bg-blue-900/20 rounded-full py-3 flex justify-center items-center gap-2 border border-blue-800/20 mb-8">
-                <div className="w-1.5 h-1.5 rounded-full bg-blue-500"></div>
-                <span className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.1em]">
-                    Pending - Waiting for Approval
-                </span>
-            </div>
+            {/* === PENDING STATUS BAR === */}
+            {cardState !== "success" && (
+                <div className="signal-pending-bar">
+                    <div className="pending-dot" />
+                    <span>Pending — Waiting for Your Approval</span>
+                </div>
+            )}
 
-
-            {/* --- SWIPE SLIDER --- */}
+            {/* === SWIPE SLIDER === */}
             <div
                 ref={containerRef}
-                className={`swipe-slider-container rounded-full p-2 h-16 relative flex items-center ${cardState === 'success' ? 'border-emerald-500/30 bg-emerald-900/10' : ''}`}
+                className={`swipe-track ${cardState === "success" ? "track-success" : cardState === "error" ? "track-error" : ""}`}
             >
-                {/* Track Text */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none pr-4">
-                    <span className={`slider-text text-sm font-medium flex items-center justify-center gap-2 ${cardState === 'success' ? 'text-emerald-400' : 'text-slate-400'}`}
-                        style={{ opacity: Math.max(0, 1 - (sliderX / (maxDist * 0.5))) }}>
-                        {cardState === 'loading' ? 'Executing...' :
-                            cardState === 'success' ? 'Trade Executed' :
-                                cardState === 'error' ? 'Failed - Try Again' : (
-                                    <>
-                                        Swipe to Approve
-                                        <ChevronRight size={14} className="opacity-40 animate-pulse" />
-                                    </>
-                                )}
-                    </span>
+                {/* Fill progress */}
+                <div
+                    className="swipe-fill"
+                    style={{ width: `${sliderProgress * 100}%` }}
+                />
+
+                {/* Label */}
+                <div
+                    className="swipe-label"
+                    style={{ opacity: Math.max(0, 1 - sliderProgress * 2) }}
+                >
+                    {cardState === "loading" ? (
+                        <><span className="swipe-spinner" /> Executing...</>
+                    ) : cardState === "success" ? (
+                        <><Check size={14} /> Trade Executed</>
+                    ) : cardState === "error" ? (
+                        <><X size={14} /> Failed — Retry</>
+                    ) : (
+                        <><ChevronRight size={14} className="chevron-bounce" /> Swipe to Approve</>
+                    )}
                 </div>
 
-                {/* Handle */}
+                {/* Drag handle */}
                 <div
-                    className={`slider-handle w-12 h-12 rounded-full flex items-center justify-center cursor-grab relative z-10 ${cardState === 'success' ? 'success cursor-default' : ''}`}
+                    className={`swipe-handle ${cardState === "success" ? "handle-success" : cardState === "error" ? "handle-error" : ""}`}
                     style={{ transform: `translateX(${sliderX}px)` }}
                     onPointerDown={handlePointerDown}
                     onPointerMove={handlePointerMove}
@@ -237,12 +251,14 @@ export function SwipeSignalCard({ signal, onSettled }: SwipeSignalCardProps) {
                     onPointerCancel={handlePointerUp}
                     onPointerLeave={handlePointerUp}
                 >
-                    {cardState === 'success' ? (
-                        <Check size={20} className="text-white" />
-                    ) : cardState === 'error' ? (
-                        <X size={20} className="text-white" />
+                    {cardState === "success" ? (
+                        <Check size={22} />
+                    ) : cardState === "error" ? (
+                        <X size={22} />
+                    ) : cardState === "loading" ? (
+                        <span className="handle-spinner" />
                     ) : (
-                        <ChevronRight size={20} className="text-white" />
+                        <ChevronRight size={22} />
                     )}
                 </div>
             </div>

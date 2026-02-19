@@ -2,8 +2,9 @@ import React from 'react';
 import Link from 'next/link';
 import Hero from '@/components/Hero';
 import Divisions from '@/components/Divisions';
-import { Rocket, TrendingUp, DollarSign, Shield, Globe, Users, BarChart3, Layout, FileText, CheckCircle, Zap } from 'lucide-react';
+import { Rocket, TrendingUp, TrendingDown, DollarSign, Shield, Globe, Users, BarChart3, Layout, FileText, CheckCircle, Zap, Bitcoin, ArrowUpDown } from 'lucide-react';
 import StarField from '@/components/StarField';
+import Spline from '@splinetool/react-spline/next';
 import '@/styles/pages/LandingPage.css';
 import '@/styles/pages/PlatformOS.css';
 import '@/styles/pages/SalesDivision.css';
@@ -138,6 +139,170 @@ export default function LandingPage() {
                         <div className="stat-item">
                             <div className="stat-value">Elite</div>
                             <div className="stat-label">Provider Network</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Crypto Division Section */}
+            <section className="crypto-section">
+                {/* Spline 3D Scene as Background */}
+                <div className="crypto-spline-bg">
+                    <Spline scene="https://prod.spline.design/yDuSQAYgwzxKjokz/scene.splinecode" />
+                </div>
+
+                {/* Dark overlay so text stays readable */}
+                <div className="crypto-overlay" />
+
+                <div className="crypto-container">
+                    {/* Badge */}
+                    <div className="section-header text-center mb-16" style={{ position: 'relative', zIndex: 2 }}>
+                        <div className="goal-badge mx-auto mb-4">
+                            <Bitcoin size={16} />
+                            <span>CRYPTO DIVISION</span>
+                        </div>
+                        <h2 className="text-5xl font-bold mb-6">
+                            The Future of <span className="text-gradient">Crypto</span> is <span className="crypto-active-word">Active</span>
+                        </h2>
+                        <p className="text-secondary max-w-3xl mx-auto text-lg">
+                            HODL is a strategy of hope. Real wealth in crypto is built by those who
+                            <strong> buy low and sell high</strong> — capitalising on both bullish rallies
+                            and bearish corrections through disciplined, signal-driven execution.
+                        </p>
+                    </div>
+
+                    {/* HODL vs Active Trading Contrast */}
+                    <div className="crypto-contrast-grid">
+                        {/* HODL Card */}
+                        <div className="crypto-contrast-card hodl-card glass-panel">
+                            <div className="contrast-header">
+                                <div className="contrast-icon hodl-icon">
+                                    <span style={{ fontSize: '28px' }}>💤</span>
+                                </div>
+                                <h3>The HODL Myth</h3>
+                                <span className="contrast-badge hodl-badge">Passive &amp; Unprofitable Long-Term</span>
+                            </div>
+                            <ul className="contrast-list">
+                                <li className="contrast-item negative">
+                                    <span className="contrast-x">✗</span>
+                                    Wait years for potential gains
+                                </li>
+                                <li className="contrast-item negative">
+                                    <span className="contrast-x">✗</span>
+                                    Lose 70–90% in bear markets
+                                </li>
+                                <li className="contrast-item negative">
+                                    <span className="contrast-x">✗</span>
+                                    No income during downturns
+                                </li>
+                                <li className="contrast-item negative">
+                                    <span className="contrast-x">✗</span>
+                                    Emotionally driven decisions
+                                </li>
+                                <li className="contrast-item negative">
+                                    <span className="contrast-x">✗</span>
+                                    Zero edge in sideways markets
+                                </li>
+                            </ul>
+                        </div>
+
+                        {/* VS Divider */}
+                        <div className="crypto-vs-divider">
+                            <div className="vs-line" />
+                            <div className="vs-badge">VS</div>
+                            <div className="vs-line" />
+                        </div>
+
+                        {/* Active Trading Card */}
+                        <div className="crypto-contrast-card active-card glass-panel featured">
+                            <div className="contrast-header">
+                                <div className="contrast-icon active-icon">
+                                    <ArrowUpDown size={28} />
+                                </div>
+                                <h3>Active Signal Trading</h3>
+                                <span className="contrast-badge active-badge">Bullish &amp; Bearish Profits</span>
+                            </div>
+                            <ul className="contrast-list">
+                                <li className="contrast-item positive">
+                                    <CheckCircle size={16} />
+                                    Profit when markets rise
+                                </li>
+                                <li className="contrast-item positive">
+                                    <CheckCircle size={16} />
+                                    Profit when markets fall
+                                </li>
+                                <li className="contrast-item positive">
+                                    <CheckCircle size={16} />
+                                    Entry at key dip levels
+                                </li>
+                                <li className="contrast-item positive">
+                                    <CheckCircle size={16} />
+                                    Exit at defined profit targets
+                                </li>
+                                <li className="contrast-item positive">
+                                    <CheckCircle size={16} />
+                                    Signal-driven, emotion-free execution
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    {/* Market Direction Cards */}
+                    <div className="crypto-markets-grid">
+                        <div className="market-card glass-panel animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+                            <div className="market-icon bull-icon">
+                                <TrendingUp size={32} />
+                            </div>
+                            <h3>Bull Markets</h3>
+                            <p>
+                                When prices are climbing, our signals identify optimal entry points so you ride the move with precision — not panic-buy at the top.
+                            </p>
+                            <div className="market-tag bull-tag">Buy Low → Sell High</div>
+                        </div>
+
+                        <div className="market-card glass-panel animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+                            <div className="market-icon bear-icon">
+                                <TrendingDown size={32} />
+                            </div>
+                            <h3>Bear Markets</h3>
+                            <p>
+                                Don't wait for a recovery. Short positions and well-timed sells mean bear markets aren't a threat — they're an opportunity to profit on the way down.
+                            </p>
+                            <div className="market-tag bear-tag">Short the Drop → Profit</div>
+                        </div>
+
+                        <div className="market-card glass-panel animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+                            <div className="market-icon twenty-four-icon">
+                                <Zap size={32} />
+                            </div>
+                            <h3>24/7 Markets</h3>
+                            <p>
+                                Crypto never sleeps — our signal network monitors the market around the clock, surfacing opportunities the moment they form.
+                            </p>
+                            <div className="market-tag active-tag">Always-On Intelligence</div>
+                        </div>
+                    </div>
+
+                    {/* Bottom Stats */}
+                    <div className="crypto-stats-bar glass-panel">
+                        <div className="stat-item">
+                            <div className="stat-value crypto-stat">Buy Low</div>
+                            <div className="stat-label">Entry Strategy</div>
+                        </div>
+                        <div className="stat-divider" />
+                        <div className="stat-item">
+                            <div className="stat-value crypto-stat">Sell High</div>
+                            <div className="stat-label">Exit Strategy</div>
+                        </div>
+                        <div className="stat-divider" />
+                        <div className="stat-item">
+                            <div className="stat-value">Both</div>
+                            <div className="stat-label">Bull &amp; Bear Markets</div>
+                        </div>
+                        <div className="stat-divider" />
+                        <div className="stat-item">
+                            <div className="stat-value">24/7</div>
+                            <div className="stat-label">Market Coverage</div>
                         </div>
                     </div>
                 </div>

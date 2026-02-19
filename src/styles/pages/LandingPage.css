@@ -837,3 +837,367 @@
         letter-spacing: 0.2em;
     }
 }
+
+/* ============================================================
+   CRYPTO DIVISION SECTION
+   ============================================================ */
+.crypto-section {
+    position: relative;
+    min-height: 100vh;
+    padding: 140px var(--spacing-lg) 120px;
+    display: flex;
+    align-items: flex-start;
+    overflow: hidden;
+    background: #000;
+}
+
+/* Spline 3D background — pinned behind everything */
+.crypto-spline-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.crypto-spline-bg>* {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Semi-transparent dark overlay so text stays readable */
+.crypto-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(to bottom,
+            rgba(0, 0, 0, 0.65) 0%,
+            rgba(0, 0, 0, 0.5) 40%,
+            rgba(0, 0, 0, 0.65) 100%);
+}
+
+/* All content sits above the background + overlay */
+.crypto-container {
+    position: relative;
+    z-index: 2;
+    max-width: 1300px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Animated "Active" word in the headline */
+.crypto-active-word {
+    background: linear-gradient(90deg, #f7931a, #e8c327, #f7931a);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: cryptoShimmer 3s linear infinite;
+}
+
+@keyframes cryptoShimmer {
+    0% {
+        background-position: 0% center;
+    }
+
+    100% {
+        background-position: 200% center;
+    }
+}
+
+/* ---- HODL vs Active contrast grid ---- */
+.crypto-contrast-grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: var(--spacing-xl);
+    align-items: center;
+    margin-bottom: 80px;
+}
+
+.crypto-contrast-card {
+    padding: var(--spacing-xl);
+    border-radius: var(--border-radius-lg);
+    transition: transform 0.3s ease;
+}
+
+.crypto-contrast-card:hover {
+    transform: translateY(-6px);
+}
+
+.hodl-card {
+    border-color: rgba(239, 68, 68, 0.3);
+    background: rgba(239, 68, 68, 0.04);
+}
+
+.active-card {
+    border-color: rgba(247, 147, 26, 0.4);
+    background: rgba(247, 147, 26, 0.05);
+    box-shadow: 0 0 40px rgba(247, 147, 26, 0.1);
+}
+
+.contrast-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
+}
+
+.contrast-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4px;
+}
+
+.hodl-icon {
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.active-icon {
+    background: rgba(247, 147, 26, 0.15);
+    border: 1px solid rgba(247, 147, 26, 0.4);
+    color: #f7931a;
+}
+
+.contrast-header h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+}
+
+.contrast-badge {
+    display: inline-flex;
+    padding: 4px 12px;
+    border-radius: var(--border-radius-full);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.hodl-badge {
+    background: rgba(239, 68, 68, 0.12);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+.active-badge {
+    background: rgba(247, 147, 26, 0.15);
+    color: #f7931a;
+    border: 1px solid rgba(247, 147, 26, 0.3);
+}
+
+.contrast-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.contrast-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.contrast-item.negative {
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.contrast-item.positive {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.contrast-item.positive svg {
+    color: #10b981;
+    flex-shrink: 0;
+}
+
+.contrast-x {
+    color: #ef4444;
+    font-weight: 700;
+    font-size: 1rem;
+    flex-shrink: 0;
+    width: 16px;
+    text-align: center;
+}
+
+/* VS Divider */
+.crypto-vs-divider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 0 var(--spacing-md);
+}
+
+.vs-line {
+    width: 2px;
+    height: 60px;
+    background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.2), transparent);
+}
+
+.vs-badge {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.05em;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+/* ---- Market Direction Cards ---- */
+.crypto-markets-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-2xl);
+}
+
+.market-card {
+    padding: var(--spacing-xl);
+    border-radius: var(--border-radius-lg);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.market-card:hover {
+    transform: translateY(-6px);
+}
+
+.market-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bull-icon {
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: #10b981;
+}
+
+.bear-icon {
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #ef4444;
+}
+
+.twenty-four-icon {
+    background: rgba(247, 147, 26, 0.12);
+    border: 1px solid rgba(247, 147, 26, 0.3);
+    color: #f7931a;
+}
+
+.market-card h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+}
+
+.market-card p {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.6;
+    margin: 0;
+    flex: 1;
+}
+
+.market-tag {
+    display: inline-flex;
+    padding: 5px 14px;
+    border-radius: var(--border-radius-full);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    align-self: flex-start;
+}
+
+.bull-tag {
+    background: rgba(16, 185, 129, 0.12);
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.bear-tag {
+    background: rgba(239, 68, 68, 0.12);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.active-tag {
+    background: rgba(247, 147, 26, 0.12);
+    color: #f7931a;
+    border: 1px solid rgba(247, 147, 26, 0.3);
+}
+
+/* ---- Crypto Stats Bar ---- */
+.crypto-stats-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: var(--spacing-xl);
+    background: rgba(247, 147, 26, 0.04);
+    border: 1px solid rgba(247, 147, 26, 0.25);
+    border-radius: var(--border-radius-lg);
+}
+
+.crypto-stat {
+    background: linear-gradient(135deg, #f7931a 0%, #e8c327 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 1024px) {
+    .crypto-contrast-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .crypto-vs-divider {
+        flex-direction: row;
+        padding: var(--spacing-sm) 0;
+    }
+
+    .vs-line {
+        width: 60px;
+        height: 2px;
+        background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
+    }
+
+    .crypto-markets-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .crypto-section {
+        padding: 80px var(--spacing-md) 60px;
+    }
+
+    .crypto-stats-bar {
+        flex-wrap: wrap;
+        gap: var(--spacing-lg);
+    }
+}

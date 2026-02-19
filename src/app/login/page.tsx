@@ -29,14 +29,27 @@ function LoginForm() {
             });
 
             if (authError) {
-                if (authError.message.toLowerCase().includes('confirm')) {
-                    throw new Error("Please verify your email address before logging in.");
+                const msg = authError.message.toLowerCase();
+                if (msg.includes('confirm') || msg.includes('verified') || msg.includes('not confirmed')) {
+                    throw new Error("Please verify your email address before logging in. Check your inbox (and spam folder).");
+                }
+                if (msg.includes('invalid login') || msg.includes('invalid credentials') || msg.includes('wrong password')) {
+                    throw new Error("Incorrect email or password. Please try again.");
                 }
                 throw authError;
             }
 
             if (data.session) {
-                router.push('/dashboard');
+                // Give the session a tick to propagate to UserContext before navigating
+                await new Promise(r => setTimeout(r, 100));
+                router.replace('/dashboard');
+                // Belt-and-suspenders: if router.replace doesn't fire within 1s, force navigate
+                setTimeout(() => { window.location.href = '/dashboard'; }, 1000);
+            } else if (data.user && !data.session) {
+                // User exists but email not confirmed
+                throw new Error("Please verify your email address before logging in. Check your inbox (and spam folder).");
+            } else {
+                throw new Error("Login failed. Please try again.");
             }
         } catch (err: any) {
             console.error("Login failed:", err);

@@ -1,5 +1,8 @@
+/* ============================================================
+   SIGNALS VIEW — Layout & Chrome
+   ============================================================ */
 .signals-view {
-    max-width: 500px;
+    max-width: 520px;
     margin: 0 auto;
     padding: var(--spacing-xl);
     height: 100%;
@@ -8,36 +11,38 @@
 
 .signals-header {
     text-align: center;
-    margin-bottom: var(--spacing-xl);
+    margin-bottom: 40px;
 }
 
 .header-badge {
-    display: inline-block;
-    padding: 6px 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 16px;
     background: rgba(99, 102, 241, 0.1);
-    border: 1px solid rgba(99, 102, 241, 0.2);
+    border: 1px solid rgba(99, 102, 241, 0.25);
     border-radius: 100px;
     color: #818cf8;
     font-size: 10px;
     font-weight: 800;
-    letter-spacing: 0.15em;
-    margin-bottom: var(--spacing-sm);
+    letter-spacing: 0.18em;
+    margin-bottom: 14px;
     text-transform: uppercase;
 }
 
 .signals-header h2 {
-    font-size: 1.85rem;
+    font-size: 2rem;
     font-weight: 800;
     color: #fff;
-    margin-bottom: var(--spacing-xs);
+    margin-bottom: 8px;
     letter-spacing: -0.03em;
 }
 
 .signals-header p {
-    color: var(--text-secondary);
-    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 0.9rem;
     line-height: 1.6;
-    max-width: 400px;
+    max-width: 380px;
     margin: 0 auto;
 }
 
@@ -50,9 +55,10 @@
 .signals-stack {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-lg);
+    gap: 24px;
 }
 
+/* Empty state */
 .empty-signals {
     display: flex;
     flex-direction: column;
@@ -63,7 +69,7 @@
     border-radius: 2rem;
     background: rgba(255, 255, 255, 0.02);
     backdrop-filter: blur(10px);
-    border: 1px dashed rgba(255, 255, 255, 0.1);
+    border: 1px dashed rgba(255, 255, 255, 0.08);
     min-height: 300px;
 }
 
@@ -75,39 +81,41 @@
 
 .empty-signals h3 {
     color: #fff;
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     font-weight: 700;
-    margin-bottom: var(--spacing-xs);
+    margin-bottom: 8px;
 }
 
 .empty-signals p {
-    color: var(--text-secondary);
+    color: rgba(255, 255, 255, 0.4);
     font-size: 0.85rem;
     max-width: 250px;
 }
 
+/* Footer hint */
 .signals-footer-hint {
-    margin-top: var(--spacing-2xl);
+    margin-top: 40px;
     text-align: center;
     padding: var(--spacing-lg);
     border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .signals-footer-hint p {
-    font-size: 0.75rem;
-    color: var(--text-muted);
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.25);
     line-height: 1.6;
     font-style: italic;
-    opacity: 0.7;
 }
 
+/* Loading */
 .signals-loading-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 400px;
-    color: var(--text-secondary);
+    color: rgba(255, 255, 255, 0.4);
+    gap: 16px;
 }
 
 .loader {
@@ -117,16 +125,11 @@
     border-top: 3px solid #818cf8;
     border-radius: 50%;
     animation: spin 0.8s cubic-bezier(0.5, 0.1, 0.5, 0.9) infinite;
-    margin-bottom: var(--spacing-lg);
     box-shadow: 0 0 15px rgba(129, 140, 248, 0.2);
 }
 
 @keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
+    to {
         transform: rotate(360deg);
     }
 }
@@ -138,7 +141,7 @@
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(12px);
     }
 
     to {
@@ -147,54 +150,574 @@
     }
 }
 
-/* New Signal Card Style matching Dashboard */
-.signal-card {
-    background: var(--bg-card);
-    /* rgba(18, 18, 18, 0.7) */
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
-    border-radius: 2.5rem;
-    /* Matches user request */
-    box-shadow: var(--glass-shadow);
-    transition: var(--transition-smooth);
-    overflow: hidden;
-}
 
-/* Slider Styles */
-.swipe-slider-container {
-    background: rgba(30, 41, 59, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+/* ============================================================
+   SIGNAL CARD V2 — Glassmorphic
+   ============================================================ */
+.signal-card-v2 {
     position: relative;
+    border-radius: 2rem;
+    padding: 28px 24px;
     overflow: hidden;
+    background: rgba(12, 14, 20, 0.72);
+    backdrop-filter: blur(28px) saturate(160%);
+    -webkit-backdrop-filter: blur(28px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: cardIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.slider-handle {
-    background: linear-gradient(90deg, #2563eb, #3b82f6);
-    box-shadow: 0 0 15px rgba(59, 130, 246, 0.6);
-    transition: transform 0.1s linear, background 0.3s;
-    touch-action: none;
-    cursor: grab;
+@keyframes cardIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
-.slider-handle:active {
-    cursor: grabbing;
+/* BUY / SELL tinting */
+.signal-card-v2.signal-buy {
+    border-color: rgba(16, 185, 129, 0.22);
+    box-shadow:
+        0 0 0 1px rgba(16, 185, 129, 0.08),
+        0 8px 40px rgba(0, 0, 0, 0.55),
+        0 0 60px rgba(16, 185, 129, 0.06) inset;
 }
 
-.slider-handle.success {
-    background: linear-gradient(90deg, #10b981, #34d399);
-    /* Emerald/Green */
-    box-shadow: 0 0 15px rgba(16, 185, 129, 0.6);
+.signal-card-v2.signal-sell {
+    border-color: rgba(239, 68, 68, 0.22);
+    box-shadow:
+        0 0 0 1px rgba(239, 68, 68, 0.08),
+        0 8px 40px rgba(0, 0, 0, 0.55),
+        0 0 60px rgba(239, 68, 68, 0.06) inset;
 }
 
-.slider-text {
+.signal-card-v2.signal-executed {
+    border-color: rgba(16, 185, 129, 0.5) !important;
+    box-shadow:
+        0 0 0 1px rgba(16, 185, 129, 0.2),
+        0 8px 50px rgba(0, 0, 0, 0.6),
+        0 0 80px rgba(16, 185, 129, 0.12) inset;
+}
+
+/* Hover lift */
+.signal-card-v2:hover {
+    transform: translateY(-3px);
+}
+
+/* Ambient glow blob behind card content */
+.signal-glow-layer {
+    position: absolute;
+    top: -60px;
+    left: -60px;
+    width: 260px;
+    height: 260px;
+    background: var(--accent-soft, rgba(16, 185, 129, 0.12));
+    filter: blur(70px);
+    border-radius: 50%;
     pointer-events: none;
-    transition: opacity 0.3s;
+    z-index: 0;
+    opacity: 0.8;
+    transition: background 0.4s ease;
 }
 
-.glass-effect-cell {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+/* Shimmer line across very top of card */
+.signal-top-shimmer {
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 1.5px;
+    background: linear-gradient(90deg,
+            transparent,
+            var(--accent, #10b981),
+            transparent);
+    opacity: 0.6;
+    z-index: 1;
+    border-radius: 100px;
+}
+
+/* All real content above glow layers */
+.signal-header,
+.signal-price-grid,
+.signal-pending-bar,
+.swipe-track {
+    position: relative;
+    z-index: 2;
+}
+
+
+/* ============================================================
+   HEADER ROW
+   ============================================================ */
+.signal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+/* Author cluster */
+.signal-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.signal-avatar {
+    position: relative;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+}
+
+.avatar-ring {
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    border: 1.5px solid var(--accent, #10b981);
+    opacity: 0.5;
+}
+
+.signal-author-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.signal-author-name {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.pro-badge {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    color: #818cf8;
+    background: rgba(99, 102, 241, 0.14);
+    border: 1px solid rgba(99, 102, 241, 0.28);
+    padding: 2px 8px;
+    border-radius: 100px;
+    text-transform: uppercase;
+}
+
+.signal-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.signal-meta-divider {
+    opacity: 0.3;
+}
+
+.signal-direction-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 700;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.buy-badge {
+    color: #10b981;
+}
+
+.sell-badge {
+    color: #ef4444;
+}
+
+.signal-timeframe {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 600;
+}
+
+/* Symbol block */
+.signal-symbol-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+.signal-symbol {
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: #fff;
+    line-height: 1;
+}
+
+/* Status badges */
+.signal-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 11px;
+    border-radius: 100px;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.live-badge {
+    background: rgba(99, 102, 241, 0.12);
+    color: #a5b4fc;
+    border: 1px solid rgba(99, 102, 241, 0.25);
+}
+
+.executed-badge {
+    background: rgba(16, 185, 129, 0.12);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    animation: pulseGlow 2s ease-in-out infinite;
+}
+
+.error-badge {
+    background: rgba(239, 68, 68, 0.12);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+@keyframes pulseGlow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    }
+
+    50% {
+        box-shadow: 0 0 10px 2px rgba(16, 185, 129, 0.25);
+    }
+}
+
+/* Pulsing dot for live badge */
+.pulse-ring {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #818cf8;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.pulse-ring::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    border: 1px solid #818cf8;
+    animation: ringPulse 2s ease-out infinite;
+    opacity: 0;
+}
+
+@keyframes ringPulse {
+    0% {
+        transform: scale(0.8);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+
+/* ============================================================
+   PRICE GRID
+   ============================================================ */
+.signal-price-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.price-cell {
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 16px;
+    padding: 14px 10px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.price-cell:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.13);
+}
+
+/* TP cell has a badge overlay */
+.tp-cell {
+    position: relative;
+    overflow: visible;
+}
+
+.rr-badge {
+    position: absolute;
+    top: -10px;
+    right: -6px;
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+    color: #fff;
+    font-size: 9px;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 8px;
+    letter-spacing: 0.05em;
+    box-shadow: 0 3px 12px rgba(59, 130, 246, 0.45);
+    z-index: 5;
+}
+
+.price-cell-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.38);
+    margin-bottom: 6px;
+}
+
+.price-cell-value {
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 1;
+}
+
+.price-cell-value.neutral {
+    color: #fff;
+}
+
+.price-cell-value.red {
+    color: #f87171;
+}
+
+.price-cell-value.green {
+    color: #34d399;
+}
+
+
+/* ============================================================
+   PENDING STATUS BAR
+   ============================================================ */
+.signal-pending-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: rgba(99, 102, 241, 0.06);
+    border: 1px solid rgba(99, 102, 241, 0.15);
+    border-radius: 100px;
+    margin-bottom: 18px;
+}
+
+.pending-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #818cf8;
+    animation: pendingPulse 2.5s ease-in-out infinite;
+    flex-shrink: 0;
+}
+
+@keyframes pendingPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.35;
+    }
+}
+
+.signal-pending-bar span {
+    font-size: 10px;
+    font-weight: 700;
+    color: #818cf8;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+
+/* ============================================================
+   SWIPE SLIDER
+   ============================================================ */
+.swipe-track {
+    position: relative;
+    height: 62px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: border-color 0.3s ease;
+}
+
+.swipe-track.track-success {
+    border-color: rgba(16, 185, 129, 0.4);
+    background: rgba(16, 185, 129, 0.06);
+}
+
+.swipe-track.track-error {
+    border-color: rgba(239, 68, 68, 0.4);
+    background: rgba(239, 68, 68, 0.05);
+}
+
+/* Coloured fill that grows as user drags */
+.swipe-fill {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    bottom: 5px;
+    border-radius: 100px;
+    background: linear-gradient(90deg,
+            rgba(16, 185, 129, 0.18),
+            rgba(16, 185, 129, 0.08));
+    pointer-events: none;
+    transition: width 0.05s linear;
+}
+
+/* Centred label text */
+.swipe-label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    color: rgba(255, 255, 255, 0.45);
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    padding-left: 26px;
+}
+
+/* Chevron bounce on idle */
+.chevron-bounce {
+    animation: bounceRight 1.8s ease-in-out infinite;
+    opacity: 0.6;
+}
+
+@keyframes bounceRight {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    50% {
+        transform: translateX(5px);
+    }
+}
+
+/* Drag handle */
+.swipe-handle {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+    box-shadow:
+        0 0 0 2px rgba(59, 130, 246, 0.2),
+        0 4px 20px rgba(37, 99, 235, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    cursor: grab;
+    flex-shrink: 0;
+    touch-action: none;
+    transition:
+        background 0.3s ease,
+        box-shadow 0.3s ease,
+        transform 0.1s linear;
+    z-index: 10;
+    position: relative;
+}
+
+.swipe-handle:active {
+    cursor: grabbing;
+    transform: scale(1.06);
+}
+
+.swipe-handle.handle-success {
+    background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+    box-shadow:
+        0 0 0 2px rgba(16, 185, 129, 0.25),
+        0 4px 24px rgba(16, 185, 129, 0.5);
+    cursor: default;
+}
+
+.swipe-handle.handle-error {
+    background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+    box-shadow:
+        0 0 0 2px rgba(239, 68, 68, 0.25),
+        0 4px 20px rgba(239, 68, 68, 0.5);
+    cursor: default;
+}
+
+/* Mini spinner inside handle during loading */
+.handle-spinner {
+    display: block;
+    width: 20px;
+    height: 20px;
+    border: 2.5px solid rgba(255, 255, 255, 0.25);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+/* Inline spinner in label text */
+.swipe-spinner {
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-top-color: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    flex-shrink: 0;
 }
