@@ -10,12 +10,30 @@ class TradeLockerClient:
     Client for TradeLocker Public API integration.
     Documentation: https://public-api.tradelocker.com/docs/getting-started
     """
-    
+
+    # Known wrong prefixes that should be replaced with /backend-api
+    _WRONG_SUFFIXES = ["/clientapi/v1", "/clientapi", "/api/v1", "/api"]
+
     def __init__(self, email: str, password: str, server: str, broker_url: str = "https://demo.tradelocker.com/backend-api"):
         self.email = email
         self.password = password
         self.server = server
-        self.base_url = broker_url.rstrip("/")
+
+        # Normalize the broker_url — always ensure it ends with /backend-api
+        # (old stored values may have wrong suffixes like /clientapi/v1)
+        base = broker_url.rstrip("/")
+        for wrong in self._WRONG_SUFFIXES:
+            if base.endswith(wrong):
+                root = base[: -len(wrong)]
+                base = root + "/backend-api"
+                logger.warning(f"[TradeLockerClient] Corrected broker_url: '{broker_url}' → '{base}'")
+                break
+        if not base.endswith("/backend-api"):
+            # If still no /backend-api, append it
+            base = base + "/backend-api"
+            logger.warning(f"[TradeLockerClient] Appended /backend-api: '{base}'")
+
+        self.base_url = base
         self.access_token = None
         self.refresh_token = None
         self.account_id = None
@@ -23,6 +41,8 @@ class TradeLockerClient:
         self.last_balance_data = {"balance": 0, "equity": 0}
         self.last_history = []
         self.session = requests.Session()
+        logger.info(f"[TradeLockerClient] Initialized with base_url={self.base_url} server={self.server}")
+
 
     def login(self) -> bool:
         """Authenticate with TradeLocker using JWT"""

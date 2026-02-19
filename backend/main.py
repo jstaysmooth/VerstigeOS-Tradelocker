@@ -1300,7 +1300,10 @@ async def execute_copy_trade(payload: dict = Body(...), db: Session = Depends(ge
     # --- Strategy 3: Supabase account lookup ---
     if not client:
         try:
+            # Try platform_id FK lookup first
             plat_res = supabase.table("trading_platforms").select("id").eq("code", "tradelocker").execute()
+            sb_row = None
+
             if plat_res.data:
                 platform_id = plat_res.data[0]['id']
                 acc_res = (
@@ -1311,14 +1314,35 @@ async def execute_copy_trade(payload: dict = Body(...), db: Session = Depends(ge
                     .execute()
                 )
                 if acc_res.data:
-                    row = acc_res.data[0]
-                    creds = json.loads(row.get("encrypted_credentials", "{}"))
-                    stored_email = creds.get('email')
-                    if stored_email and stored_email in tradelocker_sessions:
-                        client = tradelocker_sessions[stored_email]
-                        logger.info(f"[Execute] Found session via Supabase for email: {stored_email}")
+                    sb_row = acc_res.data[0]
+                    logger.info(f"[Execute] Supabase lookup via platform_id found account")
+
+            # Fallback: try provider field directly (more reliable)
+            if not sb_row:
+                acc_res2 = (
+                    supabase.table("trading_accounts")
+                    .select("*")
+                    .eq("user_id", user_id)
+                    .eq("provider", "tradelocker")
+                    .execute()
+                )
+                if acc_res2.data:
+                    sb_row = acc_res2.data[0]
+                    logger.info(f"[Execute] Supabase lookup via provider='tradelocker' found account")
+
+            if sb_row:
+                creds = json.loads(sb_row.get("encrypted_credentials", "{}"))
+                stored_email = creds.get('email')
+                if stored_email and stored_email in tradelocker_sessions:
+                    client = tradelocker_sessions[stored_email]
+                    logger.info(f"[Execute] ✅ Strategy 3: Reused in-memory session found via Supabase lookup for {stored_email}")
+                elif stored_email:
+                    logger.info(f"[Execute] Strategy 3: Got creds from Supabase for {stored_email} — will re-auth in Strategy 4")
+            else:
+                logger.warning(f"[Execute] Strategy 3: No account found in Supabase for user {user_id}")
         except Exception as sb_err:
             logger.warning(f"[Execute] Supabase lookup failed: {sb_err}")
+
 
     # --- Strategy 4: Re-authenticate using stored credentials ---
     if not client and creds:
