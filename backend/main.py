@@ -1378,7 +1378,7 @@ async def execute_copy_trade(payload: dict = Body(...), db: Session = Depends(ge
         except Exception:
             pass  # Non-critical
 
-    logger.info(f"[Execute] Success: {action} {symbol} {lot_size} lots for user {user_id}")
+    logger.info(f"[Execute] Success: {action} {symbol} {lot_size} lots for user {user_id} | orderId={result.get('orderId')} | raw={str(result.get('data',''))[:200]}")
     return {"status": "success", "orderId": result.get('orderId'), "symbol": symbol, "action": action, "lots": lot_size}
 
 

@@ -309,33 +309,89 @@ class TradeLockerClient:
         logger.info(f"CALCULATED ANALYTICS: {analytics}")
         return analytics
 
+    def get_instrument_id(self, symbol: str) -> Optional[int]:
+        """
+        Look up the numeric tradableInstrumentId for a given symbol string.
+        Calls /trade/accounts/{accountId}/instruments and matches by name/symbol.
+        Results are cached on the instance to avoid repeated API calls.
+        """
+        if not hasattr(self, '_instrument_cache'):
+            self._instrument_cache = {}
+        
+        symbol_upper = symbol.upper()
+        if symbol_upper in self._instrument_cache:
+            return self._instrument_cache[symbol_upper]
+        
+        url = f"{self.base_url}/trade/accounts/{self.account_id}/instruments"
+        try:
+            response = self.session.get(url)
+            if response.status_code == 200:
+                data = response.json()
+                # Handle 'd' wrapper
+                api_data = data.get('d', data)
+                instruments = api_data.get('instruments', api_data if isinstance(api_data, list) else [])
+                for inst in instruments:
+                    # TradeLocker instruments have 'name' field for the symbol
+                    name = (inst.get('name') or inst.get('symbol') or '').upper()
+                    if name == symbol_upper:
+                        tid = inst.get('tradableInstrumentId') or inst.get('id')
+                        if tid:
+                            self._instrument_cache[symbol_upper] = int(tid)
+                            logger.info(f"[Instrument] {symbol_upper} → id={tid}")
+                            return int(tid)
+                logger.warning(f"[Instrument] Symbol '{symbol_upper}' not found in instruments list")
+            else:
+                logger.error(f"[Instrument] Fetch failed: {response.status_code} - {response.text[:200]}")
+        except Exception as e:
+            logger.error(f"[Instrument] Lookup error: {e}")
+        return None
+
     def execute_order(self, symbol: str, action: str, quantity: float, stop_loss: float = 0, take_profit: float = 0) -> Dict:
-        """Execute a trade on TradeLocker using /trade/accounts/{accountId}/orders"""
+        """Execute a market order on TradeLocker using /trade/accounts/{accountId}/orders"""
         if not self.access_token:
-            if not self.login():
+            success, msg = self.login()
+            if not success:
                 return {"status": "failed", "message": "Not authenticated"}
 
+        # Resolve symbol → numeric tradableInstrumentId (required by TradeLocker API)
+        instrument_id = self.get_instrument_id(symbol)
+        if instrument_id is None:
+            logger.error(f"[Execute] Could not resolve instrument ID for '{symbol}'")
+            return {"status": "error", "message": f"Unknown instrument: {symbol}"}
+
         url = f"{self.base_url}/trade/accounts/{self.account_id}/orders"
-        
-        # Note: instrument_id needs to be the tradableInstrumentId, not the symbol string usually.
-        # For simplicity, we assume symbol is passed correctly or we'd need to look it up.
+
         payload = {
-            "tradableInstrumentId": symbol,
-            "side": action.upper(), # 'BUY' or 'SELL'
+            "tradableInstrumentId": instrument_id,
+            "side": action.upper(),   # 'BUY' or 'SELL'
             "quantity": quantity,
             "type": "market"
         }
-        
         if stop_loss > 0:
             payload["stopLoss"] = stop_loss
         if take_profit > 0:
             payload["takeProfit"] = take_profit
 
+        logger.info(f"[Execute] Placing order: {payload} → {url}")
+
         try:
             response = self.session.post(url, json=payload)
+            logger.info(f"[Execute] Order response: {response.status_code} - {response.text[:300]}")
+
             if response.status_code in [200, 201]:
-                return {"status": "success", "data": response.json()}
+                data = response.json()
+                # TradeLocker wraps response in 'd' key
+                order_data = data.get('d', data)
+                order_id = (
+                    order_data.get('orderId') or
+                    order_data.get('id') or
+                    order_data.get('order', {}).get('id')
+                )
+                return {"status": "success", "orderId": order_id, "data": order_data}
             else:
-                return {"status": "failed", "message": response.text}
+                logger.error(f"[Execute] Order failed: {response.status_code} - {response.text}")
+                return {"status": "failed", "message": response.text, "code": response.status_code}
         except Exception as e:
+            logger.error(f"[Execute] Order exception: {e}")
             return {"status": "error", "message": str(e)}
+
