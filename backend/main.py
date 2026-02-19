@@ -789,7 +789,8 @@ async def tradelocker_save_account(req: TradeLockerSaveRequest):
         # Check if exists
         existing = supabase.table("trading_accounts").select("id").eq("user_id", req.user_id).eq("platform_id", platform_id).execute()
         
-        # Core payload — only columns that must exist in trading_accounts
+        # Minimal safe payload — only write columns we know exist.
+        # (balance, equity, last_sync_at etc. are updated separately if columns exist)
         payload = {
             "user_id": req.user_id,
             "platform_id": platform_id,
@@ -798,16 +799,6 @@ async def tradelocker_save_account(req: TradeLockerSaveRequest):
             "encrypted_credentials": json.dumps(creds),
             "is_active": True
         }
-        # Optional fields — only include if your table has these columns.
-        # Run the SQL migration below in Supabase to add them if missing.
-        optional_fields = {
-            "account_type": req.account_type,
-            "currency": req.currency,
-            "balance": req.balance,
-            "equity": req.equity,
-            "last_sync_at": datetime.now().isoformat(),
-        }
-        payload.update(optional_fields)
 
         
         if existing.data:
