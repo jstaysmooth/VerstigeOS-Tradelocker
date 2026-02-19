@@ -793,7 +793,6 @@ async def tradelocker_save_account(req: TradeLockerSaveRequest):
             "user_id": req.user_id,
             "platform_id": platform_id,
             "account_name": req.account_name,
-            "account_number": req.account_id,
             "account_type": req.account_type,
             "currency": req.currency,
             "server": req.server,
