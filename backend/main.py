@@ -1287,6 +1287,9 @@ async def execute_copy_trade(payload: dict = Body(...), db: Session = Depends(ge
     logger.info(f"Execute request: user={user_id}, email={email}, symbol={symbol}, action={action}")
 
     # Helper: normalize base_url on any retrieved client (fixes sessions from before the URL fix)
+    client = None
+    creds = None
+
     def _fix_client_base_url(c):
         if c and not c.base_url.endswith("/backend-api"):
             old = c.base_url
@@ -1301,6 +1304,7 @@ async def execute_copy_trade(payload: dict = Body(...), db: Session = Depends(ge
             c.base_url = root
             logger.warning(f"[Execute] Patched stale session base_url: '{old}' → '{root}'")
         return c
+
 
     # --- Strategy 1: In-memory session via email passed from frontend ---
     if email and email in tradelocker_sessions:
