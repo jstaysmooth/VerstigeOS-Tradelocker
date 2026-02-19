@@ -37,8 +37,24 @@ const ADMIN_EMAILS = (process.env.NEXT_PUBLIC_ADMIN_EMAILS || '').split(',').map
 
 const computeIsAdmin = (user: User | null): boolean => {
     if (!user) return false;
-    if (user.user_metadata?.is_admin === true) return true;
-    if (user.email && ADMIN_EMAILS.includes(user.email.toLowerCase())) return true;
+
+    const isMetaAdmin = user.user_metadata?.is_admin === true;
+    const isEmailAdmin = user.email && ADMIN_EMAILS.includes(user.email.toLowerCase());
+
+    if (isMetaAdmin || isEmailAdmin) {
+        console.log("[UserContext] Admin access granted:", {
+            email: user.email,
+            isMetaAdmin,
+            isEmailAdmin,
+            allowedEmails: ADMIN_EMAILS
+        });
+        return true;
+    }
+
+    console.log("[UserContext] Admin access denied:", {
+        email: user.email,
+        allowedEmails: ADMIN_EMAILS
+    });
     return false;
 };
 
@@ -52,8 +68,9 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         try {
             const { data: { session } } = await supabase.auth.getSession();
             const currentUser = session?.user || null;
+            const computedAdmin = computeIsAdmin(currentUser);
             setUser(currentUser);
-            setIsAdmin(computeIsAdmin(currentUser));
+            setIsAdmin(computedAdmin);
 
             if (session?.user) {
                 const meta = session.user.user_metadata || {};
@@ -114,8 +131,9 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         // Listen for auth changes
         const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
             const currentUser = session?.user || null;
+            const computedAdmin = computeIsAdmin(currentUser);
             setUser(currentUser);
-            setIsAdmin(computeIsAdmin(currentUser));
+            setIsAdmin(computedAdmin);
             if (session?.user) {
                 const meta = session.user.user_metadata || {};
 
