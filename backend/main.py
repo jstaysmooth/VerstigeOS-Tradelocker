@@ -52,7 +52,9 @@ ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
     "https://verstige.io",
     "http://verstige.io",
-    "https://verstige-os-v2.netlify.app" # Adding just in case they use netlify subdomain
+    "https://www.verstige.io",
+    "https://verstige-os-v2.netlify.app",
+    "https://web-production-d3eb0.up.railway.app"
 ]
 
 sio = socketio.AsyncServer(async_mode="asgi", cors_allowed_origins=ALLOWED_ORIGINS)
