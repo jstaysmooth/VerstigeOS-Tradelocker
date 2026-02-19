@@ -608,6 +608,21 @@ dxtrade_sessions: Dict[str, DxTradeServiceClient] = {}
 matchtrader_sessions: Dict[str, MatchTraderClient] = {}
 tradelocker_sessions: Dict[str, TradeLockerClient] = {}
 
+def _normalize_session_url(client: TradeLockerClient) -> TradeLockerClient:
+    """Patch base_url on any stale in-memory session that has the wrong broker URL suffix."""
+    if client and not client.base_url.endswith("/backend-api"):
+        old = client.base_url
+        root = old
+        for wrong in ["/clientapi/v1", "/clientapi", "/api/v1", "/api"]:
+            if root.endswith(wrong):
+                root = root[: -len(wrong)]
+                break
+        if not root.endswith("/backend-api"):
+            root = root + "/backend-api"
+        client.base_url = root
+        logger.warning(f"[SessionFix] Patched stale base_url: '{old}' → '{root}'")
+    return client
+
 class MatchTraderAuthRequest(BaseModel):
     email: str
     password: str
@@ -832,7 +847,7 @@ from datetime import datetime
 async def tradelocker_select_account(req: TradeLockerAccountSelectRequest, db: Session = Depends(get_db)):
     try:
         session_id = req.email
-        client = tradelocker_sessions.get(session_id)
+        client = _normalize_session_url(tradelocker_sessions.get(session_id))
         
         if not client:
              raise HTTPException(status_code=401, detail="Session not found or expired")
@@ -912,7 +927,7 @@ async def tradelocker_select_account(req: TradeLockerAccountSelectRequest, db: S
 
 @app.get("/api/tradelocker/account-data")
 async def tradelocker_account_data(email: str):
-    client = tradelocker_sessions.get(email)
+    client = _normalize_session_url(tradelocker_sessions.get(email))
     if not client:
         raise HTTPException(status_code=401, detail="Session expired or not found")
     
@@ -1019,7 +1034,7 @@ async def tradelocker_save_account(req: TradeLockerSaveRequest):
 async def tradelocker_execute_legacy(req: GenericExecuteRequest):
     """Legacy execute endpoint using GenericExecuteRequest format (kept for backward compatibility)."""
     session_id = req.username
-    client = tradelocker_sessions.get(session_id)
+    client = _normalize_session_url(tradelocker_sessions.get(session_id))
     if not client:
          if req.password and req.server:
             client = TradeLockerClient(req.username, req.password, req.server, req.broker_url or "https://demo.tradelocker.com/backend-api")
@@ -1271,13 +1286,27 @@ async def execute_copy_trade(payload: dict = Body(...), db: Session = Depends(ge
 
     logger.info(f"Execute request: user={user_id}, email={email}, symbol={symbol}, action={action}")
 
-    client = None
-    creds = None
+    # Helper: normalize base_url on any retrieved client (fixes sessions from before the URL fix)
+    def _fix_client_base_url(c):
+        if c and not c.base_url.endswith("/backend-api"):
+            old = c.base_url
+            # Strip any known wrong suffix and replace with /backend-api
+            root = c.base_url
+            for wrong in ["/clientapi/v1", "/clientapi", "/api/v1", "/api"]:
+                if root.endswith(wrong):
+                    root = root[:-len(wrong)]
+                    break
+            if not root.endswith("/backend-api"):
+                root = root + "/backend-api"
+            c.base_url = root
+            logger.warning(f"[Execute] Patched stale session base_url: '{old}' → '{root}'")
+        return c
 
     # --- Strategy 1: In-memory session via email passed from frontend ---
     if email and email in tradelocker_sessions:
-        client = tradelocker_sessions[email]
-        logger.info(f"[Execute] Using active in-memory session for {email}")
+        client = _fix_client_base_url(tradelocker_sessions[email])
+        logger.info(f"[Execute] ✅ Strategy 1: Using in-memory session for {email} (base_url={client.base_url})")
+
 
     # --- Strategy 2: SQLAlchemy DB account lookup ---
     if not client:
