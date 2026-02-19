@@ -227,21 +227,56 @@ async def mt5_provision(req: MT5ProvisionRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/api/internal/signal")
-async def internal_signal(payload: dict):
+async def internal_signal(request: Request):
     """
-    Internal endpoint called by the MetaApi Bridge process to broadcast signals or results.
-    Payload structure: {"type": "event_name", "data": {...}}
+    Dual-purpose endpoint:
+    1. Called by MetaApi Bridge to broadcast socket events (legacy format: {type, data})
+    2. Called by Telegram webhook to receive signals and write to Supabase
     """
-    logger.info(f"Internal Signal Received: {payload}")
-    
-    # Extract event type and data, with fallback for legacy raw signal data
-    event_type = payload.get("type", "new_signal")
-    event_data = payload.get("data", payload) 
-    
-    logger.info(f"Broadcasting event: {event_type} with data: {event_data}")
+    payload = await request.json()
+    logger.info(f"Internal Signal Received: {str(payload)[:200]}")
 
+    # ── Path A: Telegram webhook update format ─────────────
+    message = payload.get("message") or payload.get("channel_post")
+    if message:
+        text    = message.get("text", "")
+        chat    = message.get("chat", {})
+        chat_id = chat.get("id")
+        logger.info(f"[Telegram via internal] Parsing: {text[:80]}")
+
+        sig = _parse_telegram_signal(text)
+        if sig:
+            try:
+                signal_id = await _publish_signal_to_supabase(sig)
+                await sio.emit("new_signal", {
+                    "id": signal_id,
+                    "symbol": sig["symbol"],
+                    "direction": sig["direction"],
+                    "entry": sig["entry"],
+                    "stop_loss": sig["stop_loss"],
+                    "take_profit": sig["take_profit"],
+                    "status": "pending",
+                    "source": "telegram",
+                })
+                logger.info(f"[Telegram] Signal saved and broadcast: {sig['direction']} {sig['symbol']}")
+                if chat_id:
+                    await _send_telegram_reply(chat_id,
+                        f"✅ Signal received!\n{sig['direction']} {sig['symbol']}\n"
+                        f"Entry: {sig['entry']} | SL: {sig['stop_loss']} | TP: {sig['take_profit']}")
+            except Exception as e:
+                logger.error(f"[Telegram] Failed to save signal: {e}")
+        else:
+            logger.info("[Telegram] Not a valid signal format, ignoring.")
+        return {"ok": True}
+
+    # ── Path B: Legacy MetaApi bridge format ───────────────
+    event_type = payload.get("type", "new_signal")
+    event_data = payload.get("data", payload)
+    logger.info(f"Broadcasting socket event: {event_type}")
     await meta_api_service.broadcast_signal(event_type, event_data)
     return {"status": "success"}
+
+
 
 @app.post("/api/test-signal")
 async def test_signal():
