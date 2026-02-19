@@ -814,8 +814,9 @@ async def tradelocker_save_account(req: TradeLockerSaveRequest):
         print(f"ERROR Saving Account: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.post("/api/tradelocker/execute")
-async def tradelocker_execute(req: GenericExecuteRequest):
+@app.post("/api/tradelocker/execute-legacy")
+async def tradelocker_execute_legacy(req: GenericExecuteRequest):
+    """Legacy execute endpoint using GenericExecuteRequest format (kept for backward compatibility)."""
     session_id = req.username
     client = tradelocker_sessions.get(session_id)
     if not client:
@@ -833,6 +834,7 @@ async def tradelocker_execute(req: GenericExecuteRequest):
         return result
     else:
         raise HTTPException(status_code=400, detail=result.get("message"))
+
 
 # --- Feed / Rank Endpoints ---
 
@@ -1047,55 +1049,120 @@ def get_master_signals(db: Session = Depends(get_db)):
 
 @app.post("/api/tradelocker/execute")
 async def execute_copy_trade(payload: dict = Body(...), db: Session = Depends(get_db)):
-    """Execute a copied signal on the user's connected account."""
+    """Execute a copied signal on the user's connected account.
+    
+    Multi-strategy session resolution:
+    1. In-memory session via email (fastest)
+    2. SQLAlchemy DB account lookup -> in-memory session
+    3. Supabase account lookup -> in-memory session
+    4. Full re-authentication using stored credentials
+    """
     user_id = payload.get("user_id")
     signal_id = payload.get("signal_id")
-    
-    # 1. Get Signal Details (from Master or Mock)
-    # For now, we'll fetch from master again or use payload details if passed.
-    # To be safe, let's assume the payload contains the critical trade info to copy.
     symbol = payload.get("symbol")
     action = payload.get("action")
     sl = payload.get("sl")
     tp = payload.get("tp")
-    
+    email = payload.get("email")  # Email from frontend for direct session lookup
+
     if not user_id or not symbol or not action:
-        raise HTTPException(status_code=400, detail="Missing trade details")
-        
-    # 2. Get User's Connected Account
-    platform = db.query(TradingPlatform).filter(TradingPlatform.code == 'tradelocker').first()
-    account = db.query(TradingAccount).filter(
-        TradingAccount.user_id == user_id,
-        TradingAccount.platform_id == platform.id
-    ).first()
-    
-    if not account:
-        raise HTTPException(status_code=400, detail="No TradeLocker account connected")
-        
-    creds = json.loads(account.encrypted_credentials)
-    
-    # 3. Execute Trade
-    # We can reuse the existing session if active, or create a new client
-    client = tradelocker_sessions.get(creds['email'])
+        raise HTTPException(status_code=400, detail="Missing trade details (user_id, symbol, action required)")
+
+    logger.info(f"Execute request: user={user_id}, email={email}, symbol={symbol}, action={action}")
+
+    client = None
+    creds = None
+
+    # --- Strategy 1: In-memory session via email passed from frontend ---
+    if email and email in tradelocker_sessions:
+        client = tradelocker_sessions[email]
+        logger.info(f"[Execute] Using active in-memory session for {email}")
+
+    # --- Strategy 2: SQLAlchemy DB account lookup ---
     if not client:
-        client = TradeLockerClient(creds['email'], creds['password'], creds['server'])
-        if creds.get('acc_num'):
-             client.acc_num = creds.get('acc_num')
-             client.session.headers.update({"accNum": str(client.acc_num)})
-        client.login()
-        client.select_account(creds.get('account_id'))
-        
-    # Default lot size for copy trading? Or use user preference?
-    # For MVP, let's use a standard 0.01 lot or what was in the signal?
-    # Let's use 0.01 for safety.
-    lot_size = 0.01 
-    
-    result = client.execute_order(symbol, action, lot_size, float(sl or 0), float(tp or 0))
-    
-    if result.get('status') == 'error': # Adjust based on actual execute_order return
-         raise HTTPException(status_code=400, detail=result.get('message', 'Execution failed'))
-         
-    return {"status": "success", "orderId": result.get('orderId')}
+        try:
+            platform = db.query(TradingPlatform).filter(TradingPlatform.code == 'tradelocker').first()
+            if platform:
+                account = db.query(TradingAccount).filter(
+                    TradingAccount.user_id == user_id,
+                    TradingAccount.platform_id == platform.id
+                ).first()
+                if account and account.encrypted_credentials:
+                    creds = json.loads(account.encrypted_credentials)
+                    stored_email = creds.get('email')
+                    if stored_email and stored_email in tradelocker_sessions:
+                        client = tradelocker_sessions[stored_email]
+                        logger.info(f"[Execute] Found session via SQLAlchemy DB for email: {stored_email}")
+        except Exception as db_err:
+            logger.warning(f"[Execute] SQLAlchemy DB lookup failed: {db_err}")
+
+    # --- Strategy 3: Supabase account lookup ---
+    if not client:
+        try:
+            plat_res = supabase.table("trading_platforms").select("id").eq("code", "tradelocker").execute()
+            if plat_res.data:
+                platform_id = plat_res.data[0]['id']
+                acc_res = (
+                    supabase.table("trading_accounts")
+                    .select("*")
+                    .eq("user_id", user_id)
+                    .eq("platform_id", platform_id)
+                    .execute()
+                )
+                if acc_res.data:
+                    row = acc_res.data[0]
+                    creds = json.loads(row.get("encrypted_credentials", "{}"))
+                    stored_email = creds.get('email')
+                    if stored_email and stored_email in tradelocker_sessions:
+                        client = tradelocker_sessions[stored_email]
+                        logger.info(f"[Execute] Found session via Supabase for email: {stored_email}")
+        except Exception as sb_err:
+            logger.warning(f"[Execute] Supabase lookup failed: {sb_err}")
+
+    # --- Strategy 4: Re-authenticate using stored credentials ---
+    if not client and creds:
+        try:
+            stored_email = creds.get('email')
+            logger.info(f"[Execute] Re-authenticating for {stored_email}")
+            new_client = TradeLockerClient(creds['email'], creds['password'], creds['server'])
+            if creds.get('acc_num'):
+                new_client.acc_num = creds.get('acc_num')
+                new_client.session.headers.update({"accNum": str(creds.get('acc_num'))})
+            success, _ = new_client.login()
+            if success:
+                new_client.select_account(creds.get('account_id'))
+                tradelocker_sessions[stored_email] = new_client
+                client = new_client
+                logger.info(f"[Execute] Re-authentication successful for {stored_email}")
+        except Exception as auth_err:
+            logger.error(f"[Execute] Re-authentication failed: {auth_err}")
+
+    if not client:
+        raise HTTPException(
+            status_code=400,
+            detail="No active TradeLocker session found. Please reconnect your account via Account Settings."
+        )
+
+    # Execute the trade
+    lot_size = 0.01
+    try:
+        result = client.execute_order(symbol, action, lot_size, float(sl or 0), float(tp or 0))
+    except Exception as exec_err:
+        logger.error(f"[Execute] Trade execution error: {exec_err}")
+        raise HTTPException(status_code=500, detail=f"Trade execution failed: {str(exec_err)}")
+
+    if result.get('status') == 'error':
+        raise HTTPException(status_code=400, detail=result.get('message', 'Execution failed'))
+
+    # Non-blocking: update signal status in Supabase
+    if signal_id:
+        try:
+            supabase.table("signals").update({"status": "executed"}).eq("id", str(signal_id)).execute()
+        except Exception:
+            pass  # Non-critical
+
+    logger.info(f"[Execute] Success: {action} {symbol} {lot_size} lots for user {user_id}")
+    return {"status": "success", "orderId": result.get('orderId'), "symbol": symbol, "action": action, "lots": lot_size}
 
 
 # Wrap FastAPI application with Socket.IO ASGI app

@@ -1,8 +1,8 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
-import { supabase } from "@/lib/supabase";
 import { Signal } from "@/hooks/useSignals";
 import { Check, ChevronRight, Share2, Timer, TrendingUp, User, X } from "lucide-react";
+
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://verstige.io";
 
@@ -23,19 +23,33 @@ export function SwipeSignalCard({ signal, onSettled }: SwipeSignalCardProps) {
     async function executeApprove() {
         setCardState("loading");
         try {
-            const { data: { session } } = await supabase.auth.getSession();
+            // Get user ID — prefer localStorage v2_user_id (Supabase auth user ID)
+            // Fallback to session user ID from Supabase
+            const userId = typeof window !== "undefined"
+                ? localStorage.getItem("v2_user_id")
+                : null;
+            const email = typeof window !== "undefined"
+                ? localStorage.getItem("v2_user_email")
+                : null;
 
-            console.log("DEBUG: SwipeSignalCard session:", session ? "Found" : "Null", session?.user?.id);
-            console.log("DEBUG: Token being sent:", session?.access_token ? session.access_token.substring(0, 10) + "..." : "None");
+            console.log("DEBUG: SwipeSignalCard executing for user:", userId, "email:", email);
+            console.log("DEBUG: Signal data:", { id: signal.id, symbol: signal.symbol, direction: signal.direction });
 
-            const headers: HeadersInit = { "Content-Type": "application/json" };
-            if (session?.access_token) headers["Authorization"] = `Bearer ${session.access_token}`;
-
-            console.log("DEBUG: Headers:", headers);
-
-            const resp = await fetch(`${API_BASE}/api/signals/${signal.id}/approve`, {
+            // Use the direct execute endpoint which uses in-memory TradeLocker sessions.
+            // This avoids the Supabase account lookup which may fail due to FK constraints.
+            const resp = await fetch(`${API_BASE}/api/tradelocker/execute`, {
                 method: "POST",
-                headers,
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    user_id: userId,
+                    signal_id: signal.id,
+                    symbol: signal.symbol,
+                    action: signal.direction,
+                    sl: signal.stop_loss,
+                    tp: signal.take_profit,
+                    // Pass email so backend can find in-memory session as fallback
+                    email: email,
+                }),
             });
 
             console.log("DEBUG: Response status:", resp.status);
@@ -46,6 +60,9 @@ export function SwipeSignalCard({ signal, onSettled }: SwipeSignalCardProps) {
                 throw new Error(data.detail || "Execution failed");
             }
 
+            const result = await resp.json();
+            console.log("DEBUG: Trade executed:", result);
+
             setCardState("success");
             setTimeout(() => {
                 onSettled?.(signal.id, "approved");
@@ -54,8 +71,11 @@ export function SwipeSignalCard({ signal, onSettled }: SwipeSignalCardProps) {
         } catch (err: any) {
             setCardState("error");
             console.error(err);
-            setSliderX(0); // Reset
-            // Optionally set error message state if you want to show it
+            // Reset slider after a short delay so user can retry
+            setTimeout(() => {
+                setSliderX(0);
+                setCardState("idle");
+            }, 2500);
         }
     }
 
