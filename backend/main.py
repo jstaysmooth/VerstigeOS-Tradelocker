@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Body, Depends
+from fastapi import FastAPI, HTTPException, Body, Depends, Request
 from sqlalchemy.orm import Session
 from backend.database import init_db, get_db
 from backend.services.feed_service import FeedService
