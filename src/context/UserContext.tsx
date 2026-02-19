@@ -10,6 +10,7 @@ interface UserProfile {
     email: string;
     phone?: string;
     divisions?: string[];
+    avatarUrl?: string;
     joinDate: string;
 }
 
@@ -107,6 +108,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
                     email: session.user.email || "",
                     phone: meta.phone,
                     divisions: meta.selected_divisions || [],
+                    avatarUrl: meta.avatar_url || meta.avatarUrl || "",
                     joinDate: new Date(session.user.created_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
                 });
 
@@ -165,6 +167,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
                     email: session.user.email || "",
                     phone: meta.phone,
                     divisions: meta.selected_divisions || [],
+                    avatarUrl: meta.avatar_url || meta.avatarUrl || "",
                     joinDate: new Date(session.user.created_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
                 });
                 localStorage.setItem('v2_user_id', session.user.id);

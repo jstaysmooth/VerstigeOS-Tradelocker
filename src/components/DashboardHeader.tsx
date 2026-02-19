@@ -39,7 +39,13 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
             <div className="header-bg-glow" />
             <div className="header-content-centered">
                 <div className="user-badge glass-panel">
-                    <div className="avatar">{initials}</div>
+                    <div className="avatar">
+                        {profile?.avatarUrl ? (
+                            <img src={profile.avatarUrl} alt="Avatar" className="avatar-img-header" />
+                        ) : (
+                            initials
+                        )}
+                    </div>
                     <span>
                         {loading ? "Aligning systems..." : (
                             badgeText || <>Welcome back, <strong>{userFullName}</strong></>

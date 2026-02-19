@@ -79,9 +79,11 @@ const DashboardLauncher: React.FC = () => {
                 <button className="launcher-item" title="Notifications">
                     <Bell size={20} />
                 </button>
-                <button className="launcher-item" title="Settings">
-                    <Settings size={20} />
-                </button>
+                <Link href="/dashboard/settings" title="Settings">
+                    <button className="launcher-item" title="Settings">
+                        <Settings size={20} />
+                    </button>
+                </Link>
             </div>
         </div>
     );
