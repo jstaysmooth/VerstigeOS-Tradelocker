@@ -679,11 +679,12 @@ async def dxtrade_authenticate(creds: DxTradeAuthRequest):
             session_id = f"{creds.username}_{creds.vendor}_{creds.domain}"
             dxtrade_sessions[session_id] = client
             
-            # If no accounts from API, use account from login
-            if not accounts and client.account_id:
+            # If no accounts from API, use account from username as Liquidbrokers often does this
+            if not accounts:
+                fallback_id = client.account_id or creds.username
                 accounts = [{
-                    "id": client.account_id,
-                    "name": f"Account {client.account_id}",
+                    "id": fallback_id,
+                    "name": f"Account {fallback_id}",
                     "balance": 0,
                     "type": "Live"
                 }]

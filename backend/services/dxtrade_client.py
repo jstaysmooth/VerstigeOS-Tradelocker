@@ -362,6 +362,7 @@ class DxTradeClient:
                 accounts = []
                 for account in data.get("accounts", data if isinstance(data, list) else []):
                     account_id = account.get("accountId", account.get("code", ""))
+                    if not account_id: continue
                     accounts.append({
                         "id": account_id,
                         "name": account.get("name", account_id),
@@ -369,10 +370,10 @@ class DxTradeClient:
                         "type": account.get("type", "Live"),
                         "currency": account.get("currency", "USD")
                     })
+                if not accounts:
+                    return self._get_accounts_from_trading_history()
                 return accounts
             else:
-                print(f"Failed to fetch accounts: {response.status_code} - {response.text}")
-                # Try alternative endpoint for some vendors
                 return self._get_accounts_from_trading_history()
         except Exception as e:
             print(f"Error fetching accounts: {str(e)}")
