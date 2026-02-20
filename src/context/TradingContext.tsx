@@ -283,69 +283,108 @@ export const TradingProvider: React.FC<{ children: ReactNode }> = ({ children })
     // ---------------------------------------------------------------
     useEffect(() => {
         const autoReconnect = async () => {
+            // ── TradeLocker Auto-reconnect ──
             try {
                 const raw = localStorage.getItem('tl_session');
-                if (!raw) return;           // No saved session — first visit or disconnected
-                const saved = JSON.parse(raw) as {
-                    email: string;
-                    password: string;
-                    server: string;
-                    account_id: string;
-                    broker_url: string;
-                };
-
-                if (!saved.email || !saved.password) return;
-
-                console.log('[TradingContext] Auto-reconnecting TradeLocker from localStorage…');
-
-                // Step 1: Re-authenticate to get fresh tokens / session
-                const authRes = await fetch(`${API_URL}/api/tradelocker/authenticate`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        email: saved.email,
-                        password: saved.password,
-                        server: saved.server,
-                        broker_url: saved.broker_url,
-                    }),
-                });
-                const authData = await authRes.json();
-
-                if (!authRes.ok && authData.status !== 'requires_account_selection' && authData.status !== 'success') {
-                    console.warn('[TradingContext] Auto-reconnect auth failed — clearing saved session');
-                    localStorage.removeItem('tl_session');
-                    return;
+                if (raw) {
+                    const saved = JSON.parse(raw) as {
+                        email: string;
+                        password: string;
+                        server: string;
+                        account_id: string;
+                        broker_url: string;
+                    };
+                    if (saved.email && saved.password) {
+                        console.log('[TradingContext] Auto-reconnecting TradeLocker from localStorage…');
+                        const authRes = await fetch(`${API_URL}/api/tradelocker/authenticate`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                email: saved.email,
+                                password: saved.password,
+                                server: saved.server,
+                                broker_url: saved.broker_url,
+                            }),
+                        });
+                        const authData = await authRes.json();
+                        if (authRes.ok || authData.status === 'requires_account_selection' || authData.status === 'success') {
+                            if (authData.status === 'requires_account_selection' || !authData.balance) {
+                                const userId = localStorage.getItem('v2_user_id');
+                                await fetch(`${API_URL}/api/tradelocker/select-account`, {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({
+                                        email: saved.email,
+                                        account_id: saved.account_id,
+                                        user_id: userId,
+                                    }),
+                                });
+                            }
+                            setTradeLockerConnected(true);
+                            await refreshTradeLockerData(saved.email);
+                        }
+                    }
                 }
+            } catch (err) {
+                console.error('[TradingContext] TL Auto-reconnect error:', err);
+            }
 
-                // Step 2: Select the previously chosen account (skip if auth returned direct success)
-                if (authData.status === 'requires_account_selection' || !authData.balance) {
-                    const userId = localStorage.getItem('v2_user_id');
-                    const selRes = await fetch(`${API_URL}/api/tradelocker/select-account`, {
+            // ── DXTrade Auto-reconnect ──
+            try {
+                const dxRaw = localStorage.getItem('dx_session');
+                if (dxRaw) {
+                    const dxSaved = JSON.parse(dxRaw);
+                    console.log('[TradingContext] Auto-reconnecting DXTrade from localStorage…');
+                    const authRes = await fetch(`${API_URL}/api/dxtrade/authenticate`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
-                            email: saved.email,
-                            account_id: saved.account_id,
-                            user_id: userId,
-                        }),
+                            username: dxSaved.username,
+                            password: dxSaved.password,
+                            vendor: dxSaved.vendor,
+                            domain: dxSaved.domain
+                        })
                     });
-                    const selData = await selRes.json();
-                    if (selData.status !== 'success') {
-                        console.warn('[TradingContext] Auto-reconnect account select failed');
-                        return;
+                    if (authRes.ok) {
+                        const selRes = await fetch(`${API_URL}/api/dxtrade/select-account`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                username: dxSaved.username,
+                                password: dxSaved.password,
+                                vendor: dxSaved.vendor,
+                                domain: dxSaved.domain,
+                                account_id: dxSaved.account_id
+                            })
+                        });
+                        const data = await selRes.json();
+                        if (selRes.ok && data.status === 'success') {
+                            setDxConnected(true);
+                            setAccountBalance(data.balance || 0);
+                            setAccountEquity(data.equity || 0);
+
+                            // Map existing positions/history from the selection response
+                            if (data.positions) {
+                                setSignals(data.positions.map((pos: any) => ({
+                                    id: pos.id,
+                                    provider: "DXTrade",
+                                    pair: pos.symbol || pos.tradableInstrumentId,
+                                    action: (pos.side || pos.orderSide || "BUY").toUpperCase() as 'BUY' | 'SELL',
+                                    pips: 0,
+                                    price: (pos.price || pos.avgPrice || 0).toString(),
+                                    sl: pos.stopLoss?.toString() || "",
+                                    tp1: pos.takeProfit?.toString() || "",
+                                    category: "FOREX",
+                                    timestamp: "Live",
+                                    lotSize: pos.quantity || pos.qty,
+                                    profit: pos.pl || pos.unrealizedPnL || 0
+                                })));
+                            }
+                        }
                     }
-                    console.log('[TradingContext] Auto-reconnect successful (via select-account)');
-                    setTradeLockerConnected(true);
-                } else {
-                    console.log('[TradingContext] Auto-reconnect successful (direct auth)');
-                    setTradeLockerConnected(true);
                 }
-
-                // Step 3: Load live account data
-                await refreshTradeLockerData(saved.email);
-
             } catch (err) {
-                console.error('[TradingContext] Auto-reconnect error:', err);
+                console.error('[TradingContext] DX Auto-reconnect error:', err);
             }
         };
 

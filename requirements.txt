@@ -16,3 +16,4 @@ psycopg2-binary
 metaapi-cloud-sdk
 websocket-client
 gunicorn
+beautifulsoup4

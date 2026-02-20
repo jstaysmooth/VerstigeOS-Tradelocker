@@ -600,6 +600,18 @@ class DxTradeAccountSelectRequest(BaseModel):
     domain: str = "default"
     account_id: str
 
+class DxTradeSaveRequest(BaseModel):
+    user_id: str
+    username: str
+    password: str
+    vendor: str
+    domain: str = "default"
+    account_id: str
+    account_name: str
+    balance: float
+    equity: float
+    currency: str
+
 # Import the new service client
 from backend.services.dxtrade_client import DxTradeClient as DxTradeServiceClient
 
@@ -1070,6 +1082,65 @@ async def tradelocker_save_account(req: TradeLockerSaveRequest):
     except Exception as e:
         logger.error(f"Error saving account: {e}")
         print(f"ERROR Saving Account: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/dxtrade/save-account")
+async def dxtrade_save_account(req: DxTradeSaveRequest):
+    try:
+        logger.info(f"Saving DXTrade account for user {req.user_id} directly to Supabase")
+        
+        # 1. Get/Create Platform row
+        plat_res = supabase.table("trading_platforms").select("id").eq("code", "dxtrade").execute()
+        if not plat_res.data:
+            plat_res = supabase.table("trading_platforms").insert({
+                "name": "DXTrade", "code": "dxtrade",
+                "api_base_url": "https://trader.liquidcharts.com"
+            }).execute()
+
+        platform_id = plat_res.data[0]['id'] if plat_res.data else None
+
+        # 2. Prepare Credentials
+        creds = {
+            "username": req.username,
+            "password": req.password,
+            "vendor": req.vendor,
+            "domain": req.domain,
+            "account_id": req.account_id
+        }
+
+        # 3. Upsert Account
+        existing = supabase.table("trading_accounts").select("id") \
+            .eq("user_id", req.user_id) \
+            .eq("provider", "dxtrade") \
+            .execute()
+
+        payload = {
+            "user_id": req.user_id,
+            "provider": "dxtrade",
+            "account_id": req.account_id,
+            "account_name": req.account_name,
+            "server": req.vendor,
+            "email": req.username,
+            "balance": req.balance,
+            "equity": req.equity,
+            "currency": req.currency,
+            "account_type": "live" if "live" in req.vendor.lower() else "demo",
+            "platform_id": platform_id,
+            "is_active": True,
+            "encrypted_credentials": json.dumps(creds)
+        }
+
+        if existing.data:
+            row_id = existing.data[0]['id']
+            supabase.table("trading_accounts").update(payload).eq("id", row_id).execute()
+        else:
+            supabase.table("trading_accounts").insert(payload).execute()
+
+        logger.info(f"Successfully saved DXTrade account for user {req.user_id}")
+        return {"status": "success", "message": "DXTrade account saved successfully"}
+
+    except Exception as e:
+        logger.error(f"Error saving DXTrade account: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/api/tradelocker/execute-legacy")

@@ -11,6 +11,7 @@ import uuid
 import time
 import threading
 import ssl
+from bs4 import BeautifulSoup
 from typing import Optional, Dict, List, Any, Callable
 from dataclasses import dataclass, field
 from enum import Enum, IntEnum

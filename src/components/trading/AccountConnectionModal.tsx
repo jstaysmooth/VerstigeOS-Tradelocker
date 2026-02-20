@@ -69,16 +69,26 @@ export default function AccountConnectionModal({ onClose }: AccountConnectionMod
                 return;
             }
 
-            console.log("Selecting Account:", { accountId, selectedAccountId, userId });
+            console.log("Selecting Account:", { accountId, selectedAccountId, userId, platform: selectedPlatform });
 
-            const response = await fetch(`${API_URL}/api/tradelocker/select-account`, {
+            const endpoint = selectedPlatform === 'tradelocker'
+                ? `${API_URL}/api/tradelocker/select-account`
+                : `${API_URL}/api/dxtrade/select-account`;
+
+            const payload = selectedPlatform === 'tradelocker'
+                ? { email: accountId, account_id: selectedAccountId, user_id: userId }
+                : {
+                    username: accountId,
+                    password: password,
+                    vendor: server.toLowerCase().replace('-live', '').replace('-demo', ''),
+                    domain: 'default',
+                    account_id: selectedAccountId
+                };
+
+            const response = await fetch(endpoint, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    email: accountId,
-                    account_id: selectedAccountId,
-                    user_id: userId
-                })
+                body: JSON.stringify(payload)
             });
 
             const data = await response.json();
@@ -87,20 +97,22 @@ export default function AccountConnectionModal({ onClose }: AccountConnectionMod
                 setTradeLockerConnected(true);
                 setTradeLockerData(data);
 
-                if (data.balance) {
-                    setAccountBalance(data.balance.balance || 0);
-                    setAccountEquity(data.balance.equity || 0);
-                }
+                // Map balance fields (DXTrade returns them at root, TradeLocker inside nested balance)
+                const balanceVal = selectedPlatform === 'tradelocker' ? data.balance?.balance : data.balance;
+                const equityVal = selectedPlatform === 'tradelocker' ? data.balance?.equity : data.equity;
+
+                setAccountBalance(balanceVal || 0);
+                setAccountEquity(equityVal || 0);
 
                 if (data.positions) {
                     const mappedPositions = data.positions.map((pos: any) => ({
                         id: pos.id,
-                        provider: "TradeLocker",
+                        provider: selectedPlatform === 'tradelocker' ? "TradeLocker" : "DXTrade",
                         providerRank: "Live",
-                        pair: pos.tradableInstrumentId || `ID: ${pos.instrumentId}`,
-                        action: pos.side.toUpperCase() as 'BUY' | 'SELL',
+                        pair: pos.tradableInstrumentId || pos.symbol || `ID: ${pos.instrumentId}`,
+                        action: (pos.side || pos.orderSide || '').toUpperCase() as 'BUY' | 'SELL',
                         pips: 0,
-                        price: pos.price.toString(),
+                        price: (pos.price || pos.avgPrice || 0).toString(),
                         sl: pos.stopLoss?.toString() || "",
                         tp1: pos.takeProfit?.toString() || "",
                         tp2: "",
@@ -108,8 +120,8 @@ export default function AccountConnectionModal({ onClose }: AccountConnectionMod
                         category: "FOREX",
                         timestamp: "Just now",
                         winRate: 0,
-                        lotSize: pos.quantity,
-                        profit: pos.unrealizedPnL
+                        lotSize: pos.quantity || pos.qty,
+                        profit: pos.unrealizedPnL || pos.pl || 0
                     }));
                     setSignals(mappedPositions);
                 }
@@ -117,63 +129,89 @@ export default function AccountConnectionModal({ onClose }: AccountConnectionMod
                 if (data.history) {
                     const mappedHistory = data.history.map((trade: any) => ({
                         id: trade.id,
-                        pair: trade.tradableInstrumentId,
-                        type: trade.side,
-                        entryPrice: trade.avgPrice || "0",
-                        closePrice: trade.avgPrice || "0",
-                        netProfit: parseFloat(trade.realizedPnL || 0),
+                        pair: trade.tradableInstrumentId || trade.symbol,
+                        type: trade.side || trade.orderSide,
+                        entryPrice: trade.avgPrice || trade.price || "0",
+                        closePrice: trade.avgPrice || trade.price || "0",
+                        netProfit: parseFloat(trade.realizedPnL || trade.profit || 0),
                         pips: 0,
-                        lotSize: parseFloat(trade.qty || 0),
-                        timestamp: trade.date,
-                        provider: "TradeLocker"
+                        lotSize: parseFloat(trade.qty || trade.quantity || 0),
+                        timestamp: trade.date || trade.timestamp,
+                        provider: selectedPlatform === 'tradelocker' ? "TradeLocker" : "DXTrade"
                     }));
                     setResults(mappedHistory);
                 }
 
-                // ADD THIS: Save to database
-                console.log("Attempting to save account with User ID:", userId);
+                // Save to database
+                console.log("Saving account for platform:", selectedPlatform);
+
+                const saveEndpoint = selectedPlatform === 'tradelocker'
+                    ? `${API_URL}/api/tradelocker/save-account`
+                    : `${API_URL}/api/dxtrade/save-account`;
+
+                const savePayload = selectedPlatform === 'tradelocker'
+                    ? {
+                        user_id: userId,
+                        email: accountId,
+                        password: password,
+                        server: server,
+                        account_id: selectedAccountId,
+                        account_name: `TradeLocker - ${selectedAccountId}`,
+                        account_type: server.includes('Demo') ? 'demo' : 'live',
+                        balance: balanceVal || 0,
+                        equity: equityVal || 0,
+                        currency: 'USD'
+                    }
+                    : {
+                        user_id: userId,
+                        username: accountId,
+                        password: password,
+                        vendor: server.toLowerCase().replace('-live', '').replace('-demo', ''),
+                        domain: 'default',
+                        account_id: selectedAccountId,
+                        account_name: `DXTrade - ${selectedAccountId}`,
+                        balance: balanceVal || 0,
+                        equity: equityVal || 0,
+                        currency: 'USD'
+                    };
 
                 try {
-                    const saveResponse = await fetch(`${API_URL}/api/tradelocker/save-account`, {
+                    const saveResponse = await fetch(saveEndpoint, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            user_id: userId,
-                            email: accountId,
-                            password: password,
-                            server: server,
-                            account_id: selectedAccountId,
-                            account_name: `${selectedPlatform} - ${selectedAccountId}`,
-                            account_type: server.includes('Demo') ? 'demo' : 'live',
-                            balance: data.balance?.balance || 0,
-                            equity: data.balance?.equity || 0,
-                            currency: 'USD'
-                        })
+                        body: JSON.stringify(savePayload)
                     });
 
                     if (saveResponse.ok) {
-                        console.log("Account saved explicitly via save-account endpoint");
+                        console.log("Account saved successfully");
 
-                        // ── Persist credentials for auto-reconnect on refresh ──
-                        const sessionPayload = {
-                            email: accountId,
-                            password: password,
-                            server: server,
-                            account_id: selectedAccountId,
-                            broker_url: server.includes('Demo')
-                                ? "https://demo.tradelocker.com/backend-api"
-                                : "https://live.tradelocker.com/backend-api",
-                        };
-                        localStorage.setItem('tl_session', JSON.stringify(sessionPayload));
-                        // ──────────────────────────────────────────────────────
+                        // Save session for auto-reconnect
+                        if (selectedPlatform === 'dxtrade') {
+                            const sessionPayload = {
+                                username: accountId,
+                                password: password,
+                                vendor: server.toLowerCase().replace('-live', '').replace('-demo', ''),
+                                domain: 'default',
+                                account_id: selectedAccountId
+                            };
+                            localStorage.setItem('dx_session', JSON.stringify(sessionPayload));
+                        } else if (selectedPlatform === 'tradelocker') {
+                            const sessionPayload = {
+                                email: accountId,
+                                password: password,
+                                server: server,
+                                account_id: selectedAccountId,
+                                broker_url: server.includes('Demo')
+                                    ? "https://demo.tradelocker.com/backend-api"
+                                    : "https://live.tradelocker.com/backend-api",
+                            };
+                            localStorage.setItem('tl_session', JSON.stringify(sessionPayload));
+                        }
 
-                        // Only close on success
                         onClose();
                     } else {
                         const errorData = await saveResponse.json();
-                        console.error("Failed to save account persistence:", errorData);
                         setError(`Connected, but failed to save account: ${errorData.detail || 'Unknown error'}`);
-                        // Do not close modal so user sees error
                     }
                 } catch (saveError) {
                     console.error("Network error saving account:", saveError);
@@ -217,7 +255,6 @@ export default function AccountConnectionModal({ onClose }: AccountConnectionMod
                     setIsLoading(false);
                     return;
                 } else if (data.status === 'success') {
-                    // Direct success fallback
                     setTradeLockerConnected(true);
                     setTradeLockerData(data);
                     if (data.balance) {
@@ -227,6 +264,27 @@ export default function AccountConnectionModal({ onClose }: AccountConnectionMod
                     onClose();
                 } else {
                     setError(data.detail || 'Failed to connect to TradeLocker');
+                }
+            } else if (selectedPlatform === 'dxtrade') {
+                const vendor = server.toLowerCase().replace('-live', '').replace('-demo', '');
+                const response = await fetch(`${API_URL}/api/dxtrade/authenticate`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        username: accountId,
+                        password: password,
+                        vendor: vendor,
+                        domain: 'default'
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.status === 'success') {
+                    setAccounts(data.accounts);
+                    setIsSelectingAccount(true);
+                } else {
+                    setError(data.detail || 'Failed to connect to DXTrade');
                 }
             } else {
                 // Mock connection for others
