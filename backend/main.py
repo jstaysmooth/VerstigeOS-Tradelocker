@@ -926,6 +926,7 @@ async def tradelocker_select_account(req: TradeLockerAccountSelectRequest, db: S
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/api/tradelocker/account-data")
+async def tradelocker_account_data(email: str, user_id: Optional[str] = None):
     logger.info(f"REQUEST [account-data] email={email}, user_id={user_id}")
     client = _normalize_session_url(tradelocker_sessions.get(email))
     
