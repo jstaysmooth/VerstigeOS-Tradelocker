@@ -7,6 +7,7 @@ Supports multiple vendors including LiquidBrokers, FTMO, etc.
 import requests
 import json
 import websocket
+from websocket import create_connection
 import uuid
 import time
 import threading
