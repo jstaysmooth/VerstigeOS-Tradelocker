@@ -357,6 +357,9 @@ class DxTradeClient:
         
         try:
             response = self.session.get(url, headers=headers)
+            with open("dxtrade_debug_accounts.log", "a") as f:
+                f.write(f"\\n--- GET {url} ---\\nStatus: {response.status_code}\\nResponse: {response.text}\\n")
+                
             if response.status_code == 200:
                 data = response.json()
                 accounts = []
@@ -380,22 +383,77 @@ class DxTradeClient:
             return None
     
     def _get_accounts_from_trading_history(self) -> Optional[List[Dict]]:
-        """Fallback: Get account info from trading activity"""
+        """Fallback: Extract account info and real names natively from the WebSocket stream"""
         try:
-            # Get accounts from the platform initialization
-            url = f"{self.base_url}/api/trading/accounts"
-            headers = {
-                'accept': 'application/json',
-                'cookie': '; '.join([f"{key}={value}" for key, value in self.cookies.items()]),
-                'x-csrf-token': self.csrf or "",
-                'x-requested-with': 'XMLHttpRequest'
-            }
-            response = self.session.get(url, headers=headers)
-            if response.status_code == 200:
-                data = response.json()
-                return data.get("accounts", [])
+            print("Listening to WebSocket stream to extract account names...")
+            cookie_string = "; ".join([f"{name}={value}" for name, value in self.cookies.items()])
+            headers = {"Cookie": cookie_string}
+            
+            ws_url = (
+                f"wss://{self.base_url.replace('https://', '')}/client/connector?"
+                f"X-Atmosphere-tracking-id=0&X-Atmosphere-Framework=2.3.2-javascript&"
+                f"X-Atmosphere-Transport=websocket&X-Atmosphere-TrackMessageSize=true&"
+                f"Content-Type=text/x-gwt-rpc;%20charset=UTF-8&X-atmo-protocol=true&"
+                f"sessionState=dx-new&guest-mode=false"
+            )
+            
+            import time
+            from websocket import create_connection
+            import json
+            
+            ws = create_connection(ws_url, header=headers, timeout=5)
+            start_time = time.time()
+            
+            accounts_map = {}
+            
+            # Listen for up to 3 seconds to gather ACCOUNT_METRICS and TRADE_LOG
+            while time.time() - start_time < 3:
+                try:
+                    raw_message = ws.recv()
+                    # Messages are often prefixed with length e.g. "123|{"
+                    if "|" in raw_message:
+                        raw_message = raw_message.split("|", 1)[1]
+                    data = json.loads(raw_message)
+                    
+                    # Extract account ID and Map Name
+                    if isinstance(data, dict):
+                        acc_id = str(data.get("accountId", ""))
+                        if acc_id and acc_id != "null" and acc_id not in accounts_map:
+                            accounts_map[acc_id] = {
+                                "id": acc_id,
+                                "name": f"Live Account ({acc_id})",
+                                "balance": 0,
+                                "type": "Live",
+                                "currency": "USD"
+                            }
+                        
+                        # Get real account name from TRADE_LOG
+                        body = data.get("body", [])
+                        if isinstance(body, list):
+                            for item in body:
+                                if isinstance(item, dict) and item.get("messageCategory") == "TRADE_LOG":
+                                    real_name = item.get("account")
+                                    trade_acc_id = str(item.get("accountId", ""))
+                                    if real_name and trade_acc_id and trade_acc_id in accounts_map:
+                                        accounts_map[trade_acc_id]["name"] = real_name
+                                        
+                        # Get balance from ACCOUNT_METRICS
+                        if data.get("type") == "ACCOUNT_METRICS":
+                            metrics = data.get("body", {}).get("allMetrics", {})
+                            if isinstance(metrics, dict) and acc_id in accounts_map:
+                                accounts_map[acc_id]["balance"] = metrics.get("cashBalance", 0)
+                                
+                except Exception as e:
+                    pass
+            ws.close()
+            
+            accounts_list = [acc for acc in accounts_map.values() if acc["id"] != "None"]
+            if accounts_list:
+                print(f"Extracted accounts from WS: {accounts_list}")
+                return accounts_list
+                
         except Exception as e:
-            print(f"Fallback account fetch error: {str(e)}")
+            print(f"Fallback WS account fetch error: {str(e)}")
         return None
     
     def set_active_account(self, account_id: str) -> bool:
@@ -452,21 +510,8 @@ class DxTradeClient:
                 response = self.session.get(endpoint, headers=headers)
                 if response.status_code == 200:
                     data = response.json()
-                    return {
-                        "balance": data.get("balance", data.get("cashBalance", 0)),
-                        "equity": data.get("equity", data.get("accountEquity", 0)),
-                        "margin_used": data.get("usedMargin", data.get("marginUsed", 0)),
-                        "free_margin": data.get("freeMargin", data.get("availableMargin", 0)),
-                        "unrealized_pnl": data.get("unrealizedPnL", data.get("floatingPnL", 0)),
-                        "realized_pnl": data.get("realizedPnL", data.get("closedPnL", 0)),
-                        "currency": data.get("currency", "USD"),
-                        "account_id": target_account
-                    }
-                else:
-                    pass
-                    # print(f"Endpoint {endpoint} returned status {response.status_code}: {response.text[:200]}")
-            except Exception as e:
-                print(f"Balance endpoint {endpoint} failed: {str(e)}")
+                    # If REST ever works, we can parse it here, otherwise fallback
+            except:
                 continue
         
         # Fallback: try to get balance from WebSocket data
@@ -475,10 +520,14 @@ class DxTradeClient:
     def _get_balance_from_websocket(self, account_id: str) -> Dict:
         """Fallback: Get balance info from WebSocket handshake"""
         def has_balance_data(msg: str) -> bool:
-            return '"balance"' in msg or '"cashBalance"' in msg or '"equity"' in msg or '"margin"' in msg
+            # Avoid matching layout/system messages
+            if '"layout"' in msg or '"systemMenu"' in msg:
+                return False
+            # Look for any of the standard balance/equity fields
+            return '"balance"' in msg or '"cashBalance"' in msg or '"equity"' in msg or '"accountEquity"' in msg
 
         try:
-            json_str = self.establish_handshake(check_func=has_balance_data, timeout=10)
+            json_str = self.establish_handshake(check_func=has_balance_data, timeout=20)
             if json_str:
                 # Handle Legacy Pipe Format
                 if "|" in json_str:
@@ -486,8 +535,12 @@ class DxTradeClient:
                     for part in parts:
                         try:
                             data = json.loads(part)
-                            if "balance" in data or "equity" in data or "cashBalance" in data:
-                                return self._extract_balance_data(data, account_id)
+                            # Check for balance indicators anywhere in the message structure
+                            msg_str = json.dumps(data)
+                            if '"balance"' in msg_str or '"equity"' in msg_str or '"cashBalance"' in msg_str:
+                                res = self._extract_balance_data(data, account_id)
+                                if res.get("balance") or res.get("equity"):
+                                    return res
                         except:
                             continue
                 # Handle New JSON Format
@@ -502,16 +555,22 @@ class DxTradeClient:
                             metrics = payload["metrics"]
                             # Iterate to find the account
                             for account_key, acct_data in metrics.items():
-                                return self._extract_balance_data(acct_data, account_id)
+                                if account_id in account_key or account_key == account_id:
+                                    return self._extract_balance_data(acct_data, account_id)
                                 
                         # AccountPortfolios format
                         elif "accounts" in payload:
                             for account in payload["accounts"]:
-                                return self._extract_balance_data(account, account_id)
+                                if account.get("accountId") == account_id:
+                                    return self._extract_balance_data(account, account_id)
+                        
+                        # Direct body format (some versions)
+                        elif "body" in data:
+                            return self._extract_balance_data(data, account_id)
                     except:
                         pass
-        except Exception as e:
-            print(f"WebSocket balance fetch error: {str(e)}")
+        except Exception:
+            pass
         
         return {
             "balance": 0, "equity": 0, "margin_used": 0, "free_margin": 0,
@@ -519,13 +578,21 @@ class DxTradeClient:
         }
 
     def _extract_balance_data(self, data, account_id):
+        # Deeply nested extraction
+        inner = data
+        if "body" in data and isinstance(data["body"], dict):
+            inner = data["body"]
+        
+        # Further nesting in metrics
+        metrics = inner.get("allMetrics", inner.get("metrics", inner))
+        
         return {
-            "balance": data.get("balance", data.get("cashBalance", 0)),
-            "equity": data.get("equity", data.get("accountEquity", 0)),
-            "margin_used": data.get("usedMargin", data.get("margin", 0)),
-            "free_margin": data.get("freeMargin", data.get("availableMargin", 0)),
-            "unrealized_pnl": data.get("unrealizedPnL", data.get("pl", 0)),
-            "realized_pnl": data.get("realizedPnL", 0),
+            "balance": metrics.get("balance", metrics.get("cashBalance", 0)),
+            "equity": metrics.get("equity", metrics.get("accountEquity", 0)),
+            "margin_used": metrics.get("usedMargin", metrics.get("margin", 0)),
+            "free_margin": metrics.get("availableFunds", metrics.get("freeMargin", metrics.get("availableMargin", 0))),
+            "unrealized_pnl": metrics.get("unrealizedPnL", metrics.get("pl", metrics.get("openPl", 0))),
+            "realized_pnl": metrics.get("realizedPnL", 0),
             "currency": "USD",
             "account_id": account_id or data.get("accountId", "unknown")
         }
@@ -581,6 +648,24 @@ class DxTradeClient:
         
         return analytics
     
+    def get_history(self) -> List[Dict]:
+        """Fetch raw trade history from the platform"""
+        headers = {
+            'accept': 'application/json',
+            'cookie': '; '.join([f"{key}={value}" for key, value in self.cookies.items()]),
+            'x-csrf-token': self.csrf or "",
+            'x-requested-with': 'XMLHttpRequest'
+        }
+        try:
+            history_url = f"{self.base_url}/api/trading/history"
+            response = self.session.get(history_url, headers=headers)
+            if response.status_code == 200:
+                data = response.json()
+                return data.get("trades", data.get("orders", []))
+        except Exception as e:
+            print(f"History fetch error: {str(e)}")
+        return []
+
     def get_positions(self) -> Optional[List[Dict]]:
         """Get current open positions"""
         def has_positions_data(msg: str) -> bool:

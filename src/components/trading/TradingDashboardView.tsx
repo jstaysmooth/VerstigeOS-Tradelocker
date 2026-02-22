@@ -43,6 +43,8 @@ export default function TradingDashboardView() {
         isConnected,
         tradeLockerConnected,
         tradeLockerData,
+        dxConnected,
+        dxData,
         approveSignal,
         disconnectTradeLocker
     } = useTrading();
@@ -51,6 +53,9 @@ export default function TradingDashboardView() {
         totalTrades,
         winRate,
         totalPnL,
+        accountBalance,
+        accountEquity,
+        dxConnected,
         tradeLockerConnected,
         tradeLockerAnalytics: tradeLockerData?.analytics
     });
@@ -140,15 +145,20 @@ export default function TradingDashboardView() {
                     <div className="connection-status">
                         <div className={`conn-dot ${isConnected ? 'live' : ''}`}></div>
                         <span className="conn-label">
-                            {tradeLockerConnected ? 'TradeLocker Active' : (isConnected ? 'MT5 Connected' : 'Waiting for Connection')}
+                            {tradeLockerConnected ? 'TradeLocker Active' : (dxConnected ? 'DXTrade Active' : (isConnected ? 'MT5 Connected' : 'Waiting for Connection'))}
                         </span>
-                        {(isConnected || tradeLockerConnected) && (
+                        {(isConnected || tradeLockerConnected || dxConnected) && (
                             <button
                                 className="disconnect-text-btn"
                                 onClick={async (e) => {
                                     e.stopPropagation();
                                     if (tradeLockerConnected) {
                                         await disconnectTradeLocker();
+                                    } else if (dxConnected) {
+                                        // TODO: implement disconnectDxTrade if needed, 
+                                        // or just clear local storage and refresh
+                                        localStorage.removeItem('dx_session');
+                                        window.location.reload();
                                     }
                                 }}
                                 style={{

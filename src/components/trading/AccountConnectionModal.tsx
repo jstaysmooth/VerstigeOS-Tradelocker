@@ -14,6 +14,8 @@ export default function AccountConnectionModal({ onClose }: AccountConnectionMod
     const {
         setTradeLockerConnected,
         setTradeLockerData,
+        setDxConnected,
+        setDxData,
         setAccountBalance,
         setAccountEquity,
         setSignals,
@@ -69,7 +71,10 @@ export default function AccountConnectionModal({ onClose }: AccountConnectionMod
                 return;
             }
 
-            console.log("Selecting Account:", { accountId, selectedAccountId, userId, platform: selectedPlatform });
+            const selectedAccount = accounts.find(acc => acc.id === selectedAccountId);
+            const resolvedAccountName = selectedAccount?.name || selectedAccountId;
+
+            console.log("Selecting Account:", { accountId, selectedAccountId, resolvedAccountName, userId, platform: selectedPlatform });
 
             const endpoint = selectedPlatform === 'tradelocker'
                 ? `${API_URL}/api/tradelocker/select-account`
@@ -94,12 +99,19 @@ export default function AccountConnectionModal({ onClose }: AccountConnectionMod
             const data = await response.json();
 
             if (data.status === 'success') {
-                setTradeLockerConnected(true);
-                setTradeLockerData(data);
+                if (selectedPlatform === 'tradelocker') {
+                    setTradeLockerConnected(true);
+                    setTradeLockerData(data);
+                } else if (selectedPlatform === 'dxtrade') {
+                    setDxConnected(true);
+                    setDxData(data);
+                }
 
                 // Map balance fields (DXTrade returns them at root, TradeLocker inside nested balance)
                 const balanceVal = selectedPlatform === 'tradelocker' ? data.balance?.balance : data.balance;
                 const equityVal = selectedPlatform === 'tradelocker' ? data.balance?.equity : data.equity;
+
+                console.log(`[Modal] Setting balance for ${selectedPlatform}:`, { balanceVal, equityVal, rawBalance: data.balance, rawEquity: data.equity });
 
                 setAccountBalance(balanceVal || 0);
                 setAccountEquity(equityVal || 0);
@@ -156,7 +168,7 @@ export default function AccountConnectionModal({ onClose }: AccountConnectionMod
                         password: password,
                         server: server,
                         account_id: selectedAccountId,
-                        account_name: `TradeLocker - ${selectedAccountId}`,
+                        account_name: `TradeLocker - ${resolvedAccountName}`,
                         account_type: server.includes('Demo') ? 'demo' : 'live',
                         balance: balanceVal || 0,
                         equity: equityVal || 0,
@@ -169,7 +181,7 @@ export default function AccountConnectionModal({ onClose }: AccountConnectionMod
                         vendor: server.toLowerCase().replace('-live', '').replace('-demo', ''),
                         domain: 'default',
                         account_id: selectedAccountId,
-                        account_name: `DXTrade - ${selectedAccountId}`,
+                        account_name: `DXTrade - ${resolvedAccountName}`,
                         balance: balanceVal || 0,
                         equity: equityVal || 0,
                         currency: 'USD'
@@ -335,8 +347,8 @@ export default function AccountConnectionModal({ onClose }: AccountConnectionMod
                                     <div key={acc.id} className="account-item glass-card" onClick={() => handleSelectAccount(acc.id)}
                                         style={{ padding: '15px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', background: 'rgba(255,255,255,0.05)', borderRadius: '8px' }}>
                                         <div className="account-details">
-                                            <div style={{ fontWeight: 'bold', fontSize: '1.1em' }}>{acc.id}</div>
-                                            <div style={{ fontSize: '0.9em', color: 'rgba(255,255,255,0.6)' }}>{acc.currency || 'USD'} • {acc.accountType || 'Standard'}</div>
+                                            <div style={{ fontWeight: 'bold', fontSize: '1.1em' }}>{acc.name || acc.id}</div>
+                                            <div style={{ fontSize: '0.9em', color: 'rgba(255,255,255,0.6)' }}>{acc.currency || 'USD'} • {acc.accountType || acc.type || 'Standard'} • ${acc.balance?.toFixed(2) || '0.00'}</div>
                                         </div>
                                         <div>→</div>
                                     </div>

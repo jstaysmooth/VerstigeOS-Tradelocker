@@ -62,6 +62,7 @@ interface TradingContextType {
     // Platform Connection States
     mt5Connected: boolean;
     dxConnected: boolean;
+    dxData: any;
     matchTraderConnected: boolean;
     tradeLockerConnected: boolean;
 
@@ -76,6 +77,7 @@ interface TradingContextType {
     // Actions
     setMt5Connected: (connected: boolean) => void;
     setDxConnected: (connected: boolean) => void;
+    setDxData: (data: any) => void;
     setMatchTraderConnected: (connected: boolean) => void;
     setTradeLockerConnected: (connected: boolean) => void;
     setAccountBalance: (balance: number) => void;
@@ -86,6 +88,7 @@ interface TradingContextType {
     refreshTradeLockerData: (email: string) => Promise<void>;
     approveSignal: (signalId: number, signalData?: any) => Promise<void>;
     disconnectTradeLocker: () => Promise<void>;
+    refreshDxTradeData: () => Promise<void>;
 }
 
 const TradingContext = createContext<TradingContextType | undefined>(undefined);
@@ -114,6 +117,7 @@ export const TradingProvider: React.FC<{ children: ReactNode }> = ({ children })
     // Platform Connection States
     const [mt5Connected, setMt5Connected] = useState(false);
     const [dxConnected, setDxConnected] = useState(false);
+    const [dxData, setDxData] = useState<any>(null);
     const [matchTraderConnected, setMatchTraderConnected] = useState(false);
     const [tradeLockerConnected, setTradeLockerConnected] = useState(false);
     const [tradeLockerData, setTradeLockerData] = useState<any>(null);
@@ -124,33 +128,48 @@ export const TradingProvider: React.FC<{ children: ReactNode }> = ({ children })
         if (tradeLockerConnected && tradeLockerData?.analytics?.total_trades !== undefined) {
             return tradeLockerData.analytics.total_trades;
         }
+        if (dxConnected && dxData?.analytics?.total_trades !== undefined) {
+            return dxData.analytics.total_trades;
+        }
         return results.length;
-    }, [results.length, tradeLockerConnected, tradeLockerData?.analytics]);
+    }, [results.length, tradeLockerConnected, tradeLockerData?.analytics, dxConnected, dxData?.analytics]);
 
     const openPositions = useMemo(() => {
         if (tradeLockerConnected && tradeLockerData?.analytics?.open_positions !== undefined) {
             return tradeLockerData.analytics.open_positions;
         }
+        if (dxConnected && dxData?.analytics?.open_positions !== undefined) {
+            return dxData.analytics.open_positions;
+        }
         return signals.length;
-    }, [signals.length, tradeLockerConnected, tradeLockerData?.analytics]);
+    }, [signals.length, tradeLockerConnected, tradeLockerData?.analytics, dxConnected, dxData?.analytics]);
 
     const overrideWinRate = useMemo(() => {
         if (tradeLockerConnected && tradeLockerData?.analytics?.win_rate !== undefined) {
             return Math.round(tradeLockerData.analytics.win_rate);
         }
+        if (dxConnected && dxData?.analytics?.win_rate !== undefined) {
+            return Math.round(dxData.analytics.win_rate);
+        }
         if (results.length === 0) return 0;
         const wins = results.filter(r => r.netProfit > 0).length;
         return Math.round((wins / results.length) * 100);
-    }, [results, tradeLockerConnected, tradeLockerData?.analytics]);
+    }, [results, tradeLockerConnected, tradeLockerData?.analytics, dxConnected, dxData?.analytics]);
 
     const overrideTotalPnL = useMemo(() => {
         if (tradeLockerConnected && tradeLockerData?.analytics?.total_pnl !== undefined) {
             return tradeLockerData.analytics.total_pnl;
         }
+        if (dxConnected && dxData?.analytics?.total_pnl !== undefined) {
+            return dxData.analytics.total_pnl;
+        }
         return results.reduce((acc, r) => acc + r.netProfit, 0);
-    }, [results, tradeLockerConnected, tradeLockerData?.analytics]);
+    }, [results, tradeLockerConnected, tradeLockerData?.analytics, dxConnected, dxData?.analytics]);
 
     const dailyPnL = useMemo(() => {
+        if (dxConnected && dxData?.analytics?.daily_pnl !== undefined) {
+            return dxData.analytics.daily_pnl;
+        }
         const today = new Date().toDateString();
         return results
             .filter(r => {
@@ -158,7 +177,27 @@ export const TradingProvider: React.FC<{ children: ReactNode }> = ({ children })
                 catch { return false; }
             })
             .reduce((acc, r) => acc + r.netProfit, 0);
-    }, [results]);
+    }, [results, dxConnected, dxData?.analytics]);
+
+    const displayBalance = useMemo(() => {
+        if (tradeLockerConnected && tradeLockerData?.balance?.balance !== undefined) {
+            return tradeLockerData.balance.balance;
+        }
+        if (dxConnected && dxData?.balance !== undefined) {
+            return dxData.balance;
+        }
+        return accountBalance;
+    }, [accountBalance, tradeLockerConnected, tradeLockerData?.balance, dxConnected, dxData?.balance]);
+
+    const displayEquity = useMemo(() => {
+        if (tradeLockerConnected && tradeLockerData?.balance?.equity !== undefined) {
+            return tradeLockerData.balance.equity;
+        }
+        if (dxConnected && dxData?.equity !== undefined) {
+            return dxData.equity;
+        }
+        return accountEquity;
+    }, [accountEquity, tradeLockerConnected, tradeLockerData?.balance, dxConnected, dxData?.equity]);
 
     // Initialize Socket
     useEffect(() => {
@@ -360,6 +399,7 @@ export const TradingProvider: React.FC<{ children: ReactNode }> = ({ children })
                         const data = await selRes.json();
                         if (selRes.ok && data.status === 'success') {
                             setDxConnected(true);
+                            setDxData(data); // Store DX data
                             setAccountBalance(data.balance || 0);
                             setAccountEquity(data.equity || 0);
 
@@ -486,6 +526,91 @@ export const TradingProvider: React.FC<{ children: ReactNode }> = ({ children })
         }
     };
 
+    const refreshDxTradeData = async () => {
+        try {
+            const dxRaw = localStorage.getItem('dx_session');
+            if (!dxRaw) {
+                console.warn("No DXTrade session found in localStorage for refresh.");
+                return;
+            }
+            const dxSaved = JSON.parse(dxRaw);
+
+            const response = await fetch(`${API_URL}/api/dxtrade/select-account`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    username: dxSaved.username,
+                    password: dxSaved.password,
+                    vendor: dxSaved.vendor,
+                    domain: dxSaved.domain,
+                    account_id: dxSaved.account_id
+                })
+            });
+            const data = await response.json();
+            console.log("TradingContext: refreshDxTradeData response:", data);
+
+            if (response.ok && data.status === 'success') {
+                setDxData(data);
+                if (data.balance !== undefined) {
+                    setAccountBalance(data.balance);
+                }
+                if (data.equity !== undefined) {
+                    setAccountEquity(data.equity);
+                }
+
+                // Map DXTrade positions to UI signals format
+                if (data.positions) {
+                    console.log('RECEIVED DX POSITIONS:', data.positions);
+                    const mappedPositions = data.positions.map((pos: any) => ({
+                        id: pos.id,
+                        provider: "DXTrade",
+                        providerRank: "Live",
+                        pair: pos.symbol || pos.tradableInstrumentId,
+                        action: (pos.side || pos.orderSide || "BUY").toUpperCase() as 'BUY' | 'SELL',
+                        pips: 0,
+                        price: (pos.price || pos.avgPrice || 0).toString(),
+                        sl: pos.stopLoss?.toString() || "",
+                        tp1: pos.takeProfit?.toString() || "",
+                        tp2: "",
+                        tp3: "",
+                        category: "FOREX",
+                        timestamp: "Live", // DXTrade might not provide openTime directly in this format
+                        winRate: 0,
+                        lotSize: parseFloat(pos.quantity || pos.qty || 0),
+                        profit: parseFloat(pos.pl || pos.unrealizedPnL || 0)
+                    }));
+                    setSignals(mappedPositions);
+                }
+
+                // Map DXTrade history to UI results format
+                if (data.history) {
+                    console.log('RECEIVED DX HISTORY:', data.history.length, 'records');
+                    const mappedHistory = data.history.map((trade: any) => ({
+                        id: trade.id || trade.orderId || trade.ticket,
+                        pair: trade.symbol || trade.tradableInstrumentId || "Unknown",
+                        type: trade.side || trade.action || trade.type || "N/A",
+                        entryPrice: parseFloat(trade.entryPrice || trade.avgPrice || 0),
+                        closePrice: parseFloat(trade.closePrice || trade.exitPrice || 0),
+                        netProfit: parseFloat(trade.profit || trade.realizedPnL || 0),
+                        pips: parseFloat(trade.pips || 0),
+                        lotSize: parseFloat(trade.quantity || trade.qty || trade.volume || 0),
+                        timestamp: trade.closeTime || trade.timestamp || new Date().toISOString(),
+                        provider: "DXTrade"
+                    }));
+                    setResults((prev: SignalResult[]) => {
+                        const newIds = new Set(mappedHistory.map((h: any) => h.id));
+                        const filteredPrev = prev.filter(p => !newIds.has(p.id));
+                        return [...mappedHistory, ...filteredPrev];
+                    });
+                }
+            } else {
+                console.error("Failed to refresh DXTrade data:", data.detail || "Unknown error");
+            }
+        } catch (error) {
+            console.error("Error refreshing DXTrade data:", error);
+        }
+    };
+
     const approveSignal = async (signalId: number, signalData?: any) => {
         console.log("Approving signal via context:", signalId, signalData);
         const userId = localStorage.getItem('v2_user_id');
@@ -504,17 +629,34 @@ export const TradingProvider: React.FC<{ children: ReactNode }> = ({ children })
                 tp: signalData?.tp1 // Default to TP1
             };
 
-            const response = await fetch(`${API_URL}/api/tradelocker/execute`, {
+            const endpoint = dxConnected
+                ? `${API_URL}/api/dxtrade/execute`
+                : `${API_URL}/api/tradelocker/execute`;
+
+            const dxRaw = localStorage.getItem('dx_session');
+            const dxSaved = dxRaw ? JSON.parse(dxRaw) : null;
+
+            const finalPayload = dxConnected && dxSaved ? {
+                ...payload,
+                username: dxSaved.username,
+                password: dxSaved.password,
+                vendor: dxSaved.vendor,
+                domain: dxSaved.domain,
+                account_id: dxSaved.account_id
+            } : payload;
+
+            const response = await fetch(endpoint, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
+                body: JSON.stringify(finalPayload)
             });
 
             const result = await response.json();
             if (response.ok) {
                 console.log("Trade executed successfully:", result);
                 // Refresh data to show new position
-                if (isConnected) refreshTradeLockerData(localStorage.getItem('v2_user_email') || '');
+                if (tradeLockerConnected) refreshTradeLockerData(localStorage.getItem('v2_user_email') || '');
+                if (dxConnected) refreshDxTradeData();
             } else {
                 console.error("Trade execution failed:", result);
                 throw new Error(result.detail || "Execution failed");
@@ -525,6 +667,16 @@ export const TradingProvider: React.FC<{ children: ReactNode }> = ({ children })
         }
     };
 
+    useEffect(() => {
+        if (dxConnected && dxData) {
+            console.log('[TradingContext] DX Data Updated:', {
+                balance: dxData.balance,
+                equity: dxData.equity,
+                analytics: dxData.analytics
+            });
+        }
+    }, [dxConnected, dxData]);
+
     return (
         <TradingContext.Provider value={{
             socket,
@@ -532,8 +684,8 @@ export const TradingProvider: React.FC<{ children: ReactNode }> = ({ children })
             results,
             prices,
             isConnected,
-            accountBalance,
-            accountEquity,
+            accountBalance: displayBalance,
+            accountEquity: displayEquity,
             margin,
             freeMargin,
             marginLevel,
@@ -544,11 +696,13 @@ export const TradingProvider: React.FC<{ children: ReactNode }> = ({ children })
             openPositions,
             mt5Connected,
             dxConnected,
+            dxData,
             matchTraderConnected,
             tradeLockerConnected,
             tradeLockerData,
             setMt5Connected,
             setDxConnected,
+            setDxData,
             setMatchTraderConnected,
             setTradeLockerConnected,
             setAccountBalance,
@@ -558,7 +712,8 @@ export const TradingProvider: React.FC<{ children: ReactNode }> = ({ children })
             setResults,
             refreshTradeLockerData,
             approveSignal,
-            disconnectTradeLocker
+            disconnectTradeLocker,
+            refreshDxTradeData
         }}>
             {children}
         </TradingContext.Provider>

@@ -17,6 +17,7 @@ print(f"DEBUG SYS PATH: {sys.path}")
 import os
 from supabase import create_client, Client
 from dotenv import load_dotenv
+from datetime import datetime
 
 # Initialize Supabase Client for direct operations
 load_dotenv()
@@ -672,6 +673,13 @@ async def dxtrade_authenticate(creds: DxTradeAuthRequest):
         )
         
         if client.login():
+            # The DXTrade REST API often requires a push session (message bus) to be active
+            # before it allows you to hit /api/accounts. Otherwise it returns 409 NO_MESSAGE_BUS.
+            try:
+                client.create_push_session()
+            except Exception as e:
+                logger.warning(f"Failed to create push session for DXTrade: {e}")
+                
             # Fetch available accounts
             accounts = client.get_accounts()
             
@@ -727,9 +735,13 @@ async def dxtrade_select_account(request: DxTradeAccountSelectRequest):
     
     # Fetch live balance and analytics
     balance_data = client.get_account_balance(request.account_id)
+    with open("/tmp/verstige_backend.log", "a") as f:
+        f.write(f"\n[Backend {datetime.now()}] DX Balance for {request.account_id}: {balance_data}\n")
     analytics_data = client.get_account_analytics(request.account_id)
+    positions_data = client.get_positions()
+    history_data = client.get_history()
     
-    return {
+    response_payload = {
         "status": "success",
         "message": f"Account {request.account_id} selected",
         "account_id": request.account_id,
@@ -741,8 +753,13 @@ async def dxtrade_select_account(request: DxTradeAccountSelectRequest):
         "unrealized_pnl": balance_data.get("unrealized_pnl", 0),
         "realized_pnl": balance_data.get("realized_pnl", 0),
         "currency": balance_data.get("currency", "USD"),
-        "analytics": analytics_data
+        "analytics": analytics_data,
+        "positions": positions_data or [],
+        "history": history_data or []
     }
+    with open("/tmp/verstige_backend.log", "a") as f:
+        f.write(f"[Backend {datetime.now()}] Sending DX Account Data: Balance={response_payload['balance']}, Equity={response_payload['equity']}\n")
+    return response_payload
 
 @app.post("/api/dxtrade/execute")
 async def dxtrade_execute_trade(
